@@ -1551,6 +1551,26 @@ describe("hasSignatureOfFormat() function tests", () => {
         expect((0, index_js_1.hasSignatureOfFormat)((0, index_js_1.fakeAsObject)("abc"), "nostr")).toEqual(false);
         expect((0, index_js_1.hasSignatureOfFormat)((0, index_js_1.fakeAsObject)([1, 2, 3]), "nostr")).toEqual(false);
         expect((0, index_js_1.hasSignatureOfFormat)((0, index_js_1.fakeAsObject)({ a: 1 }), "nostr")).toEqual(false);
+        // hasSignatureEthereum()
+        expect((0, index_js_1.hasSignatureEthereum)((0, index_js_1.fakeAsObject)(null))).toEqual(false);
+        expect((0, index_js_1.hasSignatureEthereum)((0, index_js_1.fakeAsObject)(undefined))).toEqual(false);
+        expect((0, index_js_1.hasSignatureEthereum)((0, index_js_1.fakeAsObject)(0))).toEqual(false);
+        expect((0, index_js_1.hasSignatureEthereum)((0, index_js_1.fakeAsObject)(1))).toEqual(false);
+        expect((0, index_js_1.hasSignatureEthereum)((0, index_js_1.fakeAsObject)(true))).toEqual(false);
+        expect((0, index_js_1.hasSignatureEthereum)((0, index_js_1.fakeAsObject)(false))).toEqual(false);
+        expect((0, index_js_1.hasSignatureEthereum)((0, index_js_1.fakeAsObject)("abc"))).toEqual(false);
+        expect((0, index_js_1.hasSignatureEthereum)((0, index_js_1.fakeAsObject)([1, 2, 3]))).toEqual(false);
+        expect((0, index_js_1.hasSignatureEthereum)((0, index_js_1.fakeAsObject)({ a: 1 }))).toEqual(false);
+        // hasSignatureNostr()
+        expect((0, index_js_1.hasSignatureNostr)((0, index_js_1.fakeAsObject)(null))).toEqual(false);
+        expect((0, index_js_1.hasSignatureNostr)((0, index_js_1.fakeAsObject)(undefined))).toEqual(false);
+        expect((0, index_js_1.hasSignatureNostr)((0, index_js_1.fakeAsObject)(0))).toEqual(false);
+        expect((0, index_js_1.hasSignatureNostr)((0, index_js_1.fakeAsObject)(1))).toEqual(false);
+        expect((0, index_js_1.hasSignatureNostr)((0, index_js_1.fakeAsObject)(true))).toEqual(false);
+        expect((0, index_js_1.hasSignatureNostr)((0, index_js_1.fakeAsObject)(false))).toEqual(false);
+        expect((0, index_js_1.hasSignatureNostr)((0, index_js_1.fakeAsObject)("abc"))).toEqual(false);
+        expect((0, index_js_1.hasSignatureNostr)((0, index_js_1.fakeAsObject)([1, 2, 3]))).toEqual(false);
+        expect((0, index_js_1.hasSignatureNostr)((0, index_js_1.fakeAsObject)({ a: 1 }))).toEqual(false);
     });
 });
 describe("extractNostrEvents() function tests", () => {

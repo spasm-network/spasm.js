@@ -1863,6 +1863,29 @@ describe("hasSignatureOfFormat() function tests", () => {
     expect(hasSignatureOfFormat(fakeAsObject("abc") as SpasmEventV2, "nostr")).toEqual(false);
     expect(hasSignatureOfFormat(fakeAsObject([1,2,3]) as SpasmEventV2, "nostr")).toEqual(false);
     expect(hasSignatureOfFormat(fakeAsObject({a:1}) as SpasmEventV2, "nostr")).toEqual(false);
+
+    // hasSignatureEthereum()
+    expect(hasSignatureEthereum(fakeAsObject(null) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureEthereum(fakeAsObject(undefined) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureEthereum(fakeAsObject(0) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureEthereum(fakeAsObject(1) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureEthereum(fakeAsObject(true) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureEthereum(fakeAsObject(false) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureEthereum(fakeAsObject("abc") as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureEthereum(fakeAsObject([1,2,3]) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureEthereum(fakeAsObject({a:1}) as SpasmEventV2)).toEqual(false);
+
+
+    // hasSignatureNostr()
+    expect(hasSignatureNostr(fakeAsObject(null) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureNostr(fakeAsObject(undefined) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureNostr(fakeAsObject(0) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureNostr(fakeAsObject(1) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureNostr(fakeAsObject(true) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureNostr(fakeAsObject(false) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureNostr(fakeAsObject("abc") as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureNostr(fakeAsObject([1,2,3]) as SpasmEventV2)).toEqual(false);
+    expect(hasSignatureNostr(fakeAsObject({a:1}) as SpasmEventV2)).toEqual(false);
   });
 });
 
