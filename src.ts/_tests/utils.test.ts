@@ -1890,6 +1890,17 @@ describe("hasSignatureOfFormat() function tests", () => {
 });
 
 describe("extractNostrEvents() function tests", () => {
+  test("extractNostrEvents() should return null when passed invalid type", () => {
+    expect(extractNostrEvent(fakeAsObject(null) as SpasmEventV2)).toStrictEqual(null)
+    expect(extractNostrEvent(fakeAsObject(undefined) as SpasmEventV2)).toStrictEqual(null)
+    expect(extractNostrEvent(fakeAsObject(0) as SpasmEventV2)).toStrictEqual(null)
+    expect(extractNostrEvent(fakeAsObject(1) as SpasmEventV2)).toStrictEqual(null)
+    expect(extractNostrEvent(fakeAsObject(true) as SpasmEventV2)).toStrictEqual(null)
+    expect(extractNostrEvent(fakeAsObject(false) as SpasmEventV2)).toStrictEqual(null)
+    expect(extractNostrEvent(fakeAsObject("abc") as SpasmEventV2)).toStrictEqual(null)
+    expect(extractNostrEvent(fakeAsObject([1,2,3]) as SpasmEventV2)).toStrictEqual(null)
+    expect(extractNostrEvent(fakeAsObject({a:1}) as SpasmEventV2)).toStrictEqual(null)
+  });
   test("extractNostrEvents() should extract valid Nostr event from Spasm event", () => {
     expect(extractNostrEvent(
       validDmpEventConvertedToSpasmEventV2

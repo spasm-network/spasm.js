@@ -1574,6 +1574,17 @@ describe("hasSignatureOfFormat() function tests", () => {
     });
 });
 describe("extractNostrEvents() function tests", () => {
+    test("extractNostrEvents() should return null when passed invalid type", () => {
+        expect((0, index_js_1.extractNostrEvent)((0, index_js_1.fakeAsObject)(null))).toStrictEqual(null);
+        expect((0, index_js_1.extractNostrEvent)((0, index_js_1.fakeAsObject)(undefined))).toStrictEqual(null);
+        expect((0, index_js_1.extractNostrEvent)((0, index_js_1.fakeAsObject)(0))).toStrictEqual(null);
+        expect((0, index_js_1.extractNostrEvent)((0, index_js_1.fakeAsObject)(1))).toStrictEqual(null);
+        expect((0, index_js_1.extractNostrEvent)((0, index_js_1.fakeAsObject)(true))).toStrictEqual(null);
+        expect((0, index_js_1.extractNostrEvent)((0, index_js_1.fakeAsObject)(false))).toStrictEqual(null);
+        expect((0, index_js_1.extractNostrEvent)((0, index_js_1.fakeAsObject)("abc"))).toStrictEqual(null);
+        expect((0, index_js_1.extractNostrEvent)((0, index_js_1.fakeAsObject)([1, 2, 3]))).toStrictEqual(null);
+        expect((0, index_js_1.extractNostrEvent)((0, index_js_1.fakeAsObject)({ a: 1 }))).toStrictEqual(null);
+    });
     test("extractNostrEvents() should extract valid Nostr event from Spasm event", () => {
         expect((0, index_js_1.extractNostrEvent)(_events_data_js_1.validDmpEventConvertedToSpasmEventV2)).toStrictEqual(null);
         expect((0, index_js_1.extractNostrEvent)(_events_data_js_1.validDmpEventSignedOpenedConvertedToSpasmV2)).toStrictEqual(null);
