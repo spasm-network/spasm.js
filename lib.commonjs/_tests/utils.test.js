@@ -1599,6 +1599,17 @@ describe("extractNostrEvents() function tests", () => {
 });
 // getAllSigners()
 describe("getAllSigners() function tests", () => {
+    test("getAllSigners() should return an empty array when passed invalid type", () => {
+        expect((0, index_js_1.getAllSigners)((0, index_js_1.fakeAsObject)(null))).toStrictEqual([]);
+        expect((0, index_js_1.getAllSigners)((0, index_js_1.fakeAsObject)(undefined))).toStrictEqual([]);
+        expect((0, index_js_1.getAllSigners)((0, index_js_1.fakeAsObject)(0))).toStrictEqual([]);
+        expect((0, index_js_1.getAllSigners)((0, index_js_1.fakeAsObject)(1))).toStrictEqual([]);
+        expect((0, index_js_1.getAllSigners)((0, index_js_1.fakeAsObject)(true))).toStrictEqual([]);
+        expect((0, index_js_1.getAllSigners)((0, index_js_1.fakeAsObject)(false))).toStrictEqual([]);
+        expect((0, index_js_1.getAllSigners)((0, index_js_1.fakeAsObject)("abc"))).toStrictEqual([]);
+        expect((0, index_js_1.getAllSigners)((0, index_js_1.fakeAsObject)([1, 2, 3]))).toStrictEqual([]);
+        expect((0, index_js_1.getAllSigners)((0, index_js_1.fakeAsObject)({ a: 1 }))).toStrictEqual([]);
+    });
     test("getAllSigners() should return an array of author addresses", () => {
         const inputDmp = JSON.parse(JSON.stringify(_events_data_js_1.validDmpEventSignedOpened));
         const inputNostr = JSON.parse(JSON.stringify(_events_data_js_1.validNostrEventSignedOpened));
