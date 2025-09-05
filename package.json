@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/degenrocket/spasm.js.git"
+    "url": "git+https://github.com/spasm-network/spasm.js.git"
   },
   "keywords": [
     "spasm",
