@@ -1945,6 +1945,19 @@ describe("getAllSigners() function tests", () => {
     expect(getAllSigners(fakeAsObject([1,2,3]) as SpasmEventV2)).toStrictEqual([])
     expect(getAllSigners(fakeAsObject({a:1}) as SpasmEventV2)).toStrictEqual([])
   });
+
+  test("getVerifiedSigners() should return an empty array when passed invalid type", () => {
+    expect(getVerifiedSigners(fakeAsObject(null) as SpasmEventV2)).toStrictEqual([])
+    expect(getVerifiedSigners(fakeAsObject(undefined) as SpasmEventV2)).toStrictEqual([])
+    expect(getVerifiedSigners(fakeAsObject(0) as SpasmEventV2)).toStrictEqual([])
+    expect(getVerifiedSigners(fakeAsObject(1) as SpasmEventV2)).toStrictEqual([])
+    expect(getVerifiedSigners(fakeAsObject(true) as SpasmEventV2)).toStrictEqual([])
+    expect(getVerifiedSigners(fakeAsObject(false) as SpasmEventV2)).toStrictEqual([])
+    expect(getVerifiedSigners(fakeAsObject("abc") as SpasmEventV2)).toStrictEqual([])
+    expect(getVerifiedSigners(fakeAsObject([1,2,3]) as SpasmEventV2)).toStrictEqual([])
+    expect(getVerifiedSigners(fakeAsObject({a:1}) as SpasmEventV2)).toStrictEqual([])
+  });
+
   test("getAllSigners() should return an array of author addresses", () => {
     const inputDmp = JSON.parse(JSON.stringify(validDmpEventSignedOpened));
     const inputNostr = JSON.parse(JSON.stringify(validNostrEventSignedOpened));
