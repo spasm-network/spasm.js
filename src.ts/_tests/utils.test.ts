@@ -2062,6 +2062,17 @@ describe("getSignersListedIn() function tests", () => {
     const outputNostrSpasm = ["2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"]
     // const outputWeb2 = []
 
+    // Check invalid types
+    expect(getSignersListedIn(fakeAsObject(null) as SpasmEventV2, moderators)).toEqual([]);
+    expect(getSignersListedIn(fakeAsObject(undefined) as SpasmEventV2, moderators)).toEqual([]);
+    expect(getSignersListedIn(fakeAsObject(0) as SpasmEventV2, moderators)).toEqual([]);
+    expect(getSignersListedIn(fakeAsObject(1) as SpasmEventV2, moderators)).toEqual([]);
+    expect(getSignersListedIn(fakeAsObject(true) as SpasmEventV2, moderators)).toEqual([]);
+    expect(getSignersListedIn(fakeAsObject(false) as SpasmEventV2, moderators)).toEqual([]);
+    expect(getSignersListedIn(fakeAsObject([1,2,3]) as SpasmEventV2, moderators)).toEqual([]);
+    expect(getSignersListedIn(fakeAsObject({a:1}) as SpasmEventV2, moderators)).toEqual([]);
+    expect(getSignersListedIn(fakeAsObject("string") as SpasmEventV2, moderators)).toEqual([]);
+
     // getSignersListedIn() with Dmp moderator and whitelisted
     expect(getSignersListedIn(
       inputDmp,

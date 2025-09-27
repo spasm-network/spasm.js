@@ -1710,6 +1710,16 @@ describe("getSignersListedIn() function tests", () => {
         const outputNostr = ["6e468422dfb74a5738702a8823b9b28168abab8655faacb6853cd0ee15deee93"];
         const outputNostrSpasm = ["2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"];
         // const outputWeb2 = []
+        // Check invalid types
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(null), moderators)).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(undefined), moderators)).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(0), moderators)).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(1), moderators)).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(true), moderators)).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(false), moderators)).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)([1, 2, 3]), moderators)).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)({ a: 1 }), moderators)).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)("string"), moderators)).toEqual([]);
         // getSignersListedIn() with Dmp moderator and whitelisted
         expect((0, index_js_1.getSignersListedIn)(inputDmp, moderators)).toEqual(outputDmp);
         expect((0, index_js_1.getSignersListedIn)(inputDmp, whitelistedForActionPost)).toEqual(outputDmp);
