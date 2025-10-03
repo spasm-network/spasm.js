@@ -1729,6 +1729,15 @@ describe("getSignersListedIn() function tests", () => {
         expect((0, index_js_1.getSignersListedIn)(inputDmp, (0, index_js_1.fakeAsArray)([1, 2, 3]))).toEqual([]);
         expect((0, index_js_1.getSignersListedIn)(inputDmp, (0, index_js_1.fakeAsArray)({ a: 1 }))).toEqual([]);
         expect((0, index_js_1.getSignersListedIn)(inputDmp, (0, index_js_1.fakeAsArray)("string"))).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(null), (0, index_js_1.fakeAsArray)(null))).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(undefined), (0, index_js_1.fakeAsArray)(undefined))).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(0), (0, index_js_1.fakeAsArray)(0))).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(1), (0, index_js_1.fakeAsArray)(1))).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(true), (0, index_js_1.fakeAsArray)(true))).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)(false), (0, index_js_1.fakeAsArray)(false))).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)([1, 2, 3]), (0, index_js_1.fakeAsArray)([1, 2, 3]))).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)({ a: 1 }), (0, index_js_1.fakeAsArray)({ a: 1 }))).toEqual([]);
+        expect((0, index_js_1.getSignersListedIn)((0, index_js_1.fakeAsObject)("string"), (0, index_js_1.fakeAsArray)("string"))).toEqual([]);
         // getSignersListedIn() with Dmp moderator and whitelisted
         expect((0, index_js_1.getSignersListedIn)(inputDmp, moderators)).toEqual(outputDmp);
         expect((0, index_js_1.getSignersListedIn)(inputDmp, whitelistedForActionPost)).toEqual(outputDmp);
