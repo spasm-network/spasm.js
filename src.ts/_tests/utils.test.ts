@@ -2083,6 +2083,26 @@ describe("getSignersListedIn() function tests", () => {
     expect(getSignersListedIn(inputDmp, fakeAsArray({a:1}))).toEqual([]);
     expect(getSignersListedIn(inputDmp, fakeAsArray("string"))).toEqual([]);
 
+    expect(getSignersListedIn(inputNostr, fakeAsArray(null))).toEqual([]);
+    expect(getSignersListedIn(inputNostr, fakeAsArray(undefined))).toEqual([]);
+    expect(getSignersListedIn(inputNostr, fakeAsArray(0))).toEqual([]);
+    expect(getSignersListedIn(inputNostr, fakeAsArray(1))).toEqual([]);
+    expect(getSignersListedIn(inputNostr, fakeAsArray(true))).toEqual([]);
+    expect(getSignersListedIn(inputNostr, fakeAsArray(false))).toEqual([]);
+    expect(getSignersListedIn(inputNostr, fakeAsArray([1,2,3]))).toEqual([]);
+    expect(getSignersListedIn(inputNostr, fakeAsArray({a:1}))).toEqual([]);
+    expect(getSignersListedIn(inputNostr, fakeAsArray("string"))).toEqual([]);
+
+    expect(getSignersListedIn(inputWeb2, fakeAsArray(null))).toEqual([]);
+    expect(getSignersListedIn(inputWeb2, fakeAsArray(undefined))).toEqual([]);
+    expect(getSignersListedIn(inputWeb2, fakeAsArray(0))).toEqual([]);
+    expect(getSignersListedIn(inputWeb2, fakeAsArray(1))).toEqual([]);
+    expect(getSignersListedIn(inputWeb2, fakeAsArray(true))).toEqual([]);
+    expect(getSignersListedIn(inputWeb2, fakeAsArray(false))).toEqual([]);
+    expect(getSignersListedIn(inputWeb2, fakeAsArray([1,2,3]))).toEqual([]);
+    expect(getSignersListedIn(inputWeb2, fakeAsArray({a:1}))).toEqual([]);
+    expect(getSignersListedIn(inputWeb2, fakeAsArray("string"))).toEqual([]);
+
     expect(getSignersListedIn(fakeAsObject(null) as SpasmEventV2, fakeAsArray(null))).toEqual([]);
     expect(getSignersListedIn(fakeAsObject(undefined) as SpasmEventV2, fakeAsArray(undefined))).toEqual([]);
     expect(getSignersListedIn(fakeAsObject(0) as SpasmEventV2, fakeAsArray(0))).toEqual([]);
