@@ -23,10 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.utilsStatus = exports.verifyEthereumSignature = exports.markSpasmEventAddressAsVerified = exports.sortTagsForSpasmid01 = exports.sortParentForSpasmid01 = exports.sortReferencesForSpasmid01 = exports.sortMediasForSpasmid01 = exports.sortLinksForSpasmid01 = exports.sortLinksForSpasmEventV2 = exports.sortHostsForSpasmid01 = exports.sortHostsForSpasmEventV2 = exports.sortArrayOfObjectsByKeyValue = exports.sortAuthorsForSpasmid01 = exports.sortAuthorsForSpasmEventV2 = exports.sortArrayOfObjects = exports.sortArrayOfStringsAndNumbers = exports.keepTheseKeysInObjectsInArray = exports.keepTheseKeysInObject = exports.getHashOfString = exports.getAllFormatNamesFromEvent = exports.getAllFormatNamesFromSpasmEventV2 = exports.extractAllIdFormatNamesFromSpasmEventV2 = exports.extractIdFormatNameFromSpasmEventIdV2 = exports.getFormatFromSignature = exports.getFormatFromAddress = exports.getFormatFromId = exports.getFormatFromValue = exports.createLinkObjectFromUrl = exports.isValidUrl = exports.getNostrSpasmVersion = exports.toBeNostrTimestamp = exports.toBeStandardTimestamp = exports.toBeStandardizedTimestamp = exports.toBeFullTimestamp = exports.toBeLongTimestamp = exports.toBeShortTimestamp = exports.toBeTimestamp = exports.extractSealedEvent = exports.extractVersion = exports.isArrayOfNumbersOrStrings = exports.isArrayOfStringsOrNumbers = exports.isArrayOfNumbers = exports.isArrayOfStrings = exports.isArrayWithValues = exports.isObjectWithValues = exports.ifNumberOrString = exports.ifStringOrNumber = exports.isNumberOrString = exports.isStringOrNumber = exports.hasValue = void 0;
-exports.isAnySignerListedIn = exports.getTotalOfActionReact = exports.getTotalOfReactAction = exports.getTotalOfReact = exports.getTotalOfActionReply = exports.getTotalOfReplyAction = exports.getTotalOfReply = exports.getTotalOfAction = exports.getTotalOfMostPopularReaction = exports.getTotalOfReaction = exports.getStatByAction = exports.getPubkeysListedIn = exports.getSignersListedIn = exports.getAllSignatures = exports.getAllRootIds = exports.getAllParentIds = exports.getAllEventIds = exports.getAllIdsFromArrayOfIdObjects = exports.getVerifiedNostrSigners = exports.getVerifiedEthereumSigners = exports.getVerifiedSpasmSigners = exports.getVerifiedSigners = exports.getAllNostrSigners = exports.getAllEthereumSigners = exports.getAllSpasmSigners = exports.getAllSigners = exports.hasSiblingWeb2 = exports.hasSiblingNostr = exports.hasSiblingDmp = exports.hasSiblingSpasm = exports.hasSiblingOfProtocol = exports.extractNostrEvents = exports.extractSignedNostrEvents = exports.extractSignedNostrEvent = exports.extractNostrEvent = exports.hasSignatureNostr = exports.hasSignatureEthereum = exports.hasSignatureOfFormat = exports.mergeSanitizationConfigs = exports.mergeConfigs = exports.mergeObjects = exports.clearObject = exports.clearArray = exports.sanitizeAnything = exports.sanitizeArray = exports.sanitizeEvent = exports.sanitizeEventWithDompurify = exports.sanitizeStringWithDompurify = exports.sanitizeEventWith = exports.executeFunctionForAllNestedValuesOfType = void 0;
-exports.addRootToTree = exports.addParentToEvent = exports.addParentToTree = exports.addEventsToTree = exports.mergeChildrenV2 = exports.mergeStatsV2 = exports.cleanSpasmEventV2 = exports.fakeAsObject = exports.fakeAsAny = exports.fakeAsNull = exports.fakeAsArray = exports.fakeAsNumber = exports.fakeAsString = exports.copyOf = exports.deepCopyOfObject = exports.ifEventsHaveSameSpasmId01 = exports.sortSpasmEventsV2 = exports.sortSpasmEventsV2ByDbAddedTimestamp = exports.prependToArrayIfEventIsUnique = exports.unshiftToArrayIfEventIsUnique = exports.appendToArrayIfEventIsUnique = exports.pushToArrayIfEventIsUnique = exports.insertIntoArrayIfEventIsUnique = exports.mergeEventIntoArray = exports.checkIfArrayHasThisEvent = exports.checkIfArrayHasThisSpasmEventV2 = exports.mergeDifferentSpasmEventsV2 = exports.mergeSpasmEventsV2 = exports.extractSignerFromEthereumSignature = exports.toBeSpasmEventsV2 = exports.toBeSpasmEventV2 = exports.getEventsByIds = exports.getEventById = exports.checkIfEventHasThisId = exports.removeDuplicatesFromArrayOfStrings = exports.removeDuplicatesFromArray = exports.extractRootSpasmId01 = exports.extractRootIdByFormat = exports.getRootIdByFormat = exports.extractParentSpasmId01 = exports.extractParentIdByFormat = exports.getParentIdByFormat = exports.extractSpasmId01 = exports.extractIdByFormat = exports.findMostLikelyGuid = exports.findMostLikelyUrl = exports.getIdByFormat = exports.areAllPubkeysListedIn = exports.areAllSignersListedIn = exports.isAnyPubkeyListedIn = void 0;
-exports.removeNbsp = exports.normalizeText = exports.isNostrHex = exports.isHex = exports.assignFormats = exports.attachEventAsParent = exports.attachEventAsRoot = exports.attachEventAsChild = exports.ifArraysHaveCommonId = exports.addRepliesToEvent = exports.addCommentsToEvent = exports.addChildrenToTree = exports.addRootToEvent = void 0;
+exports.verifyEthereumSignature = exports.markSpasmEventAddressAsVerified = exports.sortTagsForSpasmid01 = exports.sortParentForSpasmid01 = exports.sortReferencesForSpasmid01 = exports.sortMediasForSpasmid01 = exports.sortLinksForSpasmid01 = exports.sortLinksForSpasmEventV2 = exports.sortHostsForSpasmid01 = exports.sortHostsForSpasmEventV2 = exports.sortArrayOfObjectsByKeyValue = exports.sortAuthorsForSpasmid01 = exports.sortAuthorsForSpasmEventV2 = exports.sortArrayOfObjects = exports.sortArrayOfStringsAndNumbers = exports.keepTheseKeysInObjectsInArray = exports.keepTheseKeysInObject = exports.getHashOfString = exports.getAllFormatNamesFromEvent = exports.getAllFormatNamesFromSpasmEventV2 = exports.extractAllIdFormatNamesFromSpasmEventV2 = exports.extractIdFormatNameFromSpasmEventIdV2 = exports.getFormatFromSignature = exports.getFormatFromAddress = exports.getFormatFromId = exports.getFormatFromValue = exports.createLinkObjectFromUrl = exports.isUrl = exports.isValidUrl = exports.getNostrSpasmVersion = exports.toBeNostrTimestamp = exports.toBeStandardTimestamp = exports.toBeStandardizedTimestamp = exports.toBeFullTimestamp = exports.toBeLongTimestamp = exports.toBeShortTimestamp = exports.toBeTimestamp = exports.extractSealedEvent = exports.extractVersion = exports.isArrayOfNumbersOrStrings = exports.isArrayOfStringsOrNumbers = exports.isArrayOfNumbers = exports.isArrayOfStrings = exports.isArrayWithValues = exports.isObjectWithValues = exports.ifNumberOrString = exports.ifStringOrNumber = exports.isNumberOrString = exports.isStringOrNumber = exports.hasValue = void 0;
+exports.getTotalOfReact = exports.getTotalOfActionReply = exports.getTotalOfReplyAction = exports.getTotalOfReply = exports.getTotalOfAction = exports.getTotalOfMostPopularReaction = exports.getTotalOfReaction = exports.getStatByAction = exports.getPubkeysListedIn = exports.getSignersListedIn = exports.getAllSignatures = exports.getAllRootIds = exports.getAllParentIds = exports.getAllEventIds = exports.getAllIdsFromArrayOfIdObjects = exports.getVerifiedNostrSigners = exports.getVerifiedEthereumSigners = exports.getVerifiedSpasmSigners = exports.getVerifiedSigners = exports.getAllNostrSigners = exports.getAllEthereumSigners = exports.getAllSpasmSigners = exports.getAllSigners = exports.hasSiblingWeb2 = exports.hasSiblingNostr = exports.hasSiblingDmp = exports.hasSiblingSpasm = exports.hasSiblingOfProtocol = exports.extractNostrEvents = exports.extractSignedNostrEvents = exports.extractSignedNostrEvent = exports.extractNostrEvent = exports.hasSignatureNostr = exports.hasSignatureEthereum = exports.hasSignatureOfFormat = exports.mergeGenerateRssFeedConfigs = exports.mergeConvertToRssConfigs = exports.mergeSanitizationConfigs = exports.mergeConfigs = exports.mergeObjects = exports.clearObject = exports.clearArray = exports.sanitizeAnything = exports.sanitizeArray = exports.sanitizeEvent = exports.sanitizeEventWithDompurify = exports.sanitizeStringWithDompurify = exports.sanitizeEventWith = exports.executeFunctionForAllNestedValuesOfType = exports.utilsStatus = void 0;
+exports.mergeChildrenV2 = exports.mergeStatsV2 = exports.cleanSpasmEventV2 = exports.fakeAsObject = exports.fakeAsAny = exports.fakeAsNull = exports.fakeAsArray = exports.fakeAsNumber = exports.fakeAsString = exports.copyOf = exports.deepCopyOfObject = exports.ifEventsHaveSameSpasmId01 = exports.sortSpasmEventsV2 = exports.sortSpasmEventsV2ByDbAddedTimestamp = exports.prependToArrayIfEventIsUnique = exports.unshiftToArrayIfEventIsUnique = exports.appendToArrayIfEventIsUnique = exports.pushToArrayIfEventIsUnique = exports.insertIntoArrayIfEventIsUnique = exports.mergeEventIntoArray = exports.checkIfArrayHasThisEvent = exports.checkIfArrayHasThisSpasmEventV2 = exports.mergeDifferentSpasmEventsV2 = exports.mergeSpasmEventsV2 = exports.extractSignerFromEthereumSignature = exports.toBeUniqueSpasmEventsV2 = exports.toBeSpasmEventsV2 = exports.toBeSpasmEventV2 = exports.getEventsByIds = exports.getEventById = exports.checkIfEventHasThisId = exports.removeDuplicatesFromArrayOfStrings = exports.removeDuplicatesFromArray = exports.extractRootSpasmId01 = exports.extractRootIdByFormat = exports.getRootIdByFormat = exports.extractParentSpasmId01 = exports.extractParentIdByFormat = exports.getParentIdByFormat = exports.extractSpasmId01 = exports.extractIdByFormat = exports.findMostLikelyGuid = exports.findMostLikelyUrl = exports.getIdByFormat = exports.areAllPubkeysListedIn = exports.areAllSignersListedIn = exports.isAnyPubkeyListedIn = exports.isAnySignerListedIn = exports.getTotalOfActionReact = exports.getTotalOfReactAction = void 0;
+exports.unescapeXmlCdata = exports.restoreFromCdata = exports.restoreFromRssCdata = exports.restoreFromXmlCdata = exports.prepareForCdata = exports.prepareForRssCdata = exports.prepareForXmlCdata = exports.escapeCdata = exports.escapeRssCdata = exports.escapeXmlCdata = exports.escapeXml = exports.parseFirstAudioOrVideoUrlFromString = exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString = exports.parseFirstMediaUrlFromString = exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString = exports.parseStringForMediaUrls = exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString = exports.getAllUrlsOfMediaTypeFromArrayOfUrls = exports.getAllMediaUrlsOfMimeTypeFromArrayOfUrls = exports.filterAllMediaUrlsFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls = exports.isFileNameOfMimeType = exports.ifFileNameOfMimeType = exports.parseStringForUrls = exports.extractAllUrlsFromString = exports.getAllUrlsFromString = exports.getMimeType = exports.DEFAULT_MIME_TYPE = exports.MIME_TYPE_MAP = exports.toBeString = exports.removeNbsp = exports.normalizeText = exports.isNostrHex = exports.isHex = exports.assignFormats = exports.attachEventAsParent = exports.attachEventAsRoot = exports.attachEventAsChild = exports.ifArraysHaveCommonId = exports.addRepliesToEvent = exports.addCommentsToEvent = exports.addChildrenToTree = exports.addRootToEvent = exports.addRootToTree = exports.addParentToEvent = exports.addParentToTree = exports.addEventsToTree = void 0;
+exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShortAddress = exports.autoGeneratedName = exports.unescapeCdata = exports.unescapeRssCdata = void 0;
 /*
  * Using sha256 from 'js-sha256' npm package, because
  * built-in 'crypto' module works only in a server-side
@@ -379,6 +380,7 @@ const isValidUrl = (value) => {
     }
 };
 exports.isValidUrl = isValidUrl;
+exports.isUrl = exports.isValidUrl;
 const createLinkObjectFromUrl = (url, key) => {
     if (!url || typeof (url) !== "string")
         return null;
@@ -1172,6 +1174,16 @@ const mergeSanitizationConfigs = (defaultConfig, customConfig, handleArrays = "o
     return newConfig;
 };
 exports.mergeSanitizationConfigs = mergeSanitizationConfigs;
+const mergeConvertToRssConfigs = (defaultConfig, customConfig, handleArrays = "overwriteArrays") => {
+    const newConfig = (0, exports.mergeObjects)(defaultConfig, customConfig, handleArrays);
+    return newConfig;
+};
+exports.mergeConvertToRssConfigs = mergeConvertToRssConfigs;
+const mergeGenerateRssFeedConfigs = (defaultConfig, customConfig, handleArrays = "overwriteArrays") => {
+    const newConfig = (0, exports.mergeObjects)(defaultConfig, customConfig, handleArrays);
+    return newConfig;
+};
+exports.mergeGenerateRssFeedConfigs = mergeGenerateRssFeedConfigs;
 const hasSignatureOfFormat = (spasmEvent, signatureFormat) => {
     if (!spasmEvent)
         return false;
@@ -2223,14 +2235,19 @@ const toBeSpasmEventV2 = (unknownEvent) => {
     return null;
 };
 exports.toBeSpasmEventV2 = toBeSpasmEventV2;
-const toBeSpasmEventsV2 = (unknownEvents) => {
+const toBeSpasmEventsV2 = (unknownEvents, keepOnlyUnique = false) => {
     if (!unknownEvents || !Array.isArray(unknownEvents))
         return null;
     let spasmEvents = [];
     unknownEvents.forEach(event => {
         const spasmEvent = (0, exports.toBeSpasmEventV2)(event);
         if (spasmEvent && (0, exports.isObjectWithValues)(spasmEvent)) {
-            spasmEvents.push(spasmEvent);
+            if (keepOnlyUnique) {
+                (0, exports.pushToArrayIfEventIsUnique)(spasmEvents, spasmEvent);
+            }
+            else {
+                spasmEvents.push(spasmEvent);
+            }
         }
     });
     if (!spasmEvents[0] ||
@@ -2239,6 +2256,10 @@ const toBeSpasmEventsV2 = (unknownEvents) => {
     return spasmEvents;
 };
 exports.toBeSpasmEventsV2 = toBeSpasmEventsV2;
+const toBeUniqueSpasmEventsV2 = (unknownEvents) => {
+    return (0, exports.toBeSpasmEventsV2)(unknownEvents, true);
+};
+exports.toBeUniqueSpasmEventsV2 = toBeUniqueSpasmEventsV2;
 const extractSignerFromEthereumSignature = (signedString, signature) => {
     try {
         if (signature && typeof (signature) === 'string') {
@@ -3304,7 +3325,9 @@ const assignFormats = (event) => {
         event.ids.forEach(id => {
             if (id.value && (!("format" in id) || !id.format ||
                 !(0, exports.isObjectWithValues)(id.format))) {
-                id.format = (0, exports.getFormatFromId)(id.value);
+                if ((0, exports.getFormatFromId)(id.value)) {
+                    id.format = (0, exports.getFormatFromId)(id.value);
+                }
             }
         });
     }
@@ -3317,7 +3340,9 @@ const assignFormats = (event) => {
                 author.addresses.forEach(address => {
                     if (!("format" in address) || !address.format ||
                         (0, exports.isObjectWithValues)(address.format)) {
-                        address.format = (0, exports.getFormatFromAddress)(address.value);
+                        if ((0, exports.getFormatFromAddress)(address.value)) {
+                            address.format = (0, exports.getFormatFromAddress)(address.value);
+                        }
                     }
                 });
             }
@@ -3329,8 +3354,10 @@ const assignFormats = (event) => {
         event.signatures.forEach(signature => {
             if (signature.value && (!("format" in signature) || !signature.format ||
                 !(0, exports.isObjectWithValues)(signature.format))) {
-                signature.format =
-                    (0, exports.getFormatFromSignature)(signature.value);
+                if ((0, exports.getFormatFromSignature)(signature.value)) {
+                    signature.format =
+                        (0, exports.getFormatFromSignature)(signature.value);
+                }
             }
         });
     }
@@ -3344,7 +3371,9 @@ const assignFormats = (event) => {
                 sibling.ids.forEach(id => {
                     if (id.value && (!("format" in id) || !id.format ||
                         !(0, exports.isObjectWithValues)(id.format))) {
-                        id.format = (0, exports.getFormatFromId)(id.value);
+                        if ((0, exports.getFormatFromId)(id.value)) {
+                            id.format = (0, exports.getFormatFromId)(id.value);
+                        }
                     }
                 });
             }
@@ -3354,8 +3383,10 @@ const assignFormats = (event) => {
                 sibling.signatures.forEach(signature => {
                     if (signature.value && (!("format" in signature) || !signature.format ||
                         !(0, exports.isObjectWithValues)(signature.format))) {
-                        signature.format =
-                            (0, exports.getFormatFromSignature)(signature.value);
+                        if ((0, exports.getFormatFromSignature)(signature.value)) {
+                            signature.format =
+                                (0, exports.getFormatFromSignature)(signature.value);
+                        }
                     }
                 });
             }
@@ -3369,7 +3400,9 @@ const assignFormats = (event) => {
             event.parent.ids.forEach(id => {
                 if (id.value && (!("format" in id) || !id.format ||
                     !(0, exports.isObjectWithValues)(id.format))) {
-                    id.format = (0, exports.getFormatFromId)(id.value);
+                    if ((0, exports.getFormatFromId)(id.value)) {
+                        id.format = (0, exports.getFormatFromId)(id.value);
+                    }
                 }
             });
         }
@@ -3382,7 +3415,9 @@ const assignFormats = (event) => {
             event.root.ids.forEach(id => {
                 if (id.value && (!("format" in id) || !id.format ||
                     !(0, exports.isObjectWithValues)(id.format))) {
-                    id.format = (0, exports.getFormatFromId)(id.value);
+                    if ((0, exports.getFormatFromId)(id.value)) {
+                        id.format = (0, exports.getFormatFromId)(id.value);
+                    }
                 }
             });
         }
@@ -3396,7 +3431,9 @@ const assignFormats = (event) => {
                 reference.ids.forEach(id => {
                     if (id.value && (!("format" in id) || !id.format ||
                         !(0, exports.isObjectWithValues)(id.format))) {
-                        id.format = (0, exports.getFormatFromId)(id.value);
+                        if ((0, exports.getFormatFromId)(id.value)) {
+                            id.format = (0, exports.getFormatFromId)(id.value);
+                        }
                     }
                 });
             }
@@ -3411,7 +3448,10 @@ const assignFormats = (event) => {
                 mention.addresses.forEach(address => {
                     if (!("format" in address) || !address.format ||
                         (0, exports.isObjectWithValues)(address.format)) {
-                        address.format = (0, exports.getFormatFromAddress)(address.value);
+                        if ((0, exports.getFormatFromAddress)(address.value)) {
+                            address.format =
+                                (0, exports.getFormatFromAddress)(address.value);
+                        }
                     }
                 });
             }
@@ -3487,4 +3527,584 @@ const removeNbsp = (val) => {
     }
 };
 exports.removeNbsp = removeNbsp;
+const toBeString = (input) => {
+    switch (typeof input) {
+        case 'number':
+            return input.toString();
+        case 'boolean':
+            // Converts boolean to 'true' or 'false'
+            return input.toString();
+        case 'object':
+            // Arrays are technically also objects in JS
+            if (input && input !== null &&
+                typeof (input) === 'object') {
+                try {
+                    return JSON.stringify(input);
+                }
+                catch (e) {
+                    // Return empty string if JSON.stringify fails
+                    return '';
+                }
+            }
+            break;
+        case 'string':
+            return input;
+        default:
+            return '';
+    }
+    return ''; // Fallback for cases not covered by the switch
+};
+exports.toBeString = toBeString;
+// Using a Map for O(1) lookups of official MIME types
+exports.MIME_TYPE_MAP = new Map([
+    // Video
+    ['mp4', 'video/mp4'],
+    ['mov', 'video/quicktime'],
+    ['avi', 'video/x-msvideo'],
+    ['mkv', 'video/x-matroska'],
+    ['webm', 'video/webm'],
+    ['m4v', 'video/mp4'],
+    ['wmv', 'video/x-ms-wmv'],
+    ['flv', 'video/x-flv'],
+    // Audio
+    ['mp3', 'audio/mpeg'],
+    ['wav', 'audio/wav'],
+    ['flac', 'audio/flac'],
+    ['ogg', 'audio/ogg'],
+    // m4a is usually AAC in mp4 container
+    ['m4a', 'audio/mp4'],
+    ['aac', 'audio/aac'],
+    ['opus', 'audio/opus'],
+    ['wma', 'audio/x-ms-wma'],
+    // Image
+    ['jpg', 'image/jpeg'],
+    ['jpeg', 'image/jpeg'],
+    ['png', 'image/png'],
+    ['gif', 'image/gif'],
+    ['bmp', 'image/bmp'],
+    ['webp', 'image/webp'],
+    ['ico', 'image/vnd.microsoft.icon'],
+    ['svg', 'image/svg+xml'],
+    ['tiff', 'image/tiff'],
+    // Other
+    ['pdf', 'application/pdf'],
+    ['zip', 'application/zip'],
+    ['json', 'application/json'],
+    // 'application/git' is not standard IANA, but used by GitHub
+    ['git', 'application/git'],
+]);
+exports.DEFAULT_MIME_TYPE = 'application/octet-stream';
+// Supports:
+// https://degenrocket.space/video.mp4?extra=info
+// podcast-name-episode1.mp3
+// prefix0123456.jpeg
+const getMimeType = (str) => {
+    if (!str || typeof (str) !== "string")
+        return exports.DEFAULT_MIME_TYPE;
+    const lastDotIndex = str.lastIndexOf('.');
+    const queryIndex = str.lastIndexOf('?');
+    if (lastDotIndex < 0) {
+        const finalExt = exports.MIME_TYPE_MAP.get(str.toLowerCase()) || exports.DEFAULT_MIME_TYPE;
+        return finalExt;
+    }
+    // Determine end of extension part (ignore query params)
+    const strEndIndex = queryIndex > -1 ? queryIndex : str.length;
+    // Ensure we have a dot and it's somewhere in the path
+    // (not just a dot file at start or weird query)
+    if (lastDotIndex > -1 && lastDotIndex < strEndIndex - 1) {
+        const ext = str.substring(lastDotIndex + 1, strEndIndex);
+        const finalExt = exports.MIME_TYPE_MAP.get(ext.toLowerCase())
+            || exports.DEFAULT_MIME_TYPE;
+        return finalExt;
+    }
+    return exports.DEFAULT_MIME_TYPE;
+};
+exports.getMimeType = getMimeType;
+const getAllUrlsFromString = (description) => {
+    if (!description)
+        return [];
+    if (typeof (description) !== "string")
+        return [];
+    const urls = [];
+    const length = description.length;
+    let i = 0;
+    // Chars that typically mark the END of a URL in text
+    // We will strip these from the end if found.
+    const TRAILING_PUNCTUATION = new Set([
+        '.', ',', '!', '?', ';', ':', '"',
+        '\'', ')', ']', '}', '>', '`', "'"
+    ]);
+    // Chars that are NOT allowed in a URL (act as delimiters)
+    // Includes whitespace, control chars,
+    // and common invisible chars
+    const INVALID_CHARS = new Set([
+        ' ', '\t', '\n', '\r', '<', '|', '\\',
+        '\u00A0', '\u200B', '\u200C', '\u200D',
+        ' ' // nbsp
+    ]);
+    // Allowed characters in a URI (RFC 3986)
+    // Unreserved: A-Z a-z 0-9 - . _ ~
+    // Reserved: : / ? # [ ] @ ! $ & ' ( ) * + , ; =
+    // We will check if char is alphanumeric
+    // or one of these symbols
+    const URI_SYMBOLS = new Set([
+        ':', '/', '?', '#', '[', ']', '@', '!', '$', '&', '(',
+        ')', '*', '+', ',', ';', '=', '-', '.', '_', '~', '%'
+    ]);
+    while (i < length) {
+        const char = description[i];
+        // 1. Detect "http://" or "https://"
+        if (char === 'h') {
+            if (description.slice(i, i + 7) === 'http://' ||
+                description.slice(i, i + 8) === 'https://') {
+                let urlEnd = i;
+                // 2. Consume valid URL characters
+                while (urlEnd < length) {
+                    const c = description[urlEnd];
+                    // Stop if we hit an invalid delimiter
+                    // (whitespace, brackets, etc)
+                    if (INVALID_CHARS.has(c)) {
+                        break;
+                    }
+                    // Stop if it's not alphanumeric and not a valid URI symbol
+                    const isAlphaNum = (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+                    if (!isAlphaNum && !URI_SYMBOLS.has(c)) {
+                        break;
+                    }
+                    urlEnd++;
+                }
+                // Extract raw URL (might have trailing punctuation like . or ,)
+                let rawUrl = description.substring(i, urlEnd);
+                // 3. Strip trailing punctuation (e.g. "video.mp4!" -> "video.mp4")
+                while (rawUrl.length > 0) {
+                    const lastChar = rawUrl[rawUrl.length - 1];
+                    if (TRAILING_PUNCTUATION.has(lastChar)) {
+                        rawUrl = rawUrl.slice(0, -1);
+                    }
+                    else {
+                        break;
+                    }
+                }
+                urls.push(rawUrl);
+                // Continue searching after this invalid URL
+                i = urlEnd;
+            }
+            else {
+                i++;
+            }
+        }
+        else {
+            i++;
+        }
+    }
+    return (0, exports.removeDuplicatesFromArrayOfStrings)(urls);
+};
+exports.getAllUrlsFromString = getAllUrlsFromString;
+exports.extractAllUrlsFromString = exports.getAllUrlsFromString;
+exports.parseStringForUrls = exports.getAllUrlsFromString;
+// Accepts file names and full URLs
+const ifFileNameOfMimeType = (value, mimeTypes) => {
+    if (!value || typeof (value) !== "string")
+        return false;
+    if (!mimeTypes)
+        return false;
+    let arrayOfMimeTypes = [];
+    // Concat converts string or number into array
+    arrayOfMimeTypes = arrayOfMimeTypes.concat(mimeTypes);
+    if (!arrayOfMimeTypes || !(0, exports.isArrayWithValues)(arrayOfMimeTypes))
+        return false;
+    const fileMimeType = (0, exports.getMimeType)(value);
+    let ifMatch = false;
+    arrayOfMimeTypes.forEach(mimeType => {
+        if (mimeType && typeof (mimeType) === "string" &&
+            fileMimeType && typeof (fileMimeType) === "string" &&
+            mimeType.toLowerCase() && fileMimeType.toLowerCase()) {
+            if (fileMimeType.toLowerCase()
+                .startsWith(mimeType.toLowerCase())) {
+                ifMatch = true;
+            }
+        }
+    });
+    return ifMatch;
+};
+exports.ifFileNameOfMimeType = ifFileNameOfMimeType;
+exports.isFileNameOfMimeType = exports.ifFileNameOfMimeType;
+const getAllMediaUrlsFromArrayOfUrls = (array, mediaTypes = ["video", "audio", "image"]) => {
+    if (!array)
+        return [];
+    return array.filter(val => {
+        return (0, exports.ifFileNameOfMimeType)(val, mediaTypes);
+    });
+};
+exports.getAllMediaUrlsFromArrayOfUrls = getAllMediaUrlsFromArrayOfUrls;
+exports.filterAllMediaUrlsFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls;
+exports.getAllMediaUrlsOfMimeTypeFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls;
+exports.getAllUrlsOfMediaTypeFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls;
+const getAllMediaUrlsFromString = (str, mediaTypes = ["video", "audio", "image"]) => {
+    if (!str || typeof (str) !== "string")
+        return [];
+    const arrayOfUrls = (0, exports.getAllUrlsFromString)(str);
+    if (!arrayOfUrls)
+        return [];
+    const arrayOfMediaUrls = (0, exports.getAllMediaUrlsFromArrayOfUrls)(arrayOfUrls, mediaTypes);
+    return arrayOfMediaUrls;
+};
+exports.getAllMediaUrlsFromString = getAllMediaUrlsFromString;
+exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString;
+exports.parseStringForMediaUrls = exports.getAllMediaUrlsFromString;
+const getFirstMediaUrlFromString = (str, mediaTypes = ["video", "audio", "image"]) => {
+    if (!str || typeof (str) !== "string")
+        return "";
+    const videoOrAudioUrls = (0, exports.getAllMediaUrlsFromString)(str, mediaTypes);
+    if (videoOrAudioUrls && Array.isArray(videoOrAudioUrls) &&
+        videoOrAudioUrls[0] &&
+        typeof (videoOrAudioUrls[0]) == "string") {
+        return videoOrAudioUrls[0];
+    }
+    return "";
+};
+exports.getFirstMediaUrlFromString = getFirstMediaUrlFromString;
+exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString;
+exports.parseFirstMediaUrlFromString = exports.getFirstMediaUrlFromString;
+const getFirstAudioOrVideoUrlFromString = (str) => {
+    return (0, exports.getFirstMediaUrlFromString)(str, ["video", "audio"]);
+};
+exports.getFirstAudioOrVideoUrlFromString = getFirstAudioOrVideoUrlFromString;
+exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString;
+exports.parseFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString;
+// Escape XML entities to prevent the RSS feed
+// from breaking if a text contains <, >, &, ', "
+const escapeXml = (unsafe) => {
+    let safe = '';
+    for (const char of unsafe) {
+        switch (char) {
+            case '<':
+                safe += '&lt;';
+                break;
+            case '>':
+                safe += '&gt;';
+                break;
+            case '&':
+                safe += '&amp;';
+                break;
+            case '\'':
+                safe += '&apos;';
+                break;
+            case '"':
+                safe += '&quot;';
+                break;
+            default:
+                safe += char;
+                break;
+        }
+    }
+    return safe;
+};
+exports.escapeXml = escapeXml;
+// In XML, CDATA sections are terminated by the sequence "]]>"
+// If this sequence appears in user input, it would prematurely
+// end the CDATA section. This would break the XML structure
+// and potentially allow injection of malicious XML.
+// Replacing "]]>" with "]]]]><![CDATA[>" preserves the original
+// content while ensuring the XML remains well-formed and secure
+const escapeXmlCdata = (input) => {
+    return input.replace(']]>', ']]]]><![CDATA[>');
+};
+exports.escapeXmlCdata = escapeXmlCdata;
+exports.escapeRssCdata = exports.escapeXmlCdata;
+exports.escapeCdata = exports.escapeXmlCdata;
+exports.prepareForXmlCdata = exports.escapeXmlCdata;
+exports.prepareForRssCdata = exports.escapeXmlCdata;
+exports.prepareForCdata = exports.escapeXmlCdata;
+// Reverse the transformation done by escapeXmlCdata
+const restoreFromXmlCdata = (input) => {
+    return input.replace(']]]]><![CDATA[>', ']]>');
+};
+exports.restoreFromXmlCdata = restoreFromXmlCdata;
+exports.restoreFromRssCdata = exports.restoreFromXmlCdata;
+exports.restoreFromCdata = exports.restoreFromXmlCdata;
+exports.unescapeXmlCdata = exports.restoreFromXmlCdata;
+exports.unescapeRssCdata = exports.restoreFromXmlCdata;
+exports.unescapeCdata = exports.restoreFromXmlCdata;
+const autoGeneratedName = (value) => {
+    if (!value)
+        return "";
+    if (typeof (value) !== "string" &&
+        typeof (value) !== "number") {
+        return "";
+    }
+    const firstTech = [
+        "bankless",
+        "black",
+        "blue",
+        "dark",
+        "decoded",
+        "encoded",
+        "fluffy",
+        "free",
+        "golden",
+        "gray",
+        "green",
+        "hidden",
+        "indie",
+        "new",
+        "neon",
+        "orange",
+        "purple",
+        "red",
+        "private",
+        "pirate",
+        "quantum",
+        "scaling",
+        "secure",
+        "shadow",
+        "silver",
+        "stable",
+        "swapping",
+        "unbanked",
+        "unstable",
+        "white",
+        "zero",
+    ];
+    const secondTech = [
+        "airdrop",
+        "alpha",
+        "arbitrage",
+        "block",
+        "darknet",
+        "defi",
+        "degen",
+        "chain",
+        "code",
+        "crypto",
+        "cypher",
+        "cult",
+        "foss",
+        "freedom",
+        "hash",
+        "jupiter",
+        "key",
+        "layer",
+        "ledger",
+        "linux",
+        "lunar",
+        "market",
+        "mars",
+        "meme",
+        "mesh",
+        "moon",
+        "network",
+        "night",
+        "onion",
+        "rollup",
+        "script",
+        "silkroad",
+        "snapshot",
+        "solar",
+        "source",
+        "space",
+        "spasm",
+        "tech",
+        "token",
+        "wallet",
+        "zk",
+    ];
+    const thirdTech = [
+        "auditor",
+        "bot",
+        "broker",
+        "builder",
+        "burner",
+        "cyborg",
+        "dev",
+        "doxxer",
+        "exchanger",
+        "explorer",
+        "farmer",
+        "fighter",
+        "flipper",
+        "forker",
+        "geek",
+        "hacker",
+        "hamster",
+        "hodler",
+        "hunter",
+        // "innovator",
+        "keeper",
+        "kitty",
+        // "liberator",
+        // "maker",
+        "master",
+        "maxi",
+        "miner",
+        "minter",
+        "mixer",
+        "naut",
+        "node",
+        "noncer",
+        "phantom",
+        "punk",
+        "rebel",
+        "robot",
+        "rocket",
+        "router",
+        "samourai",
+        "scanner",
+        "sharder",
+        "signer",
+        "sniffer",
+        "stalker",
+        "swapper",
+        "tester",
+        "trader",
+        "wizard",
+    ];
+    const getNumberHashFromValue = (value) => {
+        let seed = "";
+        if (typeof (value) === "number") {
+            seed = value.toString();
+        }
+        else if (typeof (value) === "string") {
+            seed = value;
+        }
+        seed = seed.toLowerCase();
+        // Map each character to its numerical value,
+        // ignoring non-alphanumeric characters
+        const charMap = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let sum = 0;
+        const maxLength = 64; // Maximum number of chars to process
+        for (let i = 0; i < Math.min(seed.length, maxLength); i++) {
+            const charCode = seed[i];
+            const index = charMap.indexOf(charCode);
+            if (index !== -1) { // Character found in map
+                // Multiply by 2 to reduce collisions
+                sum = Math.floor(sum * 2) + index;
+            }
+        }
+        // Ensure the result fits within 32 bits
+        return sum % (2 ** 32);
+    };
+    let sum = getNumberHashFromValue(value);
+    const getUsernameFromNumber = (value, enableAutoGeneratedNamesDictionaryTech = true) => {
+        // Use the sum to determine the index
+        // for selecting a word from each array
+        const index1 = Math.abs((value * 11) % firstTech.length);
+        const index2 = Math.abs((value * 13 * 17) % secondTech.length);
+        const index3 = Math.abs((value * 19 * 23 * 29) % thirdTech.length);
+        let word1 = "";
+        let word2 = "";
+        let word3 = "";
+        // Select a word from each array
+        // using the calculated indices
+        if (enableAutoGeneratedNamesDictionaryTech) {
+            word1 = firstTech[index1];
+            word2 = secondTech[index2];
+            word3 = thirdTech[index3];
+        }
+        else {
+            // Use default dictionary
+            // (currently equal to tech dictionary)
+            word1 = firstTech[index1];
+            word2 = secondTech[index2];
+            word3 = thirdTech[index3];
+        }
+        // Combine the selected words to form the unique name
+        const titleCaseWord = (word) => {
+            if (!word)
+                return word;
+            return word[0].toUpperCase() + word.slice(1);
+        };
+        return titleCaseWord(word1) +
+            titleCaseWord(word2) +
+            titleCaseWord(word3);
+    };
+    let username = getUsernameFromNumber(sum);
+    while (username.length > 16) {
+        sum += 31;
+        username = getUsernameFromNumber(sum);
+    }
+    return username;
+};
+exports.autoGeneratedName = autoGeneratedName;
+const toBeShortAddress = (longAddress, ifPrefixWithAutoGeneratedName = true) => {
+    try {
+        const string = String(longAddress);
+        if (!string)
+            return "";
+        const shortAddress = (0, exports.sliceAddress)(string, 6);
+        let final = "";
+        if (ifPrefixWithAutoGeneratedName) {
+            final = (0, exports.autoGeneratedName)(string) + " ";
+        }
+        final = final + "(" + shortAddress + ")";
+        return final;
+    }
+    catch (err) {
+        console.error(err);
+        return "";
+    }
+};
+exports.toBeShortAddress = toBeShortAddress;
+const sliceAddress = (address, start = 6, end = 4) => {
+    return address
+        ? `${address.slice(0, start)}...${address.slice(-end)}`
+        : '';
+};
+exports.sliceAddress = sliceAddress;
+const sliceId = (id, start = 6, end = 4, max // used for URL length
+) => {
+    if (!id) {
+        return '';
+    }
+    const str = String(id) ? String(id) : '';
+    if (!str)
+        return '';
+    let maxChar = Number(start) ? Number(start) : 6;
+    if (Number(end)) {
+        maxChar += Number(end);
+    }
+    if (max && Number(max)) {
+        maxChar = Number(max);
+    }
+    // ID is URL
+    try {
+        const url = new URL(str);
+        if (url && typeof (url) === "object") {
+            let slicedUrl = '';
+            if (url.hostname && typeof (url.hostname) === "string") {
+                slicedUrl += url.hostname;
+            }
+            if (url.pathname && typeof (url.pathname) === "string") {
+                slicedUrl += url.pathname;
+            }
+            if (url.search && typeof (url.search) === "string") {
+                slicedUrl += url.search;
+            }
+            if (slicedUrl) {
+                if (slicedUrl.length > maxChar + 3) {
+                    return `${slicedUrl.slice(0, maxChar)}...`;
+                }
+                else {
+                    return slicedUrl;
+                }
+            }
+            else {
+                '';
+            }
+        }
+    }
+    catch (err) {
+        // Not a valid URL
+        // console.error(err);
+    }
+    // else
+    return str
+        ? `${str.slice(0, start)}...${str.slice(-end)}`
+        : '';
+};
+exports.sliceId = sliceId;
+const randomNumber = (min = 1, max = 1000000) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+exports.randomNumber = randomNumber;
 //# sourceMappingURL=utils.js.map

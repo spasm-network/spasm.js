@@ -336,6 +336,7 @@ export const isValidUrl = (value) => {
         return false;
     }
 };
+export const isUrl = isValidUrl;
 export const createLinkObjectFromUrl = (url, key) => {
     if (!url || typeof (url) !== "string")
         return null;
@@ -1095,6 +1096,14 @@ export const mergeConfigs = (defaultConfig, customConfig, handleArrays = "overwr
     return newConfig;
 };
 export const mergeSanitizationConfigs = (defaultConfig, customConfig, handleArrays = "overwriteArrays") => {
+    const newConfig = mergeObjects(defaultConfig, customConfig, handleArrays);
+    return newConfig;
+};
+export const mergeConvertToRssConfigs = (defaultConfig, customConfig, handleArrays = "overwriteArrays") => {
+    const newConfig = mergeObjects(defaultConfig, customConfig, handleArrays);
+    return newConfig;
+};
+export const mergeGenerateRssFeedConfigs = (defaultConfig, customConfig, handleArrays = "overwriteArrays") => {
     const newConfig = mergeObjects(defaultConfig, customConfig, handleArrays);
     return newConfig;
 };
@@ -2101,20 +2110,28 @@ export const toBeSpasmEventV2 = (unknownEvent) => {
     }
     return null;
 };
-export const toBeSpasmEventsV2 = (unknownEvents) => {
+export const toBeSpasmEventsV2 = (unknownEvents, keepOnlyUnique = false) => {
     if (!unknownEvents || !Array.isArray(unknownEvents))
         return null;
     let spasmEvents = [];
     unknownEvents.forEach(event => {
         const spasmEvent = toBeSpasmEventV2(event);
         if (spasmEvent && isObjectWithValues(spasmEvent)) {
-            spasmEvents.push(spasmEvent);
+            if (keepOnlyUnique) {
+                pushToArrayIfEventIsUnique(spasmEvents, spasmEvent);
+            }
+            else {
+                spasmEvents.push(spasmEvent);
+            }
         }
     });
     if (!spasmEvents[0] ||
         !isObjectWithValues(spasmEvents[0]))
         return null;
     return spasmEvents;
+};
+export const toBeUniqueSpasmEventsV2 = (unknownEvents) => {
+    return toBeSpasmEventsV2(unknownEvents, true);
 };
 export const extractSignerFromEthereumSignature = (signedString, signature) => {
     try {
@@ -3156,7 +3173,9 @@ export const assignFormats = (event) => {
         event.ids.forEach(id => {
             if (id.value && (!("format" in id) || !id.format ||
                 !isObjectWithValues(id.format))) {
-                id.format = getFormatFromId(id.value);
+                if (getFormatFromId(id.value)) {
+                    id.format = getFormatFromId(id.value);
+                }
             }
         });
     }
@@ -3169,7 +3188,9 @@ export const assignFormats = (event) => {
                 author.addresses.forEach(address => {
                     if (!("format" in address) || !address.format ||
                         isObjectWithValues(address.format)) {
-                        address.format = getFormatFromAddress(address.value);
+                        if (getFormatFromAddress(address.value)) {
+                            address.format = getFormatFromAddress(address.value);
+                        }
                     }
                 });
             }
@@ -3181,8 +3202,10 @@ export const assignFormats = (event) => {
         event.signatures.forEach(signature => {
             if (signature.value && (!("format" in signature) || !signature.format ||
                 !isObjectWithValues(signature.format))) {
-                signature.format =
-                    getFormatFromSignature(signature.value);
+                if (getFormatFromSignature(signature.value)) {
+                    signature.format =
+                        getFormatFromSignature(signature.value);
+                }
             }
         });
     }
@@ -3196,7 +3219,9 @@ export const assignFormats = (event) => {
                 sibling.ids.forEach(id => {
                     if (id.value && (!("format" in id) || !id.format ||
                         !isObjectWithValues(id.format))) {
-                        id.format = getFormatFromId(id.value);
+                        if (getFormatFromId(id.value)) {
+                            id.format = getFormatFromId(id.value);
+                        }
                     }
                 });
             }
@@ -3206,8 +3231,10 @@ export const assignFormats = (event) => {
                 sibling.signatures.forEach(signature => {
                     if (signature.value && (!("format" in signature) || !signature.format ||
                         !isObjectWithValues(signature.format))) {
-                        signature.format =
-                            getFormatFromSignature(signature.value);
+                        if (getFormatFromSignature(signature.value)) {
+                            signature.format =
+                                getFormatFromSignature(signature.value);
+                        }
                     }
                 });
             }
@@ -3221,7 +3248,9 @@ export const assignFormats = (event) => {
             event.parent.ids.forEach(id => {
                 if (id.value && (!("format" in id) || !id.format ||
                     !isObjectWithValues(id.format))) {
-                    id.format = getFormatFromId(id.value);
+                    if (getFormatFromId(id.value)) {
+                        id.format = getFormatFromId(id.value);
+                    }
                 }
             });
         }
@@ -3234,7 +3263,9 @@ export const assignFormats = (event) => {
             event.root.ids.forEach(id => {
                 if (id.value && (!("format" in id) || !id.format ||
                     !isObjectWithValues(id.format))) {
-                    id.format = getFormatFromId(id.value);
+                    if (getFormatFromId(id.value)) {
+                        id.format = getFormatFromId(id.value);
+                    }
                 }
             });
         }
@@ -3248,7 +3279,9 @@ export const assignFormats = (event) => {
                 reference.ids.forEach(id => {
                     if (id.value && (!("format" in id) || !id.format ||
                         !isObjectWithValues(id.format))) {
-                        id.format = getFormatFromId(id.value);
+                        if (getFormatFromId(id.value)) {
+                            id.format = getFormatFromId(id.value);
+                        }
                     }
                 });
             }
@@ -3263,7 +3296,10 @@ export const assignFormats = (event) => {
                 mention.addresses.forEach(address => {
                     if (!("format" in address) || !address.format ||
                         isObjectWithValues(address.format)) {
-                        address.format = getFormatFromAddress(address.value);
+                        if (getFormatFromAddress(address.value)) {
+                            address.format =
+                                getFormatFromAddress(address.value);
+                        }
                     }
                 });
             }
@@ -3333,5 +3369,569 @@ export const removeNbsp = (val) => {
         // console.error(err);
         return '';
     }
+};
+export const toBeString = (input) => {
+    switch (typeof input) {
+        case 'number':
+            return input.toString();
+        case 'boolean':
+            // Converts boolean to 'true' or 'false'
+            return input.toString();
+        case 'object':
+            // Arrays are technically also objects in JS
+            if (input && input !== null &&
+                typeof (input) === 'object') {
+                try {
+                    return JSON.stringify(input);
+                }
+                catch (e) {
+                    // Return empty string if JSON.stringify fails
+                    return '';
+                }
+            }
+            break;
+        case 'string':
+            return input;
+        default:
+            return '';
+    }
+    return ''; // Fallback for cases not covered by the switch
+};
+// Using a Map for O(1) lookups of official MIME types
+export const MIME_TYPE_MAP = new Map([
+    // Video
+    ['mp4', 'video/mp4'],
+    ['mov', 'video/quicktime'],
+    ['avi', 'video/x-msvideo'],
+    ['mkv', 'video/x-matroska'],
+    ['webm', 'video/webm'],
+    ['m4v', 'video/mp4'],
+    ['wmv', 'video/x-ms-wmv'],
+    ['flv', 'video/x-flv'],
+    // Audio
+    ['mp3', 'audio/mpeg'],
+    ['wav', 'audio/wav'],
+    ['flac', 'audio/flac'],
+    ['ogg', 'audio/ogg'],
+    // m4a is usually AAC in mp4 container
+    ['m4a', 'audio/mp4'],
+    ['aac', 'audio/aac'],
+    ['opus', 'audio/opus'],
+    ['wma', 'audio/x-ms-wma'],
+    // Image
+    ['jpg', 'image/jpeg'],
+    ['jpeg', 'image/jpeg'],
+    ['png', 'image/png'],
+    ['gif', 'image/gif'],
+    ['bmp', 'image/bmp'],
+    ['webp', 'image/webp'],
+    ['ico', 'image/vnd.microsoft.icon'],
+    ['svg', 'image/svg+xml'],
+    ['tiff', 'image/tiff'],
+    // Other
+    ['pdf', 'application/pdf'],
+    ['zip', 'application/zip'],
+    ['json', 'application/json'],
+    // 'application/git' is not standard IANA, but used by GitHub
+    ['git', 'application/git'],
+]);
+export const DEFAULT_MIME_TYPE = 'application/octet-stream';
+// Supports:
+// https://degenrocket.space/video.mp4?extra=info
+// podcast-name-episode1.mp3
+// prefix0123456.jpeg
+export const getMimeType = (str) => {
+    if (!str || typeof (str) !== "string")
+        return DEFAULT_MIME_TYPE;
+    const lastDotIndex = str.lastIndexOf('.');
+    const queryIndex = str.lastIndexOf('?');
+    if (lastDotIndex < 0) {
+        const finalExt = MIME_TYPE_MAP.get(str.toLowerCase()) || DEFAULT_MIME_TYPE;
+        return finalExt;
+    }
+    // Determine end of extension part (ignore query params)
+    const strEndIndex = queryIndex > -1 ? queryIndex : str.length;
+    // Ensure we have a dot and it's somewhere in the path
+    // (not just a dot file at start or weird query)
+    if (lastDotIndex > -1 && lastDotIndex < strEndIndex - 1) {
+        const ext = str.substring(lastDotIndex + 1, strEndIndex);
+        const finalExt = MIME_TYPE_MAP.get(ext.toLowerCase())
+            || DEFAULT_MIME_TYPE;
+        return finalExt;
+    }
+    return DEFAULT_MIME_TYPE;
+};
+export const getAllUrlsFromString = (description) => {
+    if (!description)
+        return [];
+    if (typeof (description) !== "string")
+        return [];
+    const urls = [];
+    const length = description.length;
+    let i = 0;
+    // Chars that typically mark the END of a URL in text
+    // We will strip these from the end if found.
+    const TRAILING_PUNCTUATION = new Set([
+        '.', ',', '!', '?', ';', ':', '"',
+        '\'', ')', ']', '}', '>', '`', "'"
+    ]);
+    // Chars that are NOT allowed in a URL (act as delimiters)
+    // Includes whitespace, control chars,
+    // and common invisible chars
+    const INVALID_CHARS = new Set([
+        ' ', '\t', '\n', '\r', '<', '|', '\\',
+        '\u00A0', '\u200B', '\u200C', '\u200D',
+        ' ' // nbsp
+    ]);
+    // Allowed characters in a URI (RFC 3986)
+    // Unreserved: A-Z a-z 0-9 - . _ ~
+    // Reserved: : / ? # [ ] @ ! $ & ' ( ) * + , ; =
+    // We will check if char is alphanumeric
+    // or one of these symbols
+    const URI_SYMBOLS = new Set([
+        ':', '/', '?', '#', '[', ']', '@', '!', '$', '&', '(',
+        ')', '*', '+', ',', ';', '=', '-', '.', '_', '~', '%'
+    ]);
+    while (i < length) {
+        const char = description[i];
+        // 1. Detect "http://" or "https://"
+        if (char === 'h') {
+            if (description.slice(i, i + 7) === 'http://' ||
+                description.slice(i, i + 8) === 'https://') {
+                let urlEnd = i;
+                // 2. Consume valid URL characters
+                while (urlEnd < length) {
+                    const c = description[urlEnd];
+                    // Stop if we hit an invalid delimiter
+                    // (whitespace, brackets, etc)
+                    if (INVALID_CHARS.has(c)) {
+                        break;
+                    }
+                    // Stop if it's not alphanumeric and not a valid URI symbol
+                    const isAlphaNum = (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+                    if (!isAlphaNum && !URI_SYMBOLS.has(c)) {
+                        break;
+                    }
+                    urlEnd++;
+                }
+                // Extract raw URL (might have trailing punctuation like . or ,)
+                let rawUrl = description.substring(i, urlEnd);
+                // 3. Strip trailing punctuation (e.g. "video.mp4!" -> "video.mp4")
+                while (rawUrl.length > 0) {
+                    const lastChar = rawUrl[rawUrl.length - 1];
+                    if (TRAILING_PUNCTUATION.has(lastChar)) {
+                        rawUrl = rawUrl.slice(0, -1);
+                    }
+                    else {
+                        break;
+                    }
+                }
+                urls.push(rawUrl);
+                // Continue searching after this invalid URL
+                i = urlEnd;
+            }
+            else {
+                i++;
+            }
+        }
+        else {
+            i++;
+        }
+    }
+    return removeDuplicatesFromArrayOfStrings(urls);
+};
+export const extractAllUrlsFromString = getAllUrlsFromString;
+export const parseStringForUrls = getAllUrlsFromString;
+// Accepts file names and full URLs
+export const ifFileNameOfMimeType = (value, mimeTypes) => {
+    if (!value || typeof (value) !== "string")
+        return false;
+    if (!mimeTypes)
+        return false;
+    let arrayOfMimeTypes = [];
+    // Concat converts string or number into array
+    arrayOfMimeTypes = arrayOfMimeTypes.concat(mimeTypes);
+    if (!arrayOfMimeTypes || !isArrayWithValues(arrayOfMimeTypes))
+        return false;
+    const fileMimeType = getMimeType(value);
+    let ifMatch = false;
+    arrayOfMimeTypes.forEach(mimeType => {
+        if (mimeType && typeof (mimeType) === "string" &&
+            fileMimeType && typeof (fileMimeType) === "string" &&
+            mimeType.toLowerCase() && fileMimeType.toLowerCase()) {
+            if (fileMimeType.toLowerCase()
+                .startsWith(mimeType.toLowerCase())) {
+                ifMatch = true;
+            }
+        }
+    });
+    return ifMatch;
+};
+export const isFileNameOfMimeType = ifFileNameOfMimeType;
+export const getAllMediaUrlsFromArrayOfUrls = (array, mediaTypes = ["video", "audio", "image"]) => {
+    if (!array)
+        return [];
+    return array.filter(val => {
+        return ifFileNameOfMimeType(val, mediaTypes);
+    });
+};
+export const filterAllMediaUrlsFromArrayOfUrls = getAllMediaUrlsFromArrayOfUrls;
+export const getAllMediaUrlsOfMimeTypeFromArrayOfUrls = getAllMediaUrlsFromArrayOfUrls;
+export const getAllUrlsOfMediaTypeFromArrayOfUrls = getAllMediaUrlsFromArrayOfUrls;
+export const getAllMediaUrlsFromString = (str, mediaTypes = ["video", "audio", "image"]) => {
+    if (!str || typeof (str) !== "string")
+        return [];
+    const arrayOfUrls = getAllUrlsFromString(str);
+    if (!arrayOfUrls)
+        return [];
+    const arrayOfMediaUrls = getAllMediaUrlsFromArrayOfUrls(arrayOfUrls, mediaTypes);
+    return arrayOfMediaUrls;
+};
+export const extractAllMediaUrlsFromString = getAllMediaUrlsFromString;
+export const parseStringForMediaUrls = getAllMediaUrlsFromString;
+export const getFirstMediaUrlFromString = (str, mediaTypes = ["video", "audio", "image"]) => {
+    if (!str || typeof (str) !== "string")
+        return "";
+    const videoOrAudioUrls = getAllMediaUrlsFromString(str, mediaTypes);
+    if (videoOrAudioUrls && Array.isArray(videoOrAudioUrls) &&
+        videoOrAudioUrls[0] &&
+        typeof (videoOrAudioUrls[0]) == "string") {
+        return videoOrAudioUrls[0];
+    }
+    return "";
+};
+export const extractFirstMediaUrlFromString = getFirstMediaUrlFromString;
+export const parseFirstMediaUrlFromString = getFirstMediaUrlFromString;
+export const getFirstAudioOrVideoUrlFromString = (str) => {
+    return getFirstMediaUrlFromString(str, ["video", "audio"]);
+};
+export const extractFirstAudioOrVideoUrlFromString = getFirstAudioOrVideoUrlFromString;
+export const parseFirstAudioOrVideoUrlFromString = getFirstAudioOrVideoUrlFromString;
+// Escape XML entities to prevent the RSS feed
+// from breaking if a text contains <, >, &, ', "
+export const escapeXml = (unsafe) => {
+    let safe = '';
+    for (const char of unsafe) {
+        switch (char) {
+            case '<':
+                safe += '&lt;';
+                break;
+            case '>':
+                safe += '&gt;';
+                break;
+            case '&':
+                safe += '&amp;';
+                break;
+            case '\'':
+                safe += '&apos;';
+                break;
+            case '"':
+                safe += '&quot;';
+                break;
+            default:
+                safe += char;
+                break;
+        }
+    }
+    return safe;
+};
+// In XML, CDATA sections are terminated by the sequence "]]>"
+// If this sequence appears in user input, it would prematurely
+// end the CDATA section. This would break the XML structure
+// and potentially allow injection of malicious XML.
+// Replacing "]]>" with "]]]]><![CDATA[>" preserves the original
+// content while ensuring the XML remains well-formed and secure
+export const escapeXmlCdata = (input) => {
+    return input.replace(']]>', ']]]]><![CDATA[>');
+};
+export const escapeRssCdata = escapeXmlCdata;
+export const escapeCdata = escapeXmlCdata;
+export const prepareForXmlCdata = escapeXmlCdata;
+export const prepareForRssCdata = escapeXmlCdata;
+export const prepareForCdata = escapeXmlCdata;
+// Reverse the transformation done by escapeXmlCdata
+export const restoreFromXmlCdata = (input) => {
+    return input.replace(']]]]><![CDATA[>', ']]>');
+};
+export const restoreFromRssCdata = restoreFromXmlCdata;
+export const restoreFromCdata = restoreFromXmlCdata;
+export const unescapeXmlCdata = restoreFromXmlCdata;
+export const unescapeRssCdata = restoreFromXmlCdata;
+export const unescapeCdata = restoreFromXmlCdata;
+export const autoGeneratedName = (value) => {
+    if (!value)
+        return "";
+    if (typeof (value) !== "string" &&
+        typeof (value) !== "number") {
+        return "";
+    }
+    const firstTech = [
+        "bankless",
+        "black",
+        "blue",
+        "dark",
+        "decoded",
+        "encoded",
+        "fluffy",
+        "free",
+        "golden",
+        "gray",
+        "green",
+        "hidden",
+        "indie",
+        "new",
+        "neon",
+        "orange",
+        "purple",
+        "red",
+        "private",
+        "pirate",
+        "quantum",
+        "scaling",
+        "secure",
+        "shadow",
+        "silver",
+        "stable",
+        "swapping",
+        "unbanked",
+        "unstable",
+        "white",
+        "zero",
+    ];
+    const secondTech = [
+        "airdrop",
+        "alpha",
+        "arbitrage",
+        "block",
+        "darknet",
+        "defi",
+        "degen",
+        "chain",
+        "code",
+        "crypto",
+        "cypher",
+        "cult",
+        "foss",
+        "freedom",
+        "hash",
+        "jupiter",
+        "key",
+        "layer",
+        "ledger",
+        "linux",
+        "lunar",
+        "market",
+        "mars",
+        "meme",
+        "mesh",
+        "moon",
+        "network",
+        "night",
+        "onion",
+        "rollup",
+        "script",
+        "silkroad",
+        "snapshot",
+        "solar",
+        "source",
+        "space",
+        "spasm",
+        "tech",
+        "token",
+        "wallet",
+        "zk",
+    ];
+    const thirdTech = [
+        "auditor",
+        "bot",
+        "broker",
+        "builder",
+        "burner",
+        "cyborg",
+        "dev",
+        "doxxer",
+        "exchanger",
+        "explorer",
+        "farmer",
+        "fighter",
+        "flipper",
+        "forker",
+        "geek",
+        "hacker",
+        "hamster",
+        "hodler",
+        "hunter",
+        // "innovator",
+        "keeper",
+        "kitty",
+        // "liberator",
+        // "maker",
+        "master",
+        "maxi",
+        "miner",
+        "minter",
+        "mixer",
+        "naut",
+        "node",
+        "noncer",
+        "phantom",
+        "punk",
+        "rebel",
+        "robot",
+        "rocket",
+        "router",
+        "samourai",
+        "scanner",
+        "sharder",
+        "signer",
+        "sniffer",
+        "stalker",
+        "swapper",
+        "tester",
+        "trader",
+        "wizard",
+    ];
+    const getNumberHashFromValue = (value) => {
+        let seed = "";
+        if (typeof (value) === "number") {
+            seed = value.toString();
+        }
+        else if (typeof (value) === "string") {
+            seed = value;
+        }
+        seed = seed.toLowerCase();
+        // Map each character to its numerical value,
+        // ignoring non-alphanumeric characters
+        const charMap = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let sum = 0;
+        const maxLength = 64; // Maximum number of chars to process
+        for (let i = 0; i < Math.min(seed.length, maxLength); i++) {
+            const charCode = seed[i];
+            const index = charMap.indexOf(charCode);
+            if (index !== -1) { // Character found in map
+                // Multiply by 2 to reduce collisions
+                sum = Math.floor(sum * 2) + index;
+            }
+        }
+        // Ensure the result fits within 32 bits
+        return sum % (2 ** 32);
+    };
+    let sum = getNumberHashFromValue(value);
+    const getUsernameFromNumber = (value, enableAutoGeneratedNamesDictionaryTech = true) => {
+        // Use the sum to determine the index
+        // for selecting a word from each array
+        const index1 = Math.abs((value * 11) % firstTech.length);
+        const index2 = Math.abs((value * 13 * 17) % secondTech.length);
+        const index3 = Math.abs((value * 19 * 23 * 29) % thirdTech.length);
+        let word1 = "";
+        let word2 = "";
+        let word3 = "";
+        // Select a word from each array
+        // using the calculated indices
+        if (enableAutoGeneratedNamesDictionaryTech) {
+            word1 = firstTech[index1];
+            word2 = secondTech[index2];
+            word3 = thirdTech[index3];
+        }
+        else {
+            // Use default dictionary
+            // (currently equal to tech dictionary)
+            word1 = firstTech[index1];
+            word2 = secondTech[index2];
+            word3 = thirdTech[index3];
+        }
+        // Combine the selected words to form the unique name
+        const titleCaseWord = (word) => {
+            if (!word)
+                return word;
+            return word[0].toUpperCase() + word.slice(1);
+        };
+        return titleCaseWord(word1) +
+            titleCaseWord(word2) +
+            titleCaseWord(word3);
+    };
+    let username = getUsernameFromNumber(sum);
+    while (username.length > 16) {
+        sum += 31;
+        username = getUsernameFromNumber(sum);
+    }
+    return username;
+};
+export const toBeShortAddress = (longAddress, ifPrefixWithAutoGeneratedName = true) => {
+    try {
+        const string = String(longAddress);
+        if (!string)
+            return "";
+        const shortAddress = sliceAddress(string, 6);
+        let final = "";
+        if (ifPrefixWithAutoGeneratedName) {
+            final = autoGeneratedName(string) + " ";
+        }
+        final = final + "(" + shortAddress + ")";
+        return final;
+    }
+    catch (err) {
+        console.error(err);
+        return "";
+    }
+};
+export const sliceAddress = (address, start = 6, end = 4) => {
+    return address
+        ? `${address.slice(0, start)}...${address.slice(-end)}`
+        : '';
+};
+export const sliceId = (id, start = 6, end = 4, max // used for URL length
+) => {
+    if (!id) {
+        return '';
+    }
+    const str = String(id) ? String(id) : '';
+    if (!str)
+        return '';
+    let maxChar = Number(start) ? Number(start) : 6;
+    if (Number(end)) {
+        maxChar += Number(end);
+    }
+    if (max && Number(max)) {
+        maxChar = Number(max);
+    }
+    // ID is URL
+    try {
+        const url = new URL(str);
+        if (url && typeof (url) === "object") {
+            let slicedUrl = '';
+            if (url.hostname && typeof (url.hostname) === "string") {
+                slicedUrl += url.hostname;
+            }
+            if (url.pathname && typeof (url.pathname) === "string") {
+                slicedUrl += url.pathname;
+            }
+            if (url.search && typeof (url.search) === "string") {
+                slicedUrl += url.search;
+            }
+            if (slicedUrl) {
+                if (slicedUrl.length > maxChar + 3) {
+                    return `${slicedUrl.slice(0, maxChar)}...`;
+                }
+                else {
+                    return slicedUrl;
+                }
+            }
+            else {
+                '';
+            }
+        }
+    }
+    catch (err) {
+        // Not a valid URL
+        // console.error(err);
+    }
+    // else
+    return str
+        ? `${str.slice(0, start)}...${str.slice(-end)}`
+        : '';
+};
+export const randomNumber = (min = 1, max = 1000000) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 //# sourceMappingURL=utils.js.map

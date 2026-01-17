@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSpasmId = exports.convertToEventForSpasmid = exports.convertManyToSpasmEventEnvelopeWithTree = exports.convertToSpasmEventEnvelopeWithTree = exports.convertManyToSpasmEventEnvelope = exports.convertToSpasmEventEnvelope = exports.convertManyToSpasmEventDatabase = exports.convertToSpasmEventDatabase = exports.convertToNostr = exports.getOriginalValueFromTagMappedDetails = exports.getOriginalFromValueAndMethod = exports.getTagMappedDetails = exports.isMappedTag = exports.convertManyToSpasm = exports.convertToSpasm = void 0;
+exports.getSpasmId = exports.convertToEventForSpasmid = exports.convertManyToSpasmEventEnvelopeWithTree = exports.convertToSpasmEventEnvelopeWithTree = exports.convertManyToSpasmEventEnvelope = exports.convertToSpasmEventEnvelope = exports.convertManyToSpasmEventDatabase = exports.convertToSpasmEventDatabase = exports.generateRssFeed = exports.convertToRss = exports.convertToNostr = exports.getOriginalValueFromTagMappedDetails = exports.getOriginalFromValueAndMethod = exports.getTagMappedDetails = exports.isMappedTag = exports.convertManyToSpasm = exports.convertToSpasm = void 0;
 var convertToSpasm_js_1 = require("./convertToSpasm.js");
 Object.defineProperty(exports, "convertToSpasm", { enumerable: true, get: function () { return convertToSpasm_js_1.convertToSpasm; } });
 Object.defineProperty(exports, "convertManyToSpasm", { enumerable: true, get: function () { return convertToSpasm_js_1.convertManyToSpasm; } });
@@ -10,6 +10,9 @@ Object.defineProperty(exports, "getOriginalFromValueAndMethod", { enumerable: tr
 Object.defineProperty(exports, "getOriginalValueFromTagMappedDetails", { enumerable: true, get: function () { return convertToSpasm_js_1.getOriginalValueFromTagMappedDetails; } });
 var convertToNostr_js_1 = require("./convertToNostr.js");
 Object.defineProperty(exports, "convertToNostr", { enumerable: true, get: function () { return convertToNostr_js_1.convertToNostr; } });
+var convertToRss_js_1 = require("./convertToRss.js");
+Object.defineProperty(exports, "convertToRss", { enumerable: true, get: function () { return convertToRss_js_1.convertToRss; } });
+Object.defineProperty(exports, "generateRssFeed", { enumerable: true, get: function () { return convertToRss_js_1.generateRssFeed; } });
 var convertToSpasmEventDatabase_js_1 = require("./convertToSpasmEventDatabase.js");
 Object.defineProperty(exports, "convertToSpasmEventDatabase", { enumerable: true, get: function () { return convertToSpasmEventDatabase_js_1.convertToSpasmEventDatabase; } });
 Object.defineProperty(exports, "convertManyToSpasmEventDatabase", { enumerable: true, get: function () { return convertToSpasmEventDatabase_js_1.convertManyToSpasmEventDatabase; } });

@@ -1,4 +1,7 @@
-import { toBeNpub } from "./../utils/index.js";
+import { convertToSpasm } from "../convert/convertToSpasm.js";
+import { convertToSpasmEventEnvelope } from "../convert/convertToSpasmEventEnvelope.js";
+import { getSpasmId01 } from "../convert/getSpasmId.js";
+import { extractSpasmId01, toBeNpub } from "./../utils/index.js";
 import { toBeTimestamp } from "./../utils/index.js";
 // import { convertToSpasm } from "./../convert/convertToSpasm"
 // const latestSpasmVersion = "2.0.0"
@@ -252,7 +255,6 @@ export const validDmpEventSignedClosedWithInvalidSignature = {
     ...validDmpEventSignedClosed,
     signature: '0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71a'
 };
-// validNostrReplyToDmpEvent
 export const validSpasmWithDmpReplyToDmpEventV0 = {
     "id": 401,
     "target": "0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b",
@@ -5281,5 +5283,459 @@ export const validSpasmEnvelopeV2SourceMoneroObserverSsp = {
     "source": {
         "name": "moneroobserver-feed"
     }
+};
+export const validMultiSignedSpasmEventV2WithMediaLinks = {
+    "type": "SpasmEventV2",
+    "content": "https://media.spasm.network/spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg\n\nHere are some links to learn more about the Spasm ecosystem.\n\nOfficial website:\nhttps://spasm.network\n\nForum:\nhttps://forum.spasm.network\n\nNpm package:\nhttps://www.npmjs.com/package/spasm.js\n\nSpasm genesis:\nhttps://forum.spasm.network/news/spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f\n\nSpasm - the endgame of social media:\nhttps://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4\n\nWeb3 authentication vs Spasm-powered direct signing:\nhttps://media.spasm.network/spasmvi0154b262c75008c8314b1aab4167533be1de92cd958591af7f0f75602bb7524434.mp4\n\nRSS feed:\nhttps://forum.spasm.network/api/events?format=rss&action=post&activity=rising",
+    "timestamp": 1768346774182,
+    "authors": [
+        {
+            "addresses": [
+                {
+                    "value": "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+                    "format": {
+                        "name": "ethereum-pubkey"
+                    },
+                    "verified": true
+                },
+                {
+                    "value": "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                    "format": {
+                        "name": "nostr-hex"
+                    },
+                    "verified": true
+                }
+            ]
+        }
+    ],
+    "siblings": [
+        {
+            "type": "SiblingNostrSpasmSignedV2",
+            "originalObject": {
+                "content": "https://media.spasm.network/spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg\n\nHere are some links to learn more about the Spasm ecosystem.\n\nOfficial website:\nhttps://spasm.network\n\nForum:\nhttps://forum.spasm.network\n\nNpm package:\nhttps://www.npmjs.com/package/spasm.js\n\nSpasm genesis:\nhttps://forum.spasm.network/news/spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f\n\nSpasm - the endgame of social media:\nhttps://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4\n\nWeb3 authentication vs Spasm-powered direct signing:\nhttps://media.spasm.network/spasmvi0154b262c75008c8314b1aab4167533be1de92cd958591af7f0f75602bb7524434.mp4\n\nRSS feed:\nhttps://forum.spasm.network/api/events?format=rss&action=post&activity=rising",
+                "created_at": 1768346774,
+                "kind": 1,
+                "id": "39b001f00b8d449a3e9aadf53bf352d9b71374e86562776d268265633a5aa5fe",
+                "pubkey": "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                "tags": [
+                    [
+                        "spasm_action",
+                        "post"
+                    ],
+                    [
+                        "spasm_timestamp",
+                        "1768346774182"
+                    ],
+                    [
+                        "license",
+                        "SPDX-License-Identifier: CC0-1.0"
+                    ],
+                    [
+                        "spasm_version",
+                        "2.0.0"
+                    ],
+                    [
+                        "nostr_spasm_version",
+                        "2.0.0"
+                    ],
+                    [
+                        "spasm_category",
+                        "general"
+                    ],
+                    [
+                        "title",
+                        "Multi-signed post with media links"
+                    ],
+                    [
+                        "O",
+                        "spasm_author:0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+                        "spasm_aadd_1"
+                    ],
+                    [
+                        "tags_mapping",
+                        "spasm_aadd_1",
+                        "O",
+                        "spasm_author:0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+                        "se2",
+                        "authors.addresses",
+                        "0",
+                        "0",
+                        "slice.13",
+                        "",
+                        "ethereum-pubkey",
+                        "",
+                        "",
+                        ""
+                    ],
+                    [
+                        "O",
+                        "spasm_author:2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                        "spasm_aadd_1"
+                    ],
+                    [
+                        "tags_mapping",
+                        "spasm_aadd_1",
+                        "O",
+                        "spasm_author:2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                        "se2",
+                        "authors.addresses",
+                        "0",
+                        "1",
+                        "slice.13",
+                        "",
+                        "nostr-hex",
+                        "",
+                        "",
+                        ""
+                    ]
+                ],
+                "sig": "7ae1392f00c55429ce37f0edae929284e4bc5c2ec93522844a2e5cbb9b905db3e6f4f2835ce57f663e4b362e7efcc07259b634b83494bfb4dc0669e35130ec91"
+            },
+            "protocol": {
+                "name": "nostr",
+                "hasExtraSpasmFields": true,
+                "extraSpasmFieldsVersion": "2.0.0"
+            },
+            "ids": [
+                {
+                    "value": "39b001f00b8d449a3e9aadf53bf352d9b71374e86562776d268265633a5aa5fe",
+                    "format": {
+                        "name": "nostr-hex"
+                    }
+                }
+            ],
+            "signatures": [
+                {
+                    "value": "7ae1392f00c55429ce37f0edae929284e4bc5c2ec93522844a2e5cbb9b905db3e6f4f2835ce57f663e4b362e7efcc07259b634b83494bfb4dc0669e35130ec91",
+                    "pubkey": "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                    "format": {
+                        "name": "nostr-sig"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "SiblingSpasmSignedV2",
+            "protocol": {
+                "name": "spasm",
+                "version": "2.0.0"
+            },
+            "signedString": "{\"type\":\"SpasmEventBodyV2\",\"action\":\"post\",\"content\":\"https://media.spasm.network/spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg\\n\\nHere are some links to learn more about the Spasm ecosystem.\\n\\nOfficial website:\\nhttps://spasm.network\\n\\nForum:\\nhttps://forum.spasm.network\\n\\nNpm package:\\nhttps://www.npmjs.com/package/spasm.js\\n\\nSpasm genesis:\\nhttps://forum.spasm.network/news/spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f\\n\\nSpasm - the endgame of social media:\\nhttps://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4\\n\\nWeb3 authentication vs Spasm-powered direct signing:\\nhttps://media.spasm.network/spasmvi0154b262c75008c8314b1aab4167533be1de92cd958591af7f0f75602bb7524434.mp4\\n\\nRSS feed:\\nhttps://forum.spasm.network/api/events?format=rss&action=post&activity=rising\",\"title\":\"Multi-signed post with media links\",\"categories\":[{\"name\":\"general\"}],\"timestamp\":1768346774182,\"license\":\"SPDX-License-Identifier: CC0-1.0\",\"protocol\":{\"name\":\"spasm\",\"version\":\"2.0.0\"},\"authors\":[{\"addresses\":[{\"value\":\"0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e\",\"format\":{\"name\":\"ethereum-pubkey\"}},{\"value\":\"2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42\",\"format\":{\"name\":\"nostr-hex\"}}]}]}",
+            "signatures": [
+                {
+                    "value": "0xb2837cf85e6bfc62a0014ea7645c33d57568e5e99c9060af63e540b902bd688f38a777e0016feceecea7e469ffb7fe043ef22c6899dee65520621a348c015f4e1c",
+                    "pubkey": "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+                    "format": {
+                        "name": "ethereum-sig"
+                    }
+                }
+            ]
+        }
+    ],
+    "ids": [
+        {
+            "value": "spasmid01ce14f534a896997aae3820167c4e0d39a5f516c5a1ecc3ab2db224d196c27b5f",
+            "format": {
+                "name": "spasmid",
+                "version": "01"
+            }
+        },
+        {
+            "value": "39b001f00b8d449a3e9aadf53bf352d9b71374e86562776d268265633a5aa5fe",
+            "format": {
+                "name": "nostr-hex"
+            }
+        }
+    ],
+    "action": "post",
+    "categories": [
+        {
+            "name": "general"
+        }
+    ],
+    "license": "SPDX-License-Identifier: CC0-1.0",
+    "title": "Multi-signed post with media links",
+    "signatures": [
+        {
+            "value": "7ae1392f00c55429ce37f0edae929284e4bc5c2ec93522844a2e5cbb9b905db3e6f4f2835ce57f663e4b362e7efcc07259b634b83494bfb4dc0669e35130ec91",
+            "pubkey": "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+            "format": {
+                "name": "nostr-sig"
+            }
+        },
+        {
+            "value": "0xb2837cf85e6bfc62a0014ea7645c33d57568e5e99c9060af63e540b902bd688f38a777e0016feceecea7e469ffb7fe043ef22c6899dee65520621a348c015f4e1c",
+            "pubkey": "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+            "format": {
+                "name": "ethereum-sig"
+            }
+        }
+    ]
+};
+export const validMultiSignedSpasmEventV2WithMarkdownMediaLinks = {
+    "type": "SpasmEventV2",
+    "content": "![image](https://media.spasm.network/spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg)\n\nHere are some links to learn more about the Spasm ecosystem:\n- [Official website](https://spasm.network)\n- [Forum](https://forum.spasm.network)\n- [Npm package](https://www.npmjs.com/package/spasm.js)\n- [Spasm genesis](https://forum.spasm.network/news/spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f)\n- [Spasm - the endgame of social media](https://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4)\n- [Web3 authentication vs Spasm-powered direct signing](https://media.spasm.network/spasmvi0154b262c75008c8314b1aab4167533be1de92cd958591af7f0f75602bb7524434.mp4)\n- [RSS feed](https://forum.spasm.network/api/events?format=rss&action=post&activity=rising)",
+    "timestamp": 1768346910230,
+    "authors": [
+        {
+            "addresses": [
+                {
+                    "value": "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+                    "format": {
+                        "name": "ethereum-pubkey"
+                    },
+                    "verified": true
+                },
+                {
+                    "value": "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                    "format": {
+                        "name": "nostr-hex"
+                    },
+                    "verified": true
+                }
+            ]
+        }
+    ],
+    "siblings": [
+        {
+            "type": "SiblingNostrSpasmSignedV2",
+            "originalObject": {
+                "content": "![image](https://media.spasm.network/spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg)\n\nHere are some links to learn more about the Spasm ecosystem:\n- [Official website](https://spasm.network)\n- [Forum](https://forum.spasm.network)\n- [Npm package](https://www.npmjs.com/package/spasm.js)\n- [Spasm genesis](https://forum.spasm.network/news/spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f)\n- [Spasm - the endgame of social media](https://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4)\n- [Web3 authentication vs Spasm-powered direct signing](https://media.spasm.network/spasmvi0154b262c75008c8314b1aab4167533be1de92cd958591af7f0f75602bb7524434.mp4)\n- [RSS feed](https://forum.spasm.network/api/events?format=rss&action=post&activity=rising)",
+                "created_at": 1768346910,
+                "kind": 1,
+                "id": "8cd6ae397a6046097a5863586959ae350ba787da4a790b963e3e18d716ba14d7",
+                "pubkey": "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                "tags": [
+                    [
+                        "spasm_action",
+                        "post"
+                    ],
+                    [
+                        "spasm_timestamp",
+                        "1768346910230"
+                    ],
+                    [
+                        "license",
+                        "SPDX-License-Identifier: CC0-1.0"
+                    ],
+                    [
+                        "spasm_version",
+                        "2.0.0"
+                    ],
+                    [
+                        "nostr_spasm_version",
+                        "2.0.0"
+                    ],
+                    [
+                        "spasm_category",
+                        "general"
+                    ],
+                    [
+                        "title",
+                        "Multi-signed post with markdown media links"
+                    ],
+                    [
+                        "O",
+                        "spasm_author:0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+                        "spasm_aadd_1"
+                    ],
+                    [
+                        "tags_mapping",
+                        "spasm_aadd_1",
+                        "O",
+                        "spasm_author:0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+                        "se2",
+                        "authors.addresses",
+                        "0",
+                        "0",
+                        "slice.13",
+                        "",
+                        "ethereum-pubkey",
+                        "",
+                        "",
+                        ""
+                    ],
+                    [
+                        "O",
+                        "spasm_author:2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                        "spasm_aadd_1"
+                    ],
+                    [
+                        "tags_mapping",
+                        "spasm_aadd_1",
+                        "O",
+                        "spasm_author:2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                        "se2",
+                        "authors.addresses",
+                        "0",
+                        "1",
+                        "slice.13",
+                        "",
+                        "nostr-hex",
+                        "",
+                        "",
+                        ""
+                    ]
+                ],
+                "sig": "cbd656552ade80cdfdd7b70b31ffdf44e9815441b4042576b0190433dcf00e62ebf9bad352c9928205f3b905ec712d7dd272a9b01288da0ee7201a6c13e3a1bd"
+            },
+            "protocol": {
+                "name": "nostr",
+                "hasExtraSpasmFields": true,
+                "extraSpasmFieldsVersion": "2.0.0"
+            },
+            "ids": [
+                {
+                    "value": "8cd6ae397a6046097a5863586959ae350ba787da4a790b963e3e18d716ba14d7",
+                    "format": {
+                        "name": "nostr-hex"
+                    }
+                }
+            ],
+            "signatures": [
+                {
+                    "value": "cbd656552ade80cdfdd7b70b31ffdf44e9815441b4042576b0190433dcf00e62ebf9bad352c9928205f3b905ec712d7dd272a9b01288da0ee7201a6c13e3a1bd",
+                    "pubkey": "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+                    "format": {
+                        "name": "nostr-sig"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "SiblingSpasmSignedV2",
+            "protocol": {
+                "name": "spasm",
+                "version": "2.0.0"
+            },
+            "signedString": "{\"type\":\"SpasmEventBodyV2\",\"action\":\"post\",\"content\":\"![image](https://media.spasm.network/spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg)\\n\\nHere are some links to learn more about the Spasm ecosystem:\\n- [Official website](https://spasm.network)\\n- [Forum](https://forum.spasm.network)\\n- [Npm package](https://www.npmjs.com/package/spasm.js)\\n- [Spasm genesis](https://forum.spasm.network/news/spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f)\\n- [Spasm - the endgame of social media](https://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4)\\n- [Web3 authentication vs Spasm-powered direct signing](https://media.spasm.network/spasmvi0154b262c75008c8314b1aab4167533be1de92cd958591af7f0f75602bb7524434.mp4)\\n- [RSS feed](https://forum.spasm.network/api/events?format=rss&action=post&activity=rising)\",\"title\":\"Multi-signed post with markdown media links\",\"categories\":[{\"name\":\"general\"}],\"timestamp\":1768346910230,\"license\":\"SPDX-License-Identifier: CC0-1.0\",\"protocol\":{\"name\":\"spasm\",\"version\":\"2.0.0\"},\"authors\":[{\"addresses\":[{\"value\":\"0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e\",\"format\":{\"name\":\"ethereum-pubkey\"}},{\"value\":\"2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42\",\"format\":{\"name\":\"nostr-hex\"}}]}]}",
+            "signatures": [
+                {
+                    "value": "0xbc19fd22232318f13c91aa179addc03ab5ab8fe5ce7c52dd14af05c8495bebaa778d7fcc5174a6dd352cfb670bb3a465eb41acca4342997f1ce117880883cbe61b",
+                    "pubkey": "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+                    "format": {
+                        "name": "ethereum-sig"
+                    }
+                }
+            ]
+        }
+    ],
+    "ids": [
+        {
+            "value": "spasmid01d7a2d69b20cc06d7094a23270fbc2aa48cc18023f91678696a89b790a77f0525",
+            "format": {
+                "name": "spasmid",
+                "version": "01"
+            }
+        },
+        {
+            "value": "8cd6ae397a6046097a5863586959ae350ba787da4a790b963e3e18d716ba14d7",
+            "format": {
+                "name": "nostr-hex"
+            }
+        }
+    ],
+    "action": "post",
+    "categories": [
+        {
+            "name": "general"
+        }
+    ],
+    "license": "SPDX-License-Identifier: CC0-1.0",
+    "title": "Multi-signed post with markdown media links",
+    "signatures": [
+        {
+            "value": "cbd656552ade80cdfdd7b70b31ffdf44e9815441b4042576b0190433dcf00e62ebf9bad352c9928205f3b905ec712d7dd272a9b01288da0ee7201a6c13e3a1bd",
+            "pubkey": "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+            "format": {
+                "name": "nostr-sig"
+            }
+        },
+        {
+            "value": "0xbc19fd22232318f13c91aa179addc03ab5ab8fe5ce7c52dd14af05c8495bebaa778d7fcc5174a6dd352cfb670bb3a465eb41acca4342997f1ce117880883cbe61b",
+            "pubkey": "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+            "format": {
+                "name": "ethereum-sig"
+            }
+        }
+    ]
+};
+export const validDmpEventSignedClosedConvertedToRssEvent = {
+    type: "RssEvent",
+    spasmEnvelope: JSON.stringify(convertToSpasmEventEnvelope(validDmpEventSignedClosed)),
+    author: validDmpEventSignedClosed.signer,
+    title: validDmpEvent.title,
+    description: validDmpEvent.text,
+    guid: getSpasmId01(validDmpEventSignedClosedConvertedToSpasmV2),
+    // pubDate: "Sat, 01 Jan 2022 22:04:46 GMT"
+    pubDate: new Date(validDmpEventSignedClosedConvertedToSpasmV2.timestamp).toUTCString()
+};
+export const validSpasmEventBodyV2ConvertedToRssEvent = {
+    type: "RssEvent",
+    spasmEnvelope: JSON.stringify(convertToSpasmEventEnvelope(validSpasmEventBodyV2)),
+    // No author because event is unsigned, so it's impossible to verify signature
+    // author: validSpasmEventBodyV2!.authors![0].addresses![0].value as string,
+    title: validSpasmEventBodyV2.title,
+    description: validSpasmEventBodyV2.content,
+    guid: getSpasmId01(validSpasmEventBodyV2ConvertedToSpasmV2),
+    // pubDate: "Sat, 12 Oct 2024 05:33:01 GMT"
+    pubDate: new Date(validSpasmEventBodyV2.timestamp).toUTCString()
+};
+export const validSpasmEventBodySignedClosedV2ConvertedToRssEvent = {
+    type: "RssEvent",
+    spasmEnvelope: JSON.stringify(convertToSpasmEventEnvelope(validSpasmEventBodySignedClosedV2)),
+    author: validSpasmEventBodyV2.authors[0].addresses[0].value,
+    title: validSpasmEventBodyV2.title,
+    description: validSpasmEventBodyV2.content,
+    guid: getSpasmId01(validSpasmEventBodySignedClosedV2ConvertedToSpasmV2),
+    // pubDate: "Sat, 12 Oct 2024 05:33:01 GMT"
+    pubDate: new Date(validSpasmEventBodySignedClosedV2ConvertedToSpasmV2.timestamp).toUTCString()
+};
+export const validNostrReplyToDmpEventConvertedToRssEvent = {
+    type: "RssEvent",
+    spasmEnvelope: JSON.stringify(convertToSpasmEventEnvelope(validNostrReplyToDmpEvent)),
+    author: toBeNpub(validNostrReplyToDmpEvent.pubkey),
+    description: validNostrReplyToDmpEvent.content,
+    guid: getSpasmId01(convertToSpasm(validNostrReplyToDmpEvent)),
+    // pubDate: "Tue, 20 Jan 1970 18:29:13 GMT"
+    pubDate: new Date(convertToSpasm(validNostrReplyToDmpEvent).timestamp).toUTCString()
+};
+export const validSpasmEventV2TreeDepth2_Post1Reply2React1ConvertedToRssEvent = {
+    type: "RssEvent",
+    spasmEnvelope: JSON.stringify(convertToSpasmEventEnvelope(validSpasmEventV2TreeDepth2_Post1Reply2React1)),
+    author: validSpasmEventV2TreeDepth2_Post1Reply2React1.authors[0].addresses[0].value,
+    description: validSpasmEventV2TreeDepth2_Post1Reply2React1.content,
+    guid: getSpasmId01(validSpasmEventV2TreeDepth2_Post1Reply2React1),
+    // pubDate: "Sun, 09 Feb 2025 21:58:16 GMT"
+    pubDate: new Date(validSpasmEventV2TreeDepth2_Post1Reply2React1.timestamp).toUTCString()
+};
+export const validPostWithRssItemConvertedToRssEvent = {
+    type: "RssEvent",
+    spasmEnvelope: JSON.stringify(convertToSpasmEventEnvelope(validPostWithRssItem)),
+    title: validPostWithRssItem.title,
+    description: validPostWithRssItem.description,
+    guid: validPostWithRssItem.guid,
+    link: validPostWithRssItem.url,
+    pubDate: "Tue, 12 Mar 2024 20:24:04 GMT",
+};
+export const validMultiSignedSpasmEventV2WithMediaLinksConvertedToRssEvent = {
+    type: "RssEvent",
+    spasmEnvelope: JSON.stringify(convertToSpasmEventEnvelope(validMultiSignedSpasmEventV2WithMediaLinks)),
+    author: validMultiSignedSpasmEventV2WithMediaLinks.authors[0].addresses[0].value,
+    title: validMultiSignedSpasmEventV2WithMediaLinks.title,
+    description: validMultiSignedSpasmEventV2WithMediaLinks.content,
+    guid: extractSpasmId01(validMultiSignedSpasmEventV2WithMediaLinks),
+    pubDate: new Date(validMultiSignedSpasmEventV2WithMediaLinks.timestamp).toUTCString(),
+    enclosureUrl: "https://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4"
+};
+export const validMultiSignedSpasmEventV2WithMarkdownMediaLinksConvertedToRssEvent = {
+    type: "RssEvent",
+    spasmEnvelope: JSON.stringify(convertToSpasmEventEnvelope(validMultiSignedSpasmEventV2WithMarkdownMediaLinks)),
+    author: validMultiSignedSpasmEventV2WithMarkdownMediaLinks.authors[0].addresses[0].value,
+    title: validMultiSignedSpasmEventV2WithMarkdownMediaLinks.title,
+    description: validMultiSignedSpasmEventV2WithMarkdownMediaLinks.content,
+    guid: extractSpasmId01(validMultiSignedSpasmEventV2WithMarkdownMediaLinks),
+    pubDate: new Date(validMultiSignedSpasmEventV2WithMarkdownMediaLinks.timestamp).toUTCString(),
+    enclosureUrl: "https://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4"
 };
 //# sourceMappingURL=_events-data.js.map

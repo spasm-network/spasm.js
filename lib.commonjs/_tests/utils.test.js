@@ -3406,7 +3406,7 @@ describe("isHex() and isNostrHex() function tests", () => {
 });
 // Troubled events from monero.observer
 describe("troubled events from monero.observer tests", () => {
-    test("template() should return true if true", () => {
+    test("getAllSigners() should return true if true", () => {
         const spasmEvent = _events_data_js_1.validSpasmEventV2SourceMoneroObserverNbsp;
         const spasmEnvelope = _events_data_js_1.validSpasmEnvelopeV2SourceMoneroObserverSsp;
         expect((0, index_js_1.getAllSigners)(spasmEvent)).toStrictEqual((0, index_js_1.getAllSigners)(spasmEnvelope));
@@ -3493,6 +3493,235 @@ describe("fakeAsObject() function tests", () => {
         expect((0, index_js_1.fakeAsObject)(null)).toStrictEqual(null);
         expect((0, index_js_1.fakeAsObject)([null])).toStrictEqual([null]);
         expect((0, index_js_1.fakeAsObject)({ a: 1 })).toStrictEqual({ a: 1 });
+    });
+});
+// getMiteType()
+describe("getMimeType() function tests", () => {
+    test("getMimeType() should return proper mime type", () => {
+        expect((0, index_js_1.getMimeType)('')).toStrictEqual('application/octet-stream');
+        expect((0, index_js_1.getMimeType)('0')).toStrictEqual('application/octet-stream');
+        expect((0, index_js_1.getMimeType)((0, index_js_1.fakeAsString)(0))).toStrictEqual('application/octet-stream');
+        expect((0, index_js_1.getMimeType)('0123')).toStrictEqual('application/octet-stream');
+        expect((0, index_js_1.getMimeType)((0, index_js_1.fakeAsString)(null))).toStrictEqual('application/octet-stream');
+        expect((0, index_js_1.getMimeType)((0, index_js_1.fakeAsString)([null]))).toStrictEqual('application/octet-stream');
+        expect((0, index_js_1.getMimeType)((0, index_js_1.fakeAsString)({ a: 1 }))).toStrictEqual('application/octet-stream');
+        expect((0, index_js_1.getMimeType)('.mp5')).toStrictEqual('application/octet-stream');
+        // Video
+        expect((0, index_js_1.getMimeType)('.mp4')).toStrictEqual('video/mp4');
+        expect((0, index_js_1.getMimeType)('.mov')).toStrictEqual('video/quicktime');
+        expect((0, index_js_1.getMimeType)('avi')).toStrictEqual('video/x-msvideo');
+        expect((0, index_js_1.getMimeType)('mKv')).toStrictEqual('video/x-matroska');
+        expect((0, index_js_1.getMimeType)('weBM')).toStrictEqual('video/webm');
+        expect((0, index_js_1.getMimeType)('.m4v')).toStrictEqual('video/mp4');
+        expect((0, index_js_1.getMimeType)('.Wmv')).toStrictEqual('video/x-ms-wmv');
+        expect((0, index_js_1.getMimeType)('.FLV')).toStrictEqual('video/x-flv');
+        // Audio
+        expect((0, index_js_1.getMimeType)('.mp3')).toStrictEqual('audio/mpeg');
+        expect((0, index_js_1.getMimeType)('.wav')).toStrictEqual('audio/wav');
+        expect((0, index_js_1.getMimeType)('.flac')).toStrictEqual('audio/flac');
+        expect((0, index_js_1.getMimeType)('.ogg')).toStrictEqual('audio/ogg');
+        expect((0, index_js_1.getMimeType)('.m4a')).toStrictEqual('audio/mp4');
+        expect((0, index_js_1.getMimeType)('.aac')).toStrictEqual('audio/aac');
+        expect((0, index_js_1.getMimeType)('.opus')).toStrictEqual('audio/opus');
+        expect((0, index_js_1.getMimeType)('.wma')).toStrictEqual('audio/x-ms-wma');
+        // Image
+        expect((0, index_js_1.getMimeType)('.jpg')).toStrictEqual('image/jpeg');
+        expect((0, index_js_1.getMimeType)('.jpeg')).toStrictEqual('image/jpeg');
+        expect((0, index_js_1.getMimeType)('.png')).toStrictEqual('image/png');
+        expect((0, index_js_1.getMimeType)('.gif')).toStrictEqual('image/gif');
+        expect((0, index_js_1.getMimeType)('.bmp')).toStrictEqual('image/bmp');
+        expect((0, index_js_1.getMimeType)('.webp')).toStrictEqual('image/webp');
+        expect((0, index_js_1.getMimeType)('.ico')).toStrictEqual('image/vnd.microsoft.icon');
+        expect((0, index_js_1.getMimeType)('.svg')).toStrictEqual('image/svg+xml');
+        expect((0, index_js_1.getMimeType)('.tiff')).toStrictEqual('image/tiff');
+        // Other
+        expect((0, index_js_1.getMimeType)('.pdf')).toStrictEqual('application/pdf');
+        expect((0, index_js_1.getMimeType)('.zip')).toStrictEqual('application/zip');
+        expect((0, index_js_1.getMimeType)('.json')).toStrictEqual('application/json');
+        expect((0, index_js_1.getMimeType)('.git')).toStrictEqual('application/git');
+        // URLs
+        expect((0, index_js_1.getMimeType)('https://degenrocket.space/video.mp4')).toStrictEqual('video/mp4');
+        expect((0, index_js_1.getMimeType)('https://degenrocket.space/video.mp4?b=21m&s=21b')).toStrictEqual('video/mp4');
+        expect((0, index_js_1.getMimeType)('https://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4')).toStrictEqual('video/mp4');
+        // names
+        expect((0, index_js_1.getMimeType)('spasm-the-endgame-of-social-media.mp4')).toStrictEqual('video/mp4');
+        // hashes
+        expect((0, index_js_1.getMimeType)('spasmvi0154b262c75008c8314b1aab4167533be1de92cd958591af7f0f75602bb7524434.mp4')).toStrictEqual('video/mp4');
+        expect((0, index_js_1.getMimeType)('spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg?b=21m&s=21b')).toStrictEqual('image/jpeg');
+    });
+});
+describe("getAllUrlsFromString() function tests", () => {
+    test("getAllUrlsFromString() for links", () => {
+        expect((0, index_js_1.getAllUrlsFromString)("audio3.mp3")).toStrictEqual([]);
+        // https
+        expect((0, index_js_1.getAllUrlsFromString)("https://degenrocket.space/audio1.mp3")).toStrictEqual(["https://degenrocket.space/audio1.mp3"]);
+        // http
+        expect((0, index_js_1.getAllUrlsFromString)("http://degenrocket.space/audio1.mp3")).toStrictEqual(["http://degenrocket.space/audio1.mp3"]);
+        // uri
+        expect((0, index_js_1.getAllUrlsFromString)("https://forum.spasm.network/audio1.mp3?b=21m&s=21b")).toStrictEqual(["https://forum.spasm.network/audio1.mp3?b=21m&s=21b"]);
+        // trailing
+        expect((0, index_js_1.getAllUrlsFromString)("https://degenrocket.space/audio1.mp3.?!)")).toStrictEqual(["https://degenrocket.space/audio1.mp3"]);
+        // markdown
+        expect((0, index_js_1.getAllUrlsFromString)("Watch the first episode [here](https://degenrocket.space/video1.mp4)!")).toStrictEqual(["https://degenrocket.space/video1.mp4"]);
+        // markdown, multiple lines, multiple media files
+        expect((0, index_js_1.getAllUrlsFromString)("Watch the first episode [here](https://degenrocket.space/video1.mp4)!\nWatch the second episode [here](https://degenrocket.space/video2.mp4)!\nSubscribe to [RSS feed](https://degenrocket.space/api/events?format=rss)")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+            "https://degenrocket.space/api/events?format=rss"
+        ]);
+        expect((0, index_js_1.getAllUrlsFromString)("Watch the first episode [here](https://degenrocket.space/video1.mp4)!\\nWatch the second episode [here](https://degenrocket.space/video2.mp4)!")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        // multiple lines, multiple media files
+        expect((0, index_js_1.getAllUrlsFromString)("Watch the first episode here: https://degenrocket.space/video1.mp4\nWatch the second episode here: https://degenrocket.space/video2.mp4")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        expect((0, index_js_1.getAllUrlsFromString)("Watch the first episode here: https://degenrocket.space/video1.mp4\\nWatch the second episode here: https://degenrocket.space/video2.mp4")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        expect((0, index_js_1.getAllUrlsFromString)("Watch the first episode here:\nhttps://degenrocket.space/video1.mp4\nWatch the second episode here:\nhttps://degenrocket.space/video2.mp4")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        expect((0, index_js_1.extractAllUrlsFromString)("Watch the first episode here:\\nhttps://degenrocket.space/video1.mp4\\nWatch the second episode here:\\nhttps://degenrocket.space/video2.mp4")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        expect((0, index_js_1.parseStringForUrls)("https://degenrocket.space/ and https://forum.spasm.network/")).toStrictEqual([
+            "https://degenrocket.space/",
+            "https://forum.spasm.network/",
+        ]);
+    });
+});
+// ifFileNameOfMimeType()
+describe("ifFileNameOfMimeType() function tests", () => {
+    test("ifFileNameOfMimeType() should return true if true", () => {
+        expect((0, index_js_1.ifFileNameOfMimeType)("https://forum.spasm.network/", ["audio", "image", "video"])).toStrictEqual(false);
+        expect((0, index_js_1.ifFileNameOfMimeType)("https://degenrocket.space/", ["video", "audio", "image"])).toStrictEqual(false);
+        expect((0, index_js_1.ifFileNameOfMimeType)("episode1", "video")).toStrictEqual(false);
+        expect((0, index_js_1.ifFileNameOfMimeType)("episode2.mp3", "video")).toStrictEqual(false);
+        expect((0, index_js_1.ifFileNameOfMimeType)("episode3.mp4", "video")).toStrictEqual(true);
+        expect((0, index_js_1.ifFileNameOfMimeType)("episode3.mp4", ["image"])).toStrictEqual(false);
+        expect((0, index_js_1.ifFileNameOfMimeType)("episode3.mp4", ["audio", "image"])).toStrictEqual(false);
+        expect((0, index_js_1.ifFileNameOfMimeType)("episode3.mp4", ["audio", "image", "video"])).toStrictEqual(true);
+        expect((0, index_js_1.ifFileNameOfMimeType)("episode3.mp4", ["video", "video", "video"])).toStrictEqual(true);
+        expect((0, index_js_1.ifFileNameOfMimeType)("spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg?b=21m&s=21b", ["video", "audio"])).toStrictEqual(false);
+        expect((0, index_js_1.ifFileNameOfMimeType)("spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg?b=21m&s=21b", ["video", "audio", "image"])).toStrictEqual(true);
+        expect((0, index_js_1.ifFileNameOfMimeType)("spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg?b=21m&s=21b", ["video", "audio", "ima"])).toStrictEqual(true);
+        expect((0, index_js_1.ifFileNameOfMimeType)("spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg?b=21m&s=21b", "Image")).toStrictEqual(true);
+        expect((0, index_js_1.ifFileNameOfMimeType)("https://degenrocket.space/video1.mp4", "audio")).toStrictEqual(false);
+        expect((0, index_js_1.ifFileNameOfMimeType)("https://degenrocket.space/video1.mp4", "vIdEo")).toStrictEqual(true);
+        expect((0, index_js_1.ifFileNameOfMimeType)("https://degenrocket.space/video1.mp4", ["audio", "video"])).toStrictEqual(true);
+        expect((0, index_js_1.isFileNameOfMimeType)("https://degenrocket.space/video1.mp4?format=rss", ["audio", "video"])).toStrictEqual(true);
+    });
+});
+// getAllMediaUrlsFromArrayOfUrls()
+describe("getAllMediaUrlsFromArrayOfUrls() function tests", () => {
+    test("getAllMediaUrlsFromArrayOfUrls() should return true if true", () => {
+        const input = [
+            "https://forum.spasm.network/audio1.mp3?b=21m&s=21b",
+            "https://degenrocket.space/api/events?format=rss",
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+            "https://degenrocket.space/image1.jpeg",
+            "https://forum.spasm.network/",
+            "https://degenrocket.space/",
+        ];
+        // default media types
+        expect((0, index_js_1.getAllMediaUrlsFromArrayOfUrls)(input)).toStrictEqual([
+            "https://forum.spasm.network/audio1.mp3?b=21m&s=21b",
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+            "https://degenrocket.space/image1.jpeg",
+        ]);
+        expect((0, index_js_1.getAllMediaUrlsFromArrayOfUrls)(input, ["video", "audio", "image"])).toStrictEqual([
+            "https://forum.spasm.network/audio1.mp3?b=21m&s=21b",
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+            "https://degenrocket.space/image1.jpeg",
+        ]);
+        expect((0, index_js_1.filterAllMediaUrlsFromArrayOfUrls)(input, ["audio", "image"])).toStrictEqual([
+            "https://forum.spasm.network/audio1.mp3?b=21m&s=21b",
+            "https://degenrocket.space/image1.jpeg",
+        ]);
+        expect((0, index_js_1.getAllMediaUrlsOfMimeTypeFromArrayOfUrls)(input, "image")).toStrictEqual([
+            "https://degenrocket.space/image1.jpeg",
+        ]);
+        expect((0, index_js_1.getAllUrlsOfMediaTypeFromArrayOfUrls)(input, ["video", "audio"])).toStrictEqual([
+            "https://forum.spasm.network/audio1.mp3?b=21m&s=21b",
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+    });
+});
+describe("getAllMediaUrlsFromString() function tests", () => {
+    test("getAllMediaUrlsFromString() for links", () => {
+        expect((0, index_js_1.getAllMediaUrlsFromString)("audio3.mp3")).toStrictEqual([]);
+        // https
+        expect((0, index_js_1.getAllMediaUrlsFromString)("https://degenrocket.space/audio1.mp3")).toStrictEqual(["https://degenrocket.space/audio1.mp3"]);
+        expect((0, index_js_1.getAllMediaUrlsFromString)("https://degenrocket.space/audio1.mp3", ["video", "audio"])).toStrictEqual(["https://degenrocket.space/audio1.mp3"]);
+        expect((0, index_js_1.getAllMediaUrlsFromString)("https://degenrocket.space/audio1.mp3", ["video"])).toStrictEqual([]);
+        // http
+        expect((0, index_js_1.getAllMediaUrlsFromString)("http://degenrocket.space/audio1.mp3", ["video", "audio"])).toStrictEqual(["http://degenrocket.space/audio1.mp3"]);
+        expect((0, index_js_1.getAllMediaUrlsFromString)("http://degenrocket.space/audio1.mp3", ["image", "video"])).toStrictEqual([]);
+        // uri
+        expect((0, index_js_1.getAllMediaUrlsFromString)("https://forum.spasm.network/audio1.mp3?b=21m&s=21b")).toStrictEqual(["https://forum.spasm.network/audio1.mp3?b=21m&s=21b"]);
+        // trailing
+        expect((0, index_js_1.getAllMediaUrlsFromString)("https://degenrocket.space/audio1.mp3.?!)")).toStrictEqual(["https://degenrocket.space/audio1.mp3"]);
+        // markdown
+        expect((0, index_js_1.getAllMediaUrlsFromString)("Watch the first episode [here](https://degenrocket.space/video1.mp4)!")).toStrictEqual(["https://degenrocket.space/video1.mp4"]);
+        // markdown, multiple lines, multiple media files
+        expect((0, index_js_1.getAllMediaUrlsFromString)("Watch the first episode [here](https://degenrocket.space/video1.mp4)!\nWatch the second episode [here](https://degenrocket.space/video2.mp4)!\nSubscribe to [RSS feed](https://degenrocket.space/api/events?format=rss)")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        expect((0, index_js_1.getAllMediaUrlsFromString)("Watch the first episode [here](https://degenrocket.space/video1.mp4)!\\nWatch the second episode [here](https://degenrocket.space/video2.mp4)!")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        // multiple lines, multiple media files
+        expect((0, index_js_1.getAllMediaUrlsFromString)("Watch the first episode here: https://degenrocket.space/video1.mp4\nWatch the second episode here: https://degenrocket.space/video2.mp4")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        expect((0, index_js_1.getAllMediaUrlsFromString)("Watch the first episode here: https://degenrocket.space/video1.mp4\\nWatch the second episode here: https://degenrocket.space/video2.mp4")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        expect((0, index_js_1.getAllMediaUrlsFromString)("Watch the first episode here:\nhttps://degenrocket.space/video1.mp4\nWatch the second episode here:\nhttps://degenrocket.space/video2.mp4")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        expect((0, index_js_1.extractAllMediaUrlsFromString)("Watch the first episode here:\\nhttps://degenrocket.space/video1.mp4\\nWatch the second episode here:\\nhttps://degenrocket.space/video2.mp4")).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+        ]);
+        expect((0, index_js_1.parseStringForMediaUrls)("https://degenrocket.space/ and https://forum.spasm.network/")).toStrictEqual([]);
+        expect((0, index_js_1.parseStringForMediaUrls)("https://degenrocket.space/ and https://forum.spasm.network/ \n![image](https://forum.spasm.network/image.jpeg)\nMore episodes:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4\nAnd audio files: https://degenrocket.space/audio1.mp3, https://degenrocket.space/audio2.mp3\nAnd duplicates:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4")).toStrictEqual([
+            "https://forum.spasm.network/image.jpeg",
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+            "https://degenrocket.space/audio1.mp3",
+            "https://degenrocket.space/audio2.mp3",
+        ]);
+        expect((0, index_js_1.parseStringForMediaUrls)("https://degenrocket.space/ and https://forum.spasm.network/ \n![image](https://forum.spasm.network/image.jpeg)\nMore episodes:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4\nAnd audio files: https://degenrocket.space/audio1.mp3, https://degenrocket.space/audio2.mp3\nAnd duplicates:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4", ["audio"])).toStrictEqual([
+            "https://degenrocket.space/audio1.mp3",
+            "https://degenrocket.space/audio2.mp3",
+        ]);
+        expect((0, index_js_1.parseStringForMediaUrls)("https://degenrocket.space/ and https://forum.spasm.network/ \n![image](https://forum.spasm.network/image.jpeg)\nMore episodes:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4\nAnd audio files: https://degenrocket.space/audio1.mp3, https://degenrocket.space/audio2.mp3\nAnd duplicates:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4", ["audio", "video"])).toStrictEqual([
+            "https://degenrocket.space/video1.mp4",
+            "https://degenrocket.space/video2.mp4",
+            "https://degenrocket.space/audio1.mp3",
+            "https://degenrocket.space/audio2.mp3",
+        ]);
+        expect((0, index_js_1.parseStringForMediaUrls)("https://degenrocket.space/ and https://forum.spasm.network/ \n![image](https://forum.spasm.network/image.jpeg)\nMore episodes:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4\nAnd audio files: https://degenrocket.space/audio1.mp3, https://degenrocket.space/audio2.mp3\nAnd duplicates:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4", ["image"])).toStrictEqual([
+            "https://forum.spasm.network/image.jpeg",
+        ]);
+        expect((0, index_js_1.parseStringForMediaUrls)("https://degenrocket.space/ and https://forum.spasm.network/ \n![image](https://forum.spasm.network/image.jpeg)\nMore episodes:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4\nAnd audio files: https://degenrocket.space/audio1.mp3, https://degenrocket.space/audio2.mp3\nAnd duplicates:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4", [])).toStrictEqual([]);
+        expect((0, index_js_1.parseFirstAudioOrVideoUrlFromString)("https://degenrocket.space/ and https://forum.spasm.network/ \n![image](https://forum.spasm.network/image.jpeg)\nMore episodes:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4\nAnd audio files: https://degenrocket.space/audio1.mp3, https://degenrocket.space/audio2.mp3\nAnd duplicates:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4")).toStrictEqual("https://degenrocket.space/video1.mp4");
     });
 });
 // template()

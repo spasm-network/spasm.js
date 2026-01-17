@@ -1,4 +1,4 @@
-import { NostrEvent, NostrEventSignedOpened, NostrSpasmEvent, NostrSpasmEventSignedOpened, DmpEvent, Post, DmpEventSignedClosed, DmpEventSignedOpened, SpasmEventV2, SpasmEventV0, EventForSpasmid01, SpasmEventEnvelopeV2, SpasmEventEnvelopeWithTreeV2, SpasmEventBodyV2, SpasmEventBodySignedClosedV2 } from "./../types/interfaces.js";
+import { NostrEvent, NostrEventSignedOpened, NostrSpasmEvent, NostrSpasmEventSignedOpened, DmpEvent, Post, DmpEventSignedClosed, DmpEventSignedOpened, SpasmEventV2, SpasmEventV0, EventForSpasmid01, SpasmEventEnvelopeV2, SpasmEventEnvelopeWithTreeV2, SpasmEventBodyV2, SpasmEventBodySignedClosedV2, RssEvent } from "./../types/interfaces.js";
 export declare const validEthereumAddress1 = "0xf8553015220a857eda377a1e903c9e5afb3ac2fa";
 export declare const invalidEthereumAddress1 = "0xf8553015220a857eda377a1e903c9e5afb3ac2f";
 export declare const validEthereumSignature1 = "0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b";
@@ -614,68 +614,7 @@ export declare const validSpasmEventV2TreeDepth2_Post1Reply1Reply1: {
         };
     }[];
 };
-export declare const validSpasmEventV2TreeDepth2_Post1Reply2React1: {
-    type: string;
-    siblings: {
-        type: string;
-        protocol: {
-            name: string;
-            version: string;
-        };
-        signedString: string;
-        signatures: {
-            value: string;
-            pubkey: string;
-            format: {
-                name: string;
-            };
-        }[];
-    }[];
-    parent: {
-        ids: {
-            value: string;
-            format: {
-                name: string;
-                version: string;
-            };
-        }[];
-    };
-    action: string;
-    content: string;
-    timestamp: number;
-    license: string;
-    authors: {
-        addresses: {
-            value: string;
-            format: {
-                name: string;
-            };
-            verified: boolean;
-        }[];
-    }[];
-    mentions: {
-        addresses: {
-            value: string;
-            format: {
-                name: string;
-            };
-        }[];
-    }[];
-    signatures: {
-        value: string;
-        pubkey: string;
-        format: {
-            name: string;
-        };
-    }[];
-    ids: {
-        value: string;
-        format: {
-            name: string;
-            version: string;
-        };
-    }[];
-};
+export declare const validSpasmEventV2TreeDepth2_Post1Reply2React1: SpasmEventV2;
 export declare const validSpasmEventV2TreeDepth2_Post1Reply2Reply1: {
     type: string;
     siblings: {
@@ -1059,7 +998,10 @@ export declare const validSpasmTreeV2Depth0_Plus2: {
             };
         }[];
         event: {
-            children: {
+            children: ({
+                ids: import("./../types/interfaces.js").SpasmEventIdV2[];
+                event: SpasmEventV2;
+            } | {
                 ids: {
                     value: string;
                     format: {
@@ -1129,7 +1071,7 @@ export declare const validSpasmTreeV2Depth0_Plus2: {
                         };
                     }[];
                 };
-            }[];
+            })[];
             type: string;
             siblings: {
                 type: string;
@@ -1600,7 +1542,10 @@ export declare const validSpasmTreeV2Depth0_Plus4: {
             };
         }[];
         event: {
-            children: {
+            children: ({
+                ids: import("./../types/interfaces.js").SpasmEventIdV2[];
+                event: SpasmEventV2;
+            } | {
                 ids: {
                     value: string;
                     format: {
@@ -1670,7 +1615,7 @@ export declare const validSpasmTreeV2Depth0_Plus4: {
                         };
                     }[];
                 };
-            }[];
+            })[];
             type: string;
             siblings: {
                 type: string;
@@ -2395,4 +2340,14 @@ export declare const validSpasmEnvelopeV2SourceMoneroObserverSsp: {
         name: string;
     };
 };
+export declare const validMultiSignedSpasmEventV2WithMediaLinks: SpasmEventV2;
+export declare const validMultiSignedSpasmEventV2WithMarkdownMediaLinks: SpasmEventV2;
+export declare const validDmpEventSignedClosedConvertedToRssEvent: RssEvent;
+export declare const validSpasmEventBodyV2ConvertedToRssEvent: RssEvent;
+export declare const validSpasmEventBodySignedClosedV2ConvertedToRssEvent: RssEvent;
+export declare const validNostrReplyToDmpEventConvertedToRssEvent: RssEvent;
+export declare const validSpasmEventV2TreeDepth2_Post1Reply2React1ConvertedToRssEvent: RssEvent;
+export declare const validPostWithRssItemConvertedToRssEvent: RssEvent;
+export declare const validMultiSignedSpasmEventV2WithMediaLinksConvertedToRssEvent: RssEvent;
+export declare const validMultiSignedSpasmEventV2WithMarkdownMediaLinksConvertedToRssEvent: RssEvent;
 //# sourceMappingURL=_events-data.d.ts.map

@@ -640,6 +640,22 @@ cleanSpasmEventV2(spasmEventV2)
 assignFormats(event)
 ```
 
+```js
+// Get all URLs from a string
+const urls = getAllUrlsFromString(event)
+
+// aliases
+const urls = extractAllUrlsFromString(event)
+const urls = parseStringForUrls(event)
+```
+
+```js
+// Generate RSS feed
+const rssFeed = generateRssFeed(events, config)
+
+const rssEvent = convertToRssEvent(event, config)
+```
+
 ## Examples
 
 ### Convert DmpEventSignedClosed to Spasm

@@ -10,6 +10,10 @@ export {
   convertToNostr
 } from "./convertToNostr.js"
 export {
+  convertToRss,
+  generateRssFeed
+} from "./convertToRss.js"
+export {
   convertToSpasmEventDatabase,
   convertManyToSpasmEventDatabase
 } from "./convertToSpasmEventDatabase.js"
