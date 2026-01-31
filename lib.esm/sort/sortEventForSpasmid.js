@@ -1,10 +1,4 @@
-import { isObjectWithValues,
-// getHashOfString,
-// sortArrayOfStringsAndNumbers,
-// sortArrayOfObjects,
-// sortAuthorsForSpasmid01,
-// keepTheseKeysInObjectsInArray
- } from "./../utils/utils.js";
+import { isObjectWithValues, } from "./../utils/utils.js";
 export const sortEventForSpasmid = (eventForSpasmid, idVersion = "01") => {
     if (!isObjectWithValues(eventForSpasmid))
         return null;

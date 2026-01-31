@@ -16,7 +16,7 @@ export declare const standardizeSpasmEventSiblingV2: (sibling: SpasmEventSibling
 export declare const standardizeDmpEventV2: (event: DmpEvent) => SpasmEventV2 | null;
 export declare const standardizeDmpEventSignedClosedV2: (event: DmpEventSignedClosed) => SpasmEventV2 | null;
 export declare const standardizeDmpEventSignedOpenedV2: (event: DmpEventSignedOpened) => SpasmEventV2 | null;
-export declare const getTagMappedDetails: (tag: string[], tags: string[][]) => string[] | null;
+export declare const getTagMappedDetails: (tag: string[], tags: string[][]) => string[][] | null;
 export declare const isMappedTag: (tag: string[], tags: string[][]) => boolean;
 export declare const getOriginalFromValueAndMethod: (value: string | null, method?: string | null, original?: string | null) => string | null;
 export declare const getOriginalValueFromTagMappedDetails: (tag: string[]) => string | null;

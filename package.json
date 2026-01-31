@@ -1,6 +1,6 @@
 {
   "name": "spasm.js",
-  "version": "2.0.0-rc.15",
+  "version": "2.0.0-rc.24",
   "description": "Tools for developing Signer and Protocol Agnostic Social Media (Spasm) apps.",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -47,6 +47,7 @@
     "ethers-v6": "npm:ethers@6.13.1",
     "isomorphic-dompurify-v2": "npm:isomorphic-dompurify@2.12.0",
     "js-sha256-v0": "npm:js-sha256@0.11.0",
+    "marked": "15.0.12",
     "nostr-tools-v2": "npm:nostr-tools@2.7.0"
   },
   "exports": {

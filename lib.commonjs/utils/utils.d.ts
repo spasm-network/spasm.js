@@ -1,4 +1,4 @@
-import { UnknownPostOrEvent, UnknownEvent, NostrSpasmEvent, NostrSpasmEventSignedOpened, NostrSpasmVersion, LinkObject, SpasmEventIdFormatV2, SpasmEventAddressFormatV2, SpasmEventSignatureFormatV2, SpasmEventV2, SpasmEventAuthorV2, SpasmEventBodyHostV2, SpasmEventMediaV2, SpasmEventIdV2, SpasmEventBodyReferenceV2, SpasmEventBodyParentV2, ConvertToSpasmConfig, CustomConvertToSpasmConfig, CustomSanitizationConfig, SanitizationConfig, UnknownEventV2, SpasmEventStatV2, SpasmEventChildV2, SpasmEventAddressFormatNameV2, NostrEventSignedOpened, NostrEvent, SpasmEventIdFormatNameV2, ConvertToRssConfig, CustomConvertToRssConfig, CustomGenerateRssFeedConfig, GenerateRssFeedConfig, PostSignature } from "./../types/interfaces.js";
+import { UnknownPostOrEvent, UnknownEvent, NostrSpasmEvent, NostrSpasmEventSignedOpened, NostrSpasmVersion, LinkObject, SpasmEventIdFormatV2, SpasmEventAddressFormatV2, SpasmEventSignatureFormatV2, SpasmEventV2, SpasmEventAuthorV2, SpasmEventBodyHostV2, SpasmEventMediaV2, SpasmEventIdV2, SpasmEventBodyReferenceV2, SpasmEventBodyParentV2, ConvertToSpasmConfig, CustomConvertToSpasmConfig, CustomSanitizationConfig, SanitizationConfig, UnknownEventV2, SpasmEventStatV2, SpasmEventChildV2, SpasmEventAddressFormatNameV2, NostrEventSignedOpened, NostrEvent, SpasmEventIdFormatNameV2, ConvertToRssConfig, CustomConvertToRssConfig, CustomGenerateRssFeedConfig, GenerateRssFeedConfig, PostSignature, CustomFunctionType } from "./../types/interfaces.js";
 export declare const hasValue: (el?: any) => boolean;
 export declare const isStringOrNumber: (val: any) => boolean;
 export declare const isNumberOrString: (val: any) => boolean;
@@ -24,6 +24,13 @@ export declare const toBeFullTimestamp: (value: string | number) => number | nul
 export declare const toBeStandardizedTimestamp: (value: string | number) => number | undefined;
 export declare const toBeStandardTimestamp: (value: string | number) => number | undefined;
 export declare const toBeNostrTimestamp: (value: string | number) => number | undefined;
+export declare const toBeDate: (value: string | number, format?: "full" | "long" | "medium" | "short") => string | null;
+export declare const toBeDateFull: (val: string | number) => string;
+export declare const toBeFullDate: (val: string | number) => string;
+export declare const toBeDateLong: (val: string | number) => string;
+export declare const toBeLongDate: (val: string | number) => string;
+export declare const toBeDateShort: (val: string | number) => string;
+export declare const toBeShortDate: (val: string | number) => string;
 export declare const getNostrSpasmVersion: (event: NostrSpasmEvent | NostrSpasmEventSignedOpened) => NostrSpasmVersion | null;
 export declare const isValidUrl: (value?: any) => boolean;
 export declare const isUrl: (value?: any) => boolean;
@@ -62,6 +69,9 @@ export declare const sanitizeEventWithDompurify: (originalItem: Object | any[], 
 export declare const sanitizeEvent: (originalItem: Object | any[], config?: CustomSanitizationConfig) => void;
 export declare const sanitizeArray: (originalItem: Object | any[], config?: CustomSanitizationConfig) => void;
 export declare const sanitizeAnything: (originalItem: Object | any[], config?: CustomSanitizationConfig) => void;
+export declare const toLowerCaseIfValueIsString: (val: any) => any;
+export declare const toLowerCaseIfString: (val: any) => any;
+export declare const toLowerCaseAllNestedStrings: (originalItem: Object | any[]) => void;
 export declare const clearArray: (arr: any[]) => void;
 export declare const clearObject: (obj: Record<string, any>) => void;
 type MergeObjectsHandleArrays = "overwriteArrays" | "mergeArrays";
@@ -82,14 +92,16 @@ export declare const hasSiblingSpasm: (spasmEvent: SpasmEventV2) => boolean;
 export declare const hasSiblingDmp: (spasmEvent: SpasmEventV2) => boolean;
 export declare const hasSiblingNostr: (spasmEvent: SpasmEventV2) => boolean;
 export declare const hasSiblingWeb2: (spasmEvent: SpasmEventV2) => boolean;
-export declare const getAllSigners: (unknownEvent: UnknownEventV2, onlyVerifiedFlag?: boolean, toLowerCase?: boolean, formatName?: SpasmEventAddressFormatNameV2 | "nostr" | "ethereum" | "spasm") => (string | number)[];
+export declare const getAllSigners: (unknownEvent: UnknownEventV2, onlyVerifiedFlag?: boolean, toLowerCase?: boolean, formatName?: SpasmEventAddressFormatNameV2 | "nostr" | "ethereum" | "spasm" | "any", returnNostrSignersAs?: "hex" | "npub" | "any") => (string | number)[];
 export declare const getAllSpasmSigners: (unknownEvent: UnknownEventV2) => (string | number)[];
 export declare const getAllEthereumSigners: (unknownEvent: UnknownEventV2) => (string | number)[];
-export declare const getAllNostrSigners: (unknownEvent: UnknownEventV2) => (string | number)[];
-export declare const getVerifiedSigners: (unknownEvent: UnknownEventV2) => (string | number)[];
+export declare const getAllNostrSigners: (unknownEvent: UnknownEventV2, returnNostrSignersAs?: "hex" | "npub" | "any") => (string | number)[];
+export declare const getVerifiedSigners: (unknownEvent: UnknownEventV2, returnNostrSignersAs?: "hex" | "npub" | "any") => (string | number)[];
 export declare const getVerifiedSpasmSigners: (unknownEvent: UnknownEventV2) => (string | number)[];
 export declare const getVerifiedEthereumSigners: (unknownEvent: UnknownEventV2) => (string | number)[];
 export declare const getVerifiedNostrSigners: (unknownEvent: UnknownEventV2) => (string | number)[];
+export declare const hasVerifiedSigner: (unknownEvent: UnknownEventV2) => boolean;
+export declare const hasValidSignature: (unknownEvent: UnknownEventV2) => boolean;
 export declare const getAllIdsFromArrayOfIdObjects: (arrayOfIdObjects: SpasmEventIdV2[], toLowerCase?: boolean) => (string | number)[];
 export declare const getAllEventIds: (unknownEvent: UnknownEventV2, toLowerCase?: boolean) => (string | number)[];
 export declare const getAllParentIds: (unknownEvent: UnknownEventV2, toLowerCase?: boolean) => (string | number)[];
@@ -124,6 +136,18 @@ export declare const extractRootIdByFormat: (unknownEvent: UnknownEventV2, custo
 export declare const extractRootSpasmId01: (unknownEvent: UnknownEventV2) => string | number;
 export declare const removeDuplicatesFromArray: (array: (string | number)[]) => (string | number)[];
 export declare const removeDuplicatesFromArrayOfStrings: (array: string[]) => string[];
+/**
+ * Removes duplicate tag arrays from a Nostr tags array
+ * Each Nostr tag is an array of strings
+ */
+export declare const removeDuplicateTags: (tags: string[][]) => string[][];
+export declare const removeDuplicateNostrTags: (tags: string[][]) => string[][];
+export declare const deduplicateTags: (tags: string[][]) => string[][];
+export declare const deduplicateNostrTags: (tags: string[][]) => string[][];
+export declare const uniqueTagsOnly: (tags: string[][]) => string[][];
+export declare const uniqueNostrTagsOnly: (tags: string[][]) => string[][];
+export declare const removeDuplicateArraysFromArrayOrArraysOfStrings: (tags: string[][]) => string[][];
+export declare const keepUniqueArraysInArrayOrArraysOfStrings: (tags: string[][]) => string[][];
 export declare const checkIfEventHasThisId: (unknownEvent: UnknownEventV2, id: (string | number), shortIdLength?: number) => Boolean;
 export declare const getEventById: (unknownEvents: UnknownEventV2[], id: (string | number), shortIdLength?: number) => SpasmEventV2 | null;
 export declare const getEventsByIds: (unknownEvents: UnknownEventV2[], ids: (string | number)[], shortIdLength?: number) => SpasmEventV2[] | null;
@@ -144,14 +168,15 @@ export declare const prependToArrayIfEventIsUnique: (array: SpasmEventV2[], even
 export declare const sortSpasmEventsV2ByDbAddedTimestamp: (unknownEvents: any[], order?: "asc" | "desc") => SpasmEventV2[] | null;
 export declare const sortSpasmEventsV2: (unknownEvents: any[], order?: "asc" | "desc") => SpasmEventV2[] | null;
 export declare const ifEventsHaveSameSpasmId01: (event1: UnknownEventV2, event2: UnknownEventV2) => Boolean;
-export declare const deepCopyOfObject: (obj: any) => any;
-export declare const copyOf: (obj: any) => any;
+export declare const deepCopyOfObject: (obj: any, seen?: WeakMap<object, any>) => any;
+export declare const copyOf: (obj: any, seen?: WeakMap<object, any>) => any;
 export declare const fakeAsString: (val: any) => string;
 export declare const fakeAsNumber: (val: any) => number;
 export declare const fakeAsArray: (val: any) => any[];
 export declare const fakeAsNull: (val: any) => null;
 export declare const fakeAsAny: (val: any) => any;
 export declare const fakeAsObject: (val: any) => Record<any, any>;
+export declare const fakeAsFunction: (val: any) => CustomFunctionType;
 export declare const cleanSpasmEventV2: (spasmEvent: SpasmEventV2) => void;
 export declare const mergeStatsV2: (allStats: SpasmEventStatV2[][]) => SpasmEventStatV2[] | null;
 export declare const mergeChildrenV2: (allChildren: SpasmEventChildV2[][], depth?: number) => SpasmEventChildV2[] | null;

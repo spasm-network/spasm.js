@@ -2350,4 +2350,8 @@ export declare const validSpasmEventV2TreeDepth2_Post1Reply2React1ConvertedToRss
 export declare const validPostWithRssItemConvertedToRssEvent: RssEvent;
 export declare const validMultiSignedSpasmEventV2WithMediaLinksConvertedToRssEvent: RssEvent;
 export declare const validMultiSignedSpasmEventV2WithMarkdownMediaLinksConvertedToRssEvent: RssEvent;
+export declare const validRssFeedChannelEmpty: string;
+export declare const validRssFeedChannelEmptyWithEthereumSigner: string;
+export declare const validRssFeedChannelEmptyWithNostrSigner: string;
+export declare const validSpasmEventBodyV2WithManyDuplicateValues: SpasmEventBodyV2;
 //# sourceMappingURL=_events-data.d.ts.map

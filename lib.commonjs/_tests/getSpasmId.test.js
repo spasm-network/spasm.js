@@ -124,7 +124,7 @@ describe("getSpasmId() tests for unsigned test events", () => {
     test("should get Spasm ID of SpasmEventV2ToTestSpasmid01", () => {
         const input = _events_data_js_1.SpasmEventV2ToTestSpasmid01;
         // const output = SpasmEventV2ConvertedToSpasmid01
-        const output = "spasmid0180e1ffb761636a38863d4a309ab42d7392e7daa9da7abfcfe4a745246a4f317a";
+        const output = "spasmid01774b98722bd3b3adcc102c3661bcc1b487004aa811440be8c893391e988f7a66";
         expect((0, getSpasmId_js_1.getSpasmId)(input)).toStrictEqual(output);
     });
     test("Spasm ID of SpasmEventV2ToTestSpasmid01", () => {
@@ -458,6 +458,30 @@ describe("getSpasmId() tests for unsigned test events", () => {
         // Changed:
         output.pows[2].words[0] = "changed word";
         expect((0, getSpasmId_js_1.getSpasmId)(input)).not.toEqual((0, getSpasmId_js_1.getSpasmId)(output));
+    });
+    test("Spasm ID 01 should be case-insensitive to values in tips", () => {
+        const spasmEvent = (0, convertToSpasm_js_1.convertToSpasm)((0, index_js_1.copyOf)(_events_data_js_1.validSpasmEventBodyV2WithOneNostrSigner));
+        const input = (0, index_js_1.copyOf)(spasmEvent);
+        const output = (0, index_js_1.copyOf)(spasmEvent);
+        const invalidOutput = (0, index_js_1.copyOf)(spasmEvent);
+        const upperCaseOutput = (0, index_js_1.copyOf)(spasmEvent);
+        // Changed:
+        invalidOutput.tips[0].address = "changed address";
+        upperCaseOutput.tips[0].address =
+            upperCaseOutput.tips[0].address.toUpperCase();
+        upperCaseOutput.tips[0].text =
+            upperCaseOutput.tips[0].text.toUpperCase();
+        upperCaseOutput.tips[0].currency.name =
+            upperCaseOutput.tips[0].currency.name.toUpperCase();
+        upperCaseOutput.tips[0].currency.ticker =
+            upperCaseOutput.tips[0].currency.ticker.toUpperCase();
+        expect((0, getSpasmId_js_1.getSpasmId)(input)).not.toEqual(null);
+        expect((0, getSpasmId_js_1.getSpasmId)(input)).not.toEqual(undefined);
+        expect((0, getSpasmId_js_1.getSpasmId)(input)).not.toEqual("");
+        expect(typeof ((0, getSpasmId_js_1.getSpasmId)(input))).toEqual("string");
+        expect((0, getSpasmId_js_1.getSpasmId)(input)).toEqual((0, getSpasmId_js_1.getSpasmId)(output));
+        expect((0, getSpasmId_js_1.getSpasmId)(input)).not.toEqual((0, getSpasmId_js_1.getSpasmId)(invalidOutput));
+        expect((0, getSpasmId_js_1.getSpasmId)(input)).toEqual((0, getSpasmId_js_1.getSpasmId)(upperCaseOutput));
     });
 });
 //# sourceMappingURL=getSpasmId.test.js.map

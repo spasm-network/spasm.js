@@ -233,13 +233,20 @@ describe("isNostrEvent(), isNostrEventSignedOpened(), isNostrSpasmEvent(), isNos
         expect((0, identifyEvent_js_1.isNostrSpasmEventSignedOpened)(input)).toBe(true);
     });
     // pubkey
-    test("should return false if an object is missing 'pubkey'", () => {
+    // test("should return false if an object is missing 'pubkey'", () => {
+    // Nostr event without pubkey should still be identified as Nostr event,
+    // e.g., if we want to convert spasmBody to Nostr and then attach pubkey.
+    test("should return true if an object is missing 'pubkey'", () => {
         const input = JSON.parse(JSON.stringify(_events_data_js_1.validNostrSpasmEventSignedOpened));
         delete input.pubkey;
-        expect((0, identifyEvent_js_1.isNostrEvent)(input)).toBe(false);
-        expect((0, identifyEvent_js_1.isNostrSpasmEvent)(input)).toBe(false);
-        expect((0, identifyEvent_js_1.isNostrEventSignedOpened)(input)).toBe(false);
-        expect((0, identifyEvent_js_1.isNostrSpasmEventSignedOpened)(input)).toBe(false);
+        // expect(isNostrEvent(input)).toBe(false);
+        // expect(isNostrSpasmEvent(input)).toBe(false);
+        // expect(isNostrEventSignedOpened(input)).toBe(false);
+        // expect(isNostrSpasmEventSignedOpened(input)).toBe(false);
+        expect((0, identifyEvent_js_1.isNostrEvent)(input)).toBe(true);
+        expect((0, identifyEvent_js_1.isNostrSpasmEvent)(input)).toBe(true);
+        expect((0, identifyEvent_js_1.isNostrEventSignedOpened)(input)).toBe(true);
+        expect((0, identifyEvent_js_1.isNostrSpasmEventSignedOpened)(input)).toBe(true);
     });
     test("should return false if pubkey is a number", () => {
         const input = JSON.parse(JSON.stringify(_events_data_js_1.validNostrSpasmEventSignedOpened));

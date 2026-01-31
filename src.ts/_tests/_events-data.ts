@@ -2207,6 +2207,29 @@ export const validSpasmEventBodyV2WithOneNostrSigner: SpasmEventBodyV2 = {
         }
       ]
     }
+  ],
+  tips: [
+    {
+      address: "tips-address-88",
+      text: "tips-text-88",
+      expiration: { timestamp: 1641074686179 } ,
+      currency: { name: "Monero", ticker: "XMR" },
+      network: { name: "testnet", id: "2" }
+    },
+    {
+      address: "tips-address-84",
+      text: "tips-text-84",
+      expiration: { timestamp: 1641074686178 },
+      currency: { name: "Monero", ticker: "XMR" },
+      network: { name: "mainnet", id: "1" },
+    },
+    {
+      address: "eth-tips-address",
+      currency: { ticker: "ETH" }
+    },
+    {
+      address: "btc-tips-address"
+    },
   ]
 }
 
@@ -2248,6 +2271,46 @@ export const validSpasmEventBodyV2WithOneNostrSignerConvertedToNostrSpasmEventV2
       // "", // signed string
       // "" // type?
     ],
+    [
+      "spasm_tips",
+      "tips-address-88",
+      "tips-text-88",
+      "1641074686179",
+      "Monero",
+      "XMR",
+      "testnet",
+      "2"
+    ],
+    [
+      "spasm_tips",
+      "tips-address-84",
+      "tips-text-84",
+      "1641074686178",
+      "Monero",
+      "XMR",
+      "mainnet",
+      "1",
+    ],
+    [
+      "spasm_tips",
+      "eth-tips-address",
+      "",
+      "",
+      "",
+      "ETH",
+      "",
+      ""
+    ],
+    [
+      "spasm_tips",
+      "btc-tips-address",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
   ]
 }
 
@@ -3606,6 +3669,7 @@ export const SpasmEventV2ToTestSpasmid01_ChangedNotImportantKeys: SpasmEventV2 =
   // then tips should NOT be included.
   // However, what if a malicious actor gets access to user's
   // private key and updates all posts with his tips addresses?
+  // Currently, tips are inluced in spasmid01
   tips: [
     {
       text: "tips-text-88",
@@ -3983,14 +4047,14 @@ export const SpasmEventV2ConvertedToSpasmid01: EventForSpasmid01 = {
       address: "tips-address-84",
       text: "tips-text-84",
       expiration: { timestamp: 1641074686178 } ,
-      currency: { name: "Monero", ticker: "XMR" },
+      currency: { name: "monero", ticker: "xmr" },
       network: { name: "mainnet", id: "1" }
     },
     {
       address: "tips-address-88",
       text: "tips-text-88",
       expiration: { timestamp: 1641074686179 } ,
-      currency: { name: "Monero", ticker: "XMR" },
+      currency: { name: "monero", ticker: "xmr" },
       network: { name: "testnet", id: "2" }
     }
   ],
@@ -5871,4 +5935,244 @@ export const validMultiSignedSpasmEventV2WithMarkdownMediaLinksConvertedToRssEve
   guid: extractSpasmId01(validMultiSignedSpasmEventV2WithMarkdownMediaLinks) as string,
   pubDate: new Date(validMultiSignedSpasmEventV2WithMarkdownMediaLinks.timestamp!).toUTCString(),
   enclosureUrl: "https://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4"
+}
+
+export const validRssFeedChannelEmpty: string = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spasm</title>
+    <description>RSS Feed of Spasm events</description>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 01 Jan 2026 12:34:56 GMT</lastBuildDate>
+    <atom:link href="https://degenrocket.space/api/events?format=rss&amp;action=post&amp;action=reply" rel="self" type="application/rss+xml" />
+    <image>
+      <url>https://media.spasm.network/spasmim016863a1cae922c77a970a86e0d339455d6417c6106125b8ebac744e50f51581a9.jpeg</url>
+      <title>Spasm</title>
+    </image>
+
+  </channel>
+</rss>`
+
+export const validRssFeedChannelEmptyWithEthereumSigner: string = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spasm - BlackSpaceDev (0xf855...c2fa)</title>
+    <description>RSS Feed of Spasm events</description>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 01 Jan 2026 12:34:56 GMT</lastBuildDate>
+    <atom:link href="https://degenrocket.space/api/events?format=rss&amp;action=post&amp;action=reply" rel="self" type="application/rss+xml" />
+    <image>
+      <url>https://media.spasm.network/spasmim016863a1cae922c77a970a86e0d339455d6417c6106125b8ebac744e50f51581a9.jpeg</url>
+      <title>Spasm</title>
+    </image>
+
+  </channel>
+</rss>`
+
+export const validRssFeedChannelEmptyWithNostrSigner: string = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Spasm - PurpleMarsHodler (npub1k...mr0z)</title>
+    <description>RSS Feed of Spasm events</description>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 01 Jan 2026 12:34:56 GMT</lastBuildDate>
+    <atom:link href="https://degenrocket.space/api/events?format=rss&amp;action=post&amp;action=reply" rel="self" type="application/rss+xml" />
+    <image>
+      <url>https://media.spasm.network/spasmim016863a1cae922c77a970a86e0d339455d6417c6106125b8ebac744e50f51581a9.jpeg</url>
+      <title>Spasm</title>
+    </image>
+
+  </channel>
+</rss>`
+
+export const validSpasmEventBodyV2WithManyDuplicateValues: SpasmEventBodyV2 = {
+  type:"SpasmEventBodyV2",
+  action:"reply",
+  content:"Reply native spasm event body V2 to genesis",
+  parent: {
+    ids: [
+      {
+        value:"spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f"
+      },
+      {
+        value:"spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f"
+      },
+      {
+        value:"0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b"
+      },
+      {
+        value:"spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f"
+      },
+      {
+        value: "3da979448d9ba263864c4d6f14984c423a3838364ec255f03c7904b1ae77f206",
+        format: {
+          name: "nostr-hex"
+        }
+      },
+      {
+        value: "3da979448d9ba263864c4d6f14984c423a3838364ec255f03c7904b1ae77f206",
+        format: {
+          name: "nostr-hex"
+        }
+      },
+      {
+        value: "3da979448d9ba263864c4d6f14984c423a3838364ec255f03c7904b1ae77f206",
+      },
+      {
+        value:"0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b"
+      }
+    ]
+  },
+  timestamp:1728711181918,
+  license:"SPDX-License-Identifier: CC0-1.0",
+  protocol:{ name:"spasm", version:"2.0.0" },
+  authors:[
+    {
+      addresses:[
+        {
+          value:"0x899a9413f0a3a4eee462e10d18ad8813fe0092c0",
+          format: { name:"ethereum-pubkey" }
+        },
+        {
+          value:"0x899a9413f0a3a4eee462e10d18ad8813fe0092c0",
+          format: { name:"ethereum-pubkey" }
+        },
+        {
+          value:"0x1111000000000000000000000000000000001111",
+          format: { name:"ethereum-pubkey" }
+        },
+      ]
+    },
+    {
+      addresses:[
+        {
+          value:"0x2222000000000000000000000000000000002222",
+        },
+        {
+          value:"0x899a9413f0a3a4eee462e10d18ad8813fe0092c0",
+          format: { name:"ethereum-pubkey" }
+        },
+        {
+          value:"0x1111000000000000000000000000000000001111",
+        },
+      ]
+    },
+    {
+      addresses:[
+        {
+          value:"0x899a9413f0a3a4eee462e10d18ad8813fe0092c0",
+          format: { name:"ethereum-pubkey" }
+        },
+        {
+          value:"0x899a9413f0a3a4eee462e10d18ad8813fe0092c0",
+          format: { name:"ethereum-pubkey" }
+        },
+        {
+          value:"0x1111000000000000000000000000000000001111",
+          format: { name:"ethereum-pubkey" }
+        },
+      ]
+    }
+  ],
+  references: [
+    {
+      ids: [
+        {
+          value: "4376c65d2f232afbe9b882a35baa4f6fe8667c4e684749af565f981833ed6a65",
+          format: { name: "nostr-hex" },
+          pubkey: "bf2376e17ba4ec269d10fcc996a4746b451152be9031fa48e74553dde5526bce"
+        },
+        {
+          value: "4376c65d2f232afbe9b882a35baa4f6fe8667c4e684749af565f981833ed6a65",
+          format: { name: "nostr-hex" },
+          pubkey: "bf2376e17ba4ec269d10fcc996a4746b451152be9031fa48e74553dde5526bce"
+        },
+        {
+          value: "spasmid019ad43c95e3a59ef9fb7ef0e493c6fee5653569a33872af9caad6b37e8fc27807",
+          format: { name: "spasmid", version: "01" },
+          pubkey: "bf2376e17ba4ec269d10fcc996a4746b451152be9031fa48e74553dde5526bce"
+        }
+      ]
+    },
+    {
+      ids: [
+        {
+          value: "spasmid018c2de31b99295885fbc4d86ecbeaa51c006a79abe5e728493b24bd186fb752eb",
+          format: { name: "spasmid", version: "01" }
+        },
+        {
+          value: "spasmid018c2de31b99295885fbc4d86ecbeaa51c006a79abe5e728493b24bd186fb752eb",
+        },
+        {
+          value: "https://forum.degenrocket.space/?b=21&t=fog&c=samourai&h=hijack",
+          format: { name: "url" }
+        },
+        {
+          value: "4376c65d2f232afbe9b882a35baa4f6fe8667c4e684749af565f981833ed6a65",
+          format: { name: "nostr-hex" },
+          pubkey: "bf2376e17ba4ec269d10fcc996a4746b451152be9031fa48e74553dde5526bce"
+        },
+        {
+          value: "4376c65d2f232afbe9b882a35baa4f6fe8667c4e684749af565f981833ed6a65",
+        },
+        {
+          value: "https://forum.degenrocket.space/?l=terraforming",
+          format: { name: "guid" }
+        }
+      ]
+    },
+    {
+      ids: [
+        {
+          value: "https://degenrocket.space",
+          format: { name: "url" }
+        }
+      ]
+    },
+    {
+      ids: [
+        {
+          value: "https://thedefiant.io/pepe-coin-genslr-coin-wojak-coin-trump-coin-rekt-coin-stonks-coin-when-does-it-stop",
+          format: { name: "url" }
+        }
+      ]
+    }
+  ],
+  mentions: [
+    {
+      addresses: [
+        {
+          value: "bf2376e17ba4ec269d10fcc996a4746b451152be9031fa48e74553dde5526bce",
+          format: {
+            name: "nostr-hex"
+          }
+        },
+        {
+          value: "bf2376e17ba4ec269d10fcc996a4746b451152be9031fa48e74553dde5526bce",
+          format: {
+            name: "nostr-hex"
+          }
+        }
+      ]
+    },
+    {
+      addresses: [
+        {
+          value: "1234000000000000000000000000000000000000000000000000000000004321",
+        },
+        {
+          value: "1234000000000000000000000000000000000000000000000000000000004321",
+          format: {
+            name: "nostr-hex"
+          }
+        },
+        {
+          value: "bf2376e17ba4ec269d10fcc996a4746b451152be9031fa48e74553dde5526bce",
+          format: {
+            name: "nostr-hex"
+          }
+        }
+      ]
+    }
+  ],
 }

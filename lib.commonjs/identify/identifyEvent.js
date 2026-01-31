@@ -578,12 +578,13 @@ const isNostrEvent = (unknownPostOrEvent) => {
         return false;
     // TODO what if we want to convert Spasm event without author
     // to Nostr event before attaching a Nostr pubkey?
-    // pubkey
-    if (!('pubkey' in unknownPostOrEvent))
-        return false;
-    if (!unknownPostOrEvent.pubkey)
-        return false;
-    if (typeof (unknownPostOrEvent.pubkey) !== "string")
+    // Thus, enabling events without pubkey
+    // if (!('pubkey' in unknownPostOrEvent)) return false
+    // if (!unknownPostOrEvent.pubkey) return false
+    // if (typeof(unknownPostOrEvent.pubkey) !== "string") return false
+    if ("pubkey" in unknownPostOrEvent &&
+        unknownPostOrEvent.pubkey &&
+        typeof (unknownPostOrEvent.pubkey) !== "string")
         return false;
     // tags
     // tags is a mandatory field

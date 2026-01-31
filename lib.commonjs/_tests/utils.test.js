@@ -1389,6 +1389,38 @@ describe("sanitizeEvent() function tests", () => {
         expect(input).toStrictEqual(output);
     });
 });
+// toLowerCaseAllNestedStrings()
+// toLowerCaseIfString()
+describe("custom toLowerCase() functions tests", () => {
+    test("should sanitize all nested strings in object", () => {
+        const input = {
+            one: "Hello",
+            two: {
+                three: "WORLD",
+                four: ["UP", "down", { and: "UP", num: 0, val: 1 }]
+            }
+        };
+        const output = {
+            one: "hello",
+            two: {
+                three: "world",
+                four: ["up", "down", { and: "up", num: 0, val: 1 }]
+            }
+        };
+        (0, index_js_1.toLowerCaseAllNestedStrings)(input);
+        expect(input).toStrictEqual(output);
+        const inputArray = ["UP", "down", { and: "UP", num: 0, val: 1 }];
+        const outputArray = ["up", "down", { and: "up", num: 0, val: 1 }];
+        (0, index_js_1.toLowerCaseAllNestedStrings)(inputArray);
+        expect(inputArray).toStrictEqual(outputArray);
+        const inputString = (0, index_js_1.toLowerCaseIfString)("Hello World");
+        const outputString = "hello world";
+        expect(inputString).toStrictEqual(outputString);
+        const inputNumber = (0, index_js_1.toLowerCaseIfString)(1);
+        const outputNumber = 1;
+        expect(inputNumber).toStrictEqual(outputNumber);
+    });
+});
 // mergeConfigs()
 describe("mergeConfigs() function tests", () => {
     test("mergeConfigs() should merge two full configs", () => {
@@ -1644,11 +1676,84 @@ describe("getAllSigners() function tests", () => {
         expect((0, index_js_1.getAllSigners)(inputNostrConverted)).toEqual(outputNostr);
         expect((0, index_js_1.getAllSigners)(inputNostrSpasmConverted)).toEqual(outputNostrSpasm);
         expect((0, index_js_1.getAllSigners)(inputWeb2Converted)).toEqual(outputWeb2);
+        expect((0, index_js_1.getAllSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks))
+            .toEqual([
+            "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+            "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"
+        ]);
+        expect((0, index_js_1.getAllSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, true, true, "any", "any"))
+            .toEqual([
+            "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+            "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"
+        ]);
+        expect((0, index_js_1.getAllSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, true, true, "any", "hex"))
+            .toEqual([
+            "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+            "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"
+        ]);
+        expect((0, index_js_1.getAllSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, true, true, "any", "npub"))
+            .toEqual([
+            "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+            "npub195ke7xdf3efncf6spe0s26322mdcl6frj0n6yy6akcadxqzgdapqjsm60y"
+        ]);
+        expect((0, index_js_1.getAllSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, true, true, "nostr", "any"))
+            .toEqual([
+            "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"
+        ]);
+        expect((0, index_js_1.getAllSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, true, true, "nostr", "hex"))
+            .toEqual([
+            "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"
+        ]);
+        expect((0, index_js_1.getAllSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, true, true, "nostr", "npub"))
+            .toEqual([
+            "npub195ke7xdf3efncf6spe0s26322mdcl6frj0n6yy6akcadxqzgdapqjsm60y"
+        ]);
         // getVerifiedSigners()
         expect((0, index_js_1.getVerifiedSigners)(inputDmp)).toEqual(outputDmp);
         expect((0, index_js_1.getVerifiedSigners)(inputNostr)).toEqual(outputNostr);
         expect((0, index_js_1.getVerifiedSigners)(inputNostrSpasm)).toEqual(outputNostrSpasm);
         expect((0, index_js_1.getVerifiedSigners)(inputWeb2)).toEqual(outputWeb2);
+        expect((0, index_js_1.getVerifiedSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks))
+            .toEqual([
+            "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+            "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"
+        ]);
+        expect((0, index_js_1.getVerifiedSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, "hex")).toEqual([
+            "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+            "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"
+        ]);
+        expect((0, index_js_1.getVerifiedSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, "npub")).toEqual([
+            "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
+            "npub195ke7xdf3efncf6spe0s26322mdcl6frj0n6yy6akcadxqzgdapqjsm60y"
+        ]);
+        // getNostrSigners
+        expect((0, index_js_1.getAllNostrSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks)).toEqual([
+            "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"
+        ]);
+        expect((0, index_js_1.getAllNostrSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, "hex")).toEqual([
+            "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"
+        ]);
+        expect((0, index_js_1.getAllNostrSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks, "npub")).toEqual([
+            "npub195ke7xdf3efncf6spe0s26322mdcl6frj0n6yy6akcadxqzgdapqjsm60y"
+        ]);
+        // getAllEthereumSigners
+        expect((0, index_js_1.getAllEthereumSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks)).toEqual([
+            "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e"
+        ]);
+        // getAllSpasmSigners
+        expect((0, index_js_1.getAllSpasmSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks)).toEqual([]);
+        // hasVerifiedSigner()
+        expect((0, index_js_1.hasVerifiedSigner)(inputDmp)).toEqual(true);
+        expect((0, index_js_1.hasVerifiedSigner)(inputNostr)).toEqual(true);
+        expect((0, index_js_1.hasVerifiedSigner)(inputNostrSpasm)).toEqual(true);
+        expect((0, index_js_1.hasVerifiedSigner)(inputWeb2)).toEqual(false);
+        expect((0, index_js_1.hasVerifiedSigner)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks)).toEqual(true);
+        // hasValidSignature
+        expect((0, index_js_1.hasValidSignature)(inputDmp)).toEqual(true);
+        expect((0, index_js_1.hasValidSignature)(inputNostr)).toEqual(true);
+        expect((0, index_js_1.hasValidSignature)(inputNostrSpasm)).toEqual(true);
+        expect((0, index_js_1.hasValidSignature)(inputWeb2)).toEqual(false);
+        expect((0, index_js_1.hasValidSignature)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks)).toEqual(true);
     });
 });
 // getAllSignatures()
@@ -1664,7 +1769,7 @@ describe("getAllSignatures() function tests", () => {
         const outputNostr = ["908a15e46fb4d8675bab026fc230a0e3542bfade63da02d542fb78b2a8513fcd0092619a2c8c1221e581946e0191f2af505dfdf8657a414dbca329186f009262"];
         const outputNostrSpasm = ["db60516accfc025582bf556e3c7660c89e3982d2a656201aaea4189c6d3e3779b202c60302e55ad782ca711df20550384516abe4d7387470bc83ac757ed8f0f1"];
         const outputWeb2 = [];
-        // getAllSigners()
+        // getAllSignatures()
         expect((0, index_js_1.getAllSignatures)(inputDmp)).toEqual(outputDmp);
         expect((0, index_js_1.getAllSignatures)(inputNostr)).toEqual(outputNostr);
         expect((0, index_js_1.getAllSignatures)(inputNostrSpasm)).toEqual(outputNostrSpasm);
@@ -3366,6 +3471,47 @@ describe("toBeShortTimestamp() function tests", () => {
             .toStrictEqual(1641074686);
     });
 });
+// toBeDate()
+describe("toBeDate() function tests", () => {
+    test("toBeDate() should return date", () => {
+        expect((0, index_js_1.toBeDate)(1641074686178))
+            .toStrictEqual("Sat, 01 Jan 2022 22:04:46 GMT");
+        expect((0, index_js_1.toBeDate)("1641074686178"))
+            .toStrictEqual("Sat, 01 Jan 2022 22:04:46 GMT");
+        expect((0, index_js_1.toBeDate)("2022-01-01T22:04:46+00:00"))
+            .toStrictEqual("Sat, 01 Jan 2022 22:04:46 GMT");
+        expect((0, index_js_1.toBeDate)(1714176000))
+            .toStrictEqual("Sat, 27 Apr 2024 00:00:00 GMT");
+        // Wrong weekday (Mon istead of Wed)
+        expect((0, index_js_1.toBeDate)("Mon, 19 Feb 2025"))
+            .toStrictEqual("Wed, 19 Feb 2025 00:00:00 GMT");
+        expect((0, index_js_1.toBeDate)("Wed, 19 Feb 2025 22:00:39 GMT"))
+            .toStrictEqual("Wed, 19 Feb 2025 22:00:39 GMT");
+        expect((0, index_js_1.toBeDate)("hello world"))
+            .toStrictEqual(null);
+        expect((0, index_js_1.toBeDate)(0))
+            .toStrictEqual(null);
+    });
+    test("toBeDate() aliases should return date", () => {
+        expect((0, index_js_1.toBeShortDate)(1641074686178))
+            .toStrictEqual("01 Jan 2022");
+        expect((0, index_js_1.toBeDateShort)("1641074686178"))
+            .toStrictEqual("01 Jan 2022");
+        expect((0, index_js_1.toBeLongDate)("2022-01-01T22:04:46+00:00"))
+            .toStrictEqual("01 Jan 2022 22:04:46");
+        expect((0, index_js_1.toBeDateLong)(1714176000))
+            .toStrictEqual("27 Apr 2024 00:00:00");
+        // Wrong weekday (Mon istead of Wed)
+        expect((0, index_js_1.toBeFullDate)("Mon, 19 Feb 2025"))
+            .toStrictEqual("Wed, 19 Feb 2025 00:00:00 GMT");
+        expect((0, index_js_1.toBeDateFull)("Wed, 19 Feb 2025 22:00:39 GMT"))
+            .toStrictEqual("Wed, 19 Feb 2025 22:00:39 GMT");
+        expect((0, index_js_1.toBeShortDate)("hello world"))
+            .toStrictEqual(null);
+        expect((0, index_js_1.toBeLongDate)(0))
+            .toStrictEqual(null);
+    });
+});
 // isHex()
 // isNostrHex()
 describe("isHex() and isNostrHex() function tests", () => {
@@ -3722,6 +3868,77 @@ describe("getAllMediaUrlsFromString() function tests", () => {
         ]);
         expect((0, index_js_1.parseStringForMediaUrls)("https://degenrocket.space/ and https://forum.spasm.network/ \n![image](https://forum.spasm.network/image.jpeg)\nMore episodes:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4\nAnd audio files: https://degenrocket.space/audio1.mp3, https://degenrocket.space/audio2.mp3\nAnd duplicates:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4", [])).toStrictEqual([]);
         expect((0, index_js_1.parseFirstAudioOrVideoUrlFromString)("https://degenrocket.space/ and https://forum.spasm.network/ \n![image](https://forum.spasm.network/image.jpeg)\nMore episodes:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4\nAnd audio files: https://degenrocket.space/audio1.mp3, https://degenrocket.space/audio2.mp3\nAnd duplicates:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4")).toStrictEqual("https://degenrocket.space/video1.mp4");
+    });
+});
+describe("removeDuplicateTags() function tests", () => {
+    test("removes completely duplicate tag arrays", () => {
+        const tags = [
+            ['e', '123', 'wss://relay.damus.io'],
+            ['p', '456'],
+            // Duplicate of first tag
+            ['e', '123', 'wss://relay.damus.io'],
+            ['e', '789', 'wss://relay.damus.io'],
+        ];
+        const result = (0, index_js_1.removeDuplicateTags)(tags);
+        expect(result).toEqual([
+            ['e', '123', 'wss://relay.damus.io'],
+            ['p', '456'],
+            ['e', '789', 'wss://relay.damus.io'],
+        ]);
+    });
+    test('keeps tags with different values even if first element is same', () => {
+        const tags = [
+            ['e', '123', 'wss://relay.damus.io'],
+            ['e', '456', 'wss://relay.damus.io'],
+            // Different third element
+            ['e', '123', 'wss://relay.nostr.com'],
+        ];
+        const result = (0, index_js_1.removeDuplicateNostrTags)(tags);
+        expect(result).toEqual([
+            ['e', '123', 'wss://relay.damus.io'],
+            ['e', '456', 'wss://relay.damus.io'],
+            ['e', '123', 'wss://relay.nostr.com'],
+        ]);
+    });
+    test('handles empty array', () => {
+        const tags = [];
+        const result = (0, index_js_1.removeDuplicateTags)(tags);
+        expect(result).toEqual([]);
+    });
+    test('handles array with single tag', () => {
+        const tags = [['p', '456']];
+        const result = (0, index_js_1.removeDuplicateTags)(tags);
+        expect(result).toEqual([['p', '456']]);
+    });
+    test('preserves order of unique tags', () => {
+        const tags = [
+            ['p', '111'],
+            ['e', '222'],
+            ['p', '111'], // Duplicate
+            ['d', '333'],
+            ['e', '222'], // Duplicate
+        ];
+        const result = (0, index_js_1.removeDuplicateTags)(tags);
+        expect(result).toEqual([
+            ['p', '111'],
+            ['e', '222'],
+            ['d', '333'],
+        ]);
+    });
+    test('handles tags with duplicate values inside a single tag', () => {
+        const tags = [
+            // Duplicate '123' inside tag
+            ['e', '123', '123', 'wss://relay.damus.io'],
+            // Duplicate '456' inside tag
+            ['p', '456', '456'],
+        ];
+        const result = (0, index_js_1.removeDuplicateTags)(tags);
+        // Should keep the tags as-is,
+        // including duplicate values inside each tag
+        expect(result).toEqual([
+            ['e', '123', '123', 'wss://relay.damus.io'],
+            ['p', '456', '456'],
+        ]);
     });
 });
 // template()

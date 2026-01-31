@@ -38,13 +38,14 @@ import {
   // EventForSpasmid01
   SpasmEventV2ToTestSpasmid01,
   // SpasmEventV2ConvertedToSpasmid01,
-  SpasmEventV2ToTestSpasmid01_ChangedNotImportantKeys
+  SpasmEventV2ToTestSpasmid01_ChangedNotImportantKeys,
+  validSpasmEventBodyV2WithOneNostrSigner
 } from "./_events-data.js"
 
 import { convertToSpasm } from "./../convert/convertToSpasm.js"
 import { getSpasmId } from "./../convert/getSpasmId.js"
 import { SpasmEventV2 } from "../types/interfaces.js";
-import { fakeAsObject } from "../utils/index.js";
+import { copyOf, fakeAsObject } from "../utils/index.js";
 
 describe("getSpasmId tests", () => {
   test("should return true if true", () => {
@@ -182,7 +183,7 @@ describe("getSpasmId() tests for unsigned test events", () => {
   test("should get Spasm ID of SpasmEventV2ToTestSpasmid01", () => {
     const input = SpasmEventV2ToTestSpasmid01
     // const output = SpasmEventV2ConvertedToSpasmid01
-    const output = "spasmid0180e1ffb761636a38863d4a309ab42d7392e7daa9da7abfcfe4a745246a4f317a"
+    const output = "spasmid01774b98722bd3b3adcc102c3661bcc1b487004aa811440be8c893391e988f7a66"
     expect(getSpasmId(input)).toStrictEqual(output);
   });
 
@@ -747,4 +748,32 @@ describe("getSpasmId() tests for unsigned test events", () => {
     expect(getSpasmId(input)).not.toEqual(getSpasmId(output));
   });
 
+  test("Spasm ID 01 should be case-insensitive to values in tips", () => {
+    const spasmEvent = convertToSpasm(
+      copyOf(validSpasmEventBodyV2WithOneNostrSigner))
+    const input: SpasmEventV2 = copyOf(spasmEvent)
+    const output: SpasmEventV2 = copyOf(spasmEvent)
+    const invalidOutput: SpasmEventV2 = copyOf(spasmEvent)
+    const upperCaseOutput: SpasmEventV2 = copyOf(spasmEvent)
+
+    // Changed:
+    invalidOutput.tips![0].address = "changed address"
+
+    upperCaseOutput.tips![0].address = 
+      upperCaseOutput.tips![0].address!.toUpperCase()
+    upperCaseOutput.tips![0].text = 
+      upperCaseOutput.tips![0].text!.toUpperCase()
+    upperCaseOutput.tips![0].currency!.name = 
+      upperCaseOutput.tips![0].currency!.name!.toUpperCase()
+    upperCaseOutput.tips![0].currency!.ticker = 
+      upperCaseOutput.tips![0].currency!.ticker!.toUpperCase()
+
+    expect(getSpasmId(input)).not.toEqual(null);
+    expect(getSpasmId(input)).not.toEqual(undefined);
+    expect(getSpasmId(input)).not.toEqual("");
+    expect(typeof(getSpasmId(input))).toEqual("string");
+    expect(getSpasmId(input)).toEqual(getSpasmId(output));
+    expect(getSpasmId(input)).not.toEqual(getSpasmId(invalidOutput));
+    expect(getSpasmId(input)).toEqual(getSpasmId(upperCaseOutput));
+  });
 });

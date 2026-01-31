@@ -1,20 +1,39 @@
 // import {
-//   validDmpEventSignedClosedConvertedToSpasmV2WithSpasmDmpChildWithoutEvent,
-//   validDmpEventSignedClosedConvertedToSpasmV2WithTwoChildrenReverse,
-//   validPostWithNostrReplyToDmpEventConvertedToSpasmV2,
-//   validSpasmWithDmpReplyToDmpEventV0ConvertedToSpasmEventV2,
+//   validSpasmEventBodyV2WithManyDuplicateValues,
 // } from "./_events-data.js"
 // import {
-//   addEventsToTree,
 //   copyOf,
 // } from "../utils/utils.js";
-// import {convertToSpasm} from "../convert/convertToSpasm.js";
 // import {
 //   SpasmEventV2
 // } from "../types/interfaces.js";
-// import { verifyEvent as verifyNostrEvent } from 'nostr-tools-v2'
+// import {convertToSpasm} from "../convert/convertToSpasm.js";
+// import {convertToNostr} from "../convert/convertToNostr.js";
+// import {getSpasmId01} from "../convert/getSpasmId.js";
 
-describe("convertToSpasm() tests for events with parent and root events", () => {
+describe("convertToSpasm() tests for events with multiple duplicate values", () => {
+  // const spasmEvent: SpasmEventV2 =
+  //   convertToSpasm(validSpasmEventBodyV2WithManyDuplicateValues)!
+  // const spasmEventToNostr = convertToNostr(copyOf(spasmEvent))
+  // const spasmEventToNostrToSpasm = convertToSpasm(spasmEventToNostr!)
+  // const id1 = getSpasmId01(copyOf(spasmEvent))
+  // const id2 = getSpasmId01(copyOf(spasmEventToNostrToSpasm))
+  //
+  // test("IDs should have string values", () => {
+  //   expect(id1).not.toEqual(null);
+  //   expect(id1).not.toEqual(undefined);
+  //   expect(id1).not.toEqual("");
+  //   expect(typeof(id1)).toStrictEqual("string")
+  //   expect(id2).not.toEqual(null);
+  //   expect(id2).not.toEqual(undefined);
+  //   expect(id2).not.toEqual("");
+  //   expect(typeof(id2)).toStrictEqual("string")
+  // });
+  //
+  // test("IDs should be equal after converting Spasm to Nostr to Spasm", () => {
+  //   expect(id1).toStrictEqual(id2)
+  // });
+
   test("template", () => {
     expect(true).toStrictEqual(true)
   });

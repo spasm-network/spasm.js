@@ -24,7 +24,9 @@ import {
   toBeLongTimestamp,
   toBeShortTimestamp,
   toBeSpasmEventV2,
-  extractIdFormatNameFromSpasmEventIdV2
+  extractIdFormatNameFromSpasmEventIdV2,
+  isObjectWithValues,
+  toBeString
 } from "../utils/utils.js"
 
 // TODO convertManyToNostr()
@@ -255,6 +257,86 @@ export const convertSpasmEventV2ToNostrSpasmV2 = (
           "authors.addresses",
           String(authorIndex)
         )
+      }
+    })
+  }
+
+  if (
+    "tips" in spasmEventV2 && spasmEventV2.tips &&
+    isArrayWithValues(spasmEventV2.tips)
+  ) {
+    spasmEventV2.tips.forEach(tip => {
+      if (
+        tip && isObjectWithValues(tip) &&
+        "address" in tip && tip.address &&
+        typeof(tip.address) === "string"
+      ) {
+        const tipTag = [
+          "spasm_tips", // tag name
+          tip.address, // address
+          "", // text
+          "", // expiration timestamp
+          "", // currency name
+          "", // currency ticker
+          "", // network name
+          "", // network id
+        ]
+        if (
+          "text" in tip && tip.text &&
+          typeof(tip.text) === "string"
+        ) {
+          tipTag[2] = tip.text
+        }
+        if (
+          "expiration" in tip && tip.expiration &&
+          isObjectWithValues(tip.expiration) &&
+          "timestamp" in tip.expiration &&
+          typeof(tip.expiration.timestamp) === "number"
+        ) {
+          const time = toBeString(tip.expiration.timestamp)
+          if (time && typeof(time) === "string") {
+            tipTag[3] = time
+          }
+        }
+        if (
+          "currency" in tip && tip.currency &&
+          isObjectWithValues(tip.currency)
+        ) {
+          if (
+            "name" in tip.currency && tip.currency.name &&
+            typeof(tip.currency.name) === "string"
+          ) { tipTag[4] = tip.currency.name }
+          if (
+            "ticker" in tip.currency && tip.currency.ticker &&
+            typeof(tip.currency.ticker) === "string"
+          ) { tipTag[5] = tip.currency.ticker }
+        }
+        if (
+          "network" in tip && tip.network &&
+          isObjectWithValues(tip.network)
+        ) {
+          if ("name" in tip.network && tip.network.name) {
+            if (typeof(tip.network.name) === "string") {
+              tipTag[6] = tip.network.name
+            } else if (typeof(tip.network.name) === "number") {
+              const name = toBeString(tip.network.name)
+              if (name && typeof(name) === "string") {
+                tipTag[6] = name
+              }
+            }
+          }
+          if ("id" in tip.network && tip.network.id) {
+            if (typeof(tip.network.id) === "string") {
+              tipTag[7] = tip.network.id
+            } else if (typeof(tip.network.id) === "number") {
+              const id = toBeString(tip.network.id)
+              if (id && typeof(id) === "string") {
+                tipTag[7] = id
+              }
+            }
+          }
+        }
+        nostrEvent.tags?.push(tipTag)
       }
     })
   }

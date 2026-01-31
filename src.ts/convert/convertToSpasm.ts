@@ -48,6 +48,7 @@ import {
   SpasmEventAddressV2,
   SpasmEventAddressFormatNameV2,
   SpasmEventCategoryV2,
+  SpasmEventBodyTipsV2,
 } from "./../types/interfaces.js";
 import {
   toBeHex
@@ -68,7 +69,8 @@ import {
   isArrayWithValues,
   isStringOrNumber,
   assignFormats,
-  isArrayOfStrings
+  isArrayOfStrings,
+  removeDuplicateNostrTags
 } from "./../utils/utils.js";
 import {
   identifyPostOrEvent,
@@ -1315,7 +1317,7 @@ export const standardizeDmpEventSignedOpenedV2 = (
 export const getTagMappedDetails = (
   tag: string[], 
   tags: string[][]
-): string[] | null => {
+): string[][] | null => {
   if (!tag) return null
   if (!isArrayOfStrings(tag)) return null
   if (!tags) return null
@@ -1327,16 +1329,19 @@ export const getTagMappedDetails = (
   const tagName = tag[0]
   const tagValue = tag[1]
   
-  let mappedDetails: string[] | null = null
+  let mappedDetails: string[][] = []
   tags.forEach(tag => {
     if (
       tag[0] === "tags_mapping" &&
       tag[2] === tagName &&
       tag[3] === tagValue
-    ) { mappedDetails = tag }
+    ) { mappedDetails.push(tag) }
   })
 
-  return mappedDetails
+  if (isArrayWithValues(mappedDetails)) {
+    return mappedDetails
+  }
+  return null
 }
 
 export const isMappedTag = (
@@ -1535,7 +1540,15 @@ export const standardizeNostrEventV2 = (
 
   let keywords: string[] = []
 
+  // Remove duplicate tags
+  let uniqueTags: string[][] = []
   if (event.tags && Array.isArray(event.tags)) {
+    uniqueTags = removeDuplicateNostrTags(event.tags)
+  }
+  if (
+    uniqueTags && Array.isArray(uniqueTags) &&
+    isArrayWithValues(uniqueTags)
+  ) {
     event.tags.forEach(function (tag) {
       // References
       // ["e", <event-id>, <relay-url>, <marker>, <pubkey>]
@@ -1546,120 +1559,151 @@ export const standardizeNostrEventV2 = (
         tag[1] && typeof(tag[1]) === 'string' &&
         isMappedTag(tag, event.tags)
       ) {
-        const tagDetails: string[] | null =
+        // We have to make sure that each tags_mapping tag with
+        // associated tag is used, because there might
+        // be multiple tags_mappings tags for one tag.
+        // For example, duplicate parent IDs will have two
+        // different tags_mappings associated with the same ID,
+        // but they will have different mapped values since
+        // duplicate parent IDs on the original Spasm event will
+        // be located at the different array indexes, e.g.,
+        // parentId[0] and parentId[1].
+        // Another example is having two different mentioned
+        // authors with multiple pubkeys which share the same
+        // pubkey, e.g.:
+        // mentioned-author-1: eth-pubkey-1 && nostr-pubkey1
+        // mentioned-author-2: eth-pubkey-1 && nostr-pubkey2
+        // This might happend if an author changed his Nostr
+        // signing key during a conversation tree, but kept
+        // the same Ethereum key, e.g., if his Nostr key got
+        // compromised. In that case, there will be two
+        // different tags_mapping tags associated with
+        // eth-pubkey-1 since it's located in two different
+        // objects.
+        const arrayOfTagDetails: string[][] | null =
           getTagMappedDetails(tag, event.tags)
 
         if (
-          tagDetails && isArrayOfStrings(tagDetails) &&
-          tagDetails[1] === "spasm_id_1" &&
-          tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
-          tagDetails[4] === "se2"
+          arrayOfTagDetails &&
+          isArrayWithValues(arrayOfTagDetails)
         ) {
-          const originalValue =
-            getOriginalValueFromTagMappedDetails(tagDetails)
-          const path = tagDetails[5]
-          const eventIndex = Number(tagDetails[6])
-          const idIndex = Number(tagDetails[7])
-          if (
-            originalValue &&
-            typeof(originalValue) === "string" &&
-            path && typeof(path) === "string" &&
-            typeof(eventIndex) === "number" && eventIndex >= 0 &&
-            typeof(idIndex) === "number" && idIndex >= 0
-          ) {
-            // <event-id>
-            const eventId: SpasmEventIdV2 = {
-              value: originalValue,
-              // Create a new format field only if a
-              // format can be determined from a string.
-              ...(
-                getFormatFromId(originalValue)
-                  ? {format: getFormatFromId(originalValue)}
-                  : {}
-              )
-            }
+          arrayOfTagDetails.forEach((
+            tagDetails: string[] | null
+          ) => {
 
-            const formatName = tagDetails[10]
-            if (formatName && typeof(formatName) === "string") {
-              eventId.format ??= {
-                name: formatName as SpasmEventIdFormatNameV2
-              };
-              eventId.format.name =
-                formatName as SpasmEventIdFormatNameV2
-            }
-
-            const formatVersion = tagDetails[11]
             if (
-              formatVersion &&
-              typeof(formatVersion) === "string" &&
-              eventId.format
-            ) { eventId.format.version = formatVersion }
-
-            const marker = tagDetails[12]
-            if (marker && typeof(marker) === "string") {
-              eventId.marker = marker
-            }
-
-            const pubkey = tag[4]
-            if (pubkey && typeof(pubkey) === "string") {
-              if (
-                tagDetails[1] === "spasm_id_1" &&
-                tagDetails[14] &&
-                typeof(tagDetails[14]) === "string"
-              ) {
-                const pubkeyMethod = tagDetails[14]
-                // Original might be undefined or empty string
-                const pubkeyOriginal = tagDetails[15]
-                const pubkeyValue =
-                  getOriginalFromValueAndMethod(
-                    pubkey, pubkeyMethod, pubkeyOriginal
-                )
-                if (
-                  pubkeyValue && typeof(pubkeyValue) === "string"
-                ) { eventId.pubkey = pubkeyValue }
-              }
-            }
-
-            const hosts: SpasmEventHostV2[] = []
-            if (
-              tagDetails[13] &&
-              typeof(tagDetails[13] === "string")
+              tagDetails && isArrayOfStrings(tagDetails) &&
+              tagDetails[1] === "spasm_id_1" &&
+              tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
+              tagDetails[4] === "se2"
             ) {
-              const hostsStrings: string[] =
-                tagDetails[13].split(',')
-              if (isArrayOfStrings(hostsStrings)) {
-                hostsStrings.forEach(host => {
-                  hosts.push({ value: host })
-                })
+              const originalValue =
+                getOriginalValueFromTagMappedDetails(tagDetails)
+              const path = tagDetails[5]
+              const eventIndex = Number(tagDetails[6])
+              const idIndex = Number(tagDetails[7])
+              if (
+                originalValue &&
+                typeof(originalValue) === "string" &&
+                path && typeof(path) === "string" &&
+                typeof(eventIndex) === "number" && eventIndex >= 0 &&
+                typeof(idIndex) === "number" && idIndex >= 0
+              ) {
+                // <event-id>
+                const eventId: SpasmEventIdV2 = {
+                  value: originalValue,
+                  // Create a new format field only if a
+                  // format can be determined from a string.
+                  ...(
+                    getFormatFromId(originalValue)
+                      ? {format: getFormatFromId(originalValue)}
+                      : {}
+                  )
+                }
+
+                const formatName = tagDetails[10]
+                if (formatName && typeof(formatName) === "string") {
+                  eventId.format ??= {
+                    name: formatName as SpasmEventIdFormatNameV2
+                  };
+                  eventId.format.name =
+                    formatName as SpasmEventIdFormatNameV2
+                }
+
+                const formatVersion = tagDetails[11]
+                if (
+                  formatVersion &&
+                  typeof(formatVersion) === "string" &&
+                  eventId.format
+                ) { eventId.format.version = formatVersion }
+
+                const marker = tagDetails[12]
+                if (marker && typeof(marker) === "string") {
+                  eventId.marker = marker
+                }
+
+                const pubkey = tag[4]
+                if (pubkey && typeof(pubkey) === "string") {
+                  if (
+                    tagDetails[1] === "spasm_id_1" &&
+                    tagDetails[14] &&
+                    typeof(tagDetails[14]) === "string"
+                  ) {
+                    const pubkeyMethod = tagDetails[14]
+                    // Original might be undefined or empty string
+                    const pubkeyOriginal = tagDetails[15]
+                    const pubkeyValue =
+                      getOriginalFromValueAndMethod(
+                        pubkey, pubkeyMethod, pubkeyOriginal
+                    )
+                    if (
+                      pubkeyValue && typeof(pubkeyValue) === "string"
+                    ) { eventId.pubkey = pubkeyValue }
+                  }
+                }
+
+                const hosts: SpasmEventHostV2[] = []
+                if (
+                  tagDetails[13] &&
+                  typeof(tagDetails[13] === "string")
+                ) {
+                  const hostsStrings: string[] =
+                    tagDetails[13].split(',')
+                  if (isArrayOfStrings(hostsStrings)) {
+                    hostsStrings.forEach(host => {
+                      hosts.push({ value: host })
+                    })
+                  }
+                }
+                if (isArrayWithValues(hosts)) {
+                  eventId.hosts = hosts
+                }
+
+                if (path === "parent.ids") {
+                  // Create object it's null or undefined
+                  parentEventsMapped[eventIndex] ??= { ids: [] }
+                  // Create ids if it's null or undefined
+                  parentEventsMapped[eventIndex].ids ??= []
+                  parentEventsMapped[eventIndex].ids[idIndex] =
+                    eventId
+                } else if (path === "root.ids") {
+                  // Create object it's null or undefined
+                  rootEventsMapped[eventIndex] ??= { ids: [] }
+                  // Create ids if it's null or undefined
+                  rootEventsMapped[eventIndex].ids ??= []
+                  rootEventsMapped[eventIndex].ids[idIndex] =
+                    eventId
+                } else if (path === "references.ids") {
+                  // Create object it's null or undefined
+                  referencedEventsMapped[eventIndex] ??= { ids: [] }
+                  // Create ids if it's null or undefined
+                  referencedEventsMapped[eventIndex].ids ??= []
+                  referencedEventsMapped[eventIndex].ids[idIndex] =
+                    eventId
+                }
               }
             }
-            if (isArrayWithValues(hosts)) {
-              eventId.hosts = hosts
-            }
-
-            if (path === "parent.ids") {
-              // Create object it's null or undefined
-              parentEventsMapped[eventIndex] ??= { ids: [] }
-              // Create ids if it's null or undefined
-              parentEventsMapped[eventIndex].ids ??= []
-              parentEventsMapped[eventIndex].ids[idIndex] =
-                eventId
-            } else if (path === "root.ids") {
-              // Create object it's null or undefined
-              rootEventsMapped[eventIndex] ??= { ids: [] }
-              // Create ids if it's null or undefined
-              rootEventsMapped[eventIndex].ids ??= []
-              rootEventsMapped[eventIndex].ids[idIndex] =
-                eventId
-            } else if (path === "references.ids") {
-              // Create object it's null or undefined
-              referencedEventsMapped[eventIndex] ??= { ids: [] }
-              // Create ids if it's null or undefined
-              referencedEventsMapped[eventIndex].ids ??= []
-              referencedEventsMapped[eventIndex].ids[idIndex] =
-                eventId
-            }
-          }
+          })
         }
       }
 
@@ -1722,98 +1766,107 @@ export const standardizeNostrEventV2 = (
         tag[1] && typeof(tag[1]) === 'string' &&
         isMappedTag(tag, event.tags)
       ) {
-        const tagDetails: string[] | null =
+        const arrayOfTagDetails: string[][] | null =
           getTagMappedDetails(tag, event.tags)
 
         if (
-          tagDetails && isArrayOfStrings(tagDetails) &&
-          tagDetails[1] === "spasm_add_1" &&
-          tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
-          tagDetails[4] === "se2"
+          arrayOfTagDetails &&
+          isArrayWithValues(arrayOfTagDetails)
         ) {
-          const originalValue =
-            getOriginalValueFromTagMappedDetails(tagDetails)
-          const path = tagDetails[5]
-          const authorIndex = Number(tagDetails[6])
-          const addressIndex = Number(tagDetails[7])
-          if (
-            originalValue &&
-            typeof(originalValue) === "string" &&
-            path && typeof(path) === "string" &&
-            typeof(authorIndex) === "number" &&
-            authorIndex >= 0 &&
-            typeof(addressIndex) === "number" &&
-            addressIndex >= 0
-          ) {
-            // <pubkey>
-            const address: SpasmEventAddressV2 = {
-              value: originalValue,
-              // Create a new format field only if a
-              // format can be determined from a string.
-              ...(
-                getFormatFromAddress(originalValue)
-                  ? {format: getFormatFromAddress(originalValue)}
-                  : {}
-              )
-            }
-
-            const formatName = tagDetails[10]
-            if (formatName && typeof(formatName) === "string") {
-              address.format ??= {
-                name: formatName as SpasmEventAddressFormatNameV2
-              };
-              address.format.name =
-                formatName as SpasmEventAddressFormatNameV2
-            }
-
-            const formatVersion = tagDetails[11]
+          arrayOfTagDetails.forEach((
+            tagDetails: string[] | null
+          ) => {
             if (
-              formatVersion &&
-              typeof(formatVersion) === "string" &&
-              address.format
-            ) { address.format.version = formatVersion }
-
-            const marker = tagDetails[12]
-            if (marker && typeof(marker) === "string") {
-              address.marker = marker
-            }
-
-            const hosts: SpasmEventHostV2[] = []
-            if (
-              tagDetails[13] &&
-              typeof(tagDetails[13] === "string")
+              tagDetails && isArrayOfStrings(tagDetails) &&
+              tagDetails[1] === "spasm_add_1" &&
+              tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
+              tagDetails[4] === "se2"
             ) {
-              const hostsStrings: string[] =
-                tagDetails[13].split(',')
-              if (isArrayOfStrings(hostsStrings)) {
-                hostsStrings.forEach(host => {
-                  hosts.push({ value: host })
-                })
-              }
-            }
-            if (isArrayWithValues(hosts)) {
-              address.hosts = hosts
-            }
-
-            if (path === "mentions.addresses") {
-              // Create object it's null or undefined
-              mentionedAuthorsMapped[authorIndex] ??= {
-                addresses: []
-              }
-              // Create addresses if it's null or undefined
-              mentionedAuthorsMapped[authorIndex]
-                .addresses ??= []
+              const originalValue =
+                getOriginalValueFromTagMappedDetails(tagDetails)
+              const path = tagDetails[5]
+              const authorIndex = Number(tagDetails[6])
+              const addressIndex = Number(tagDetails[7])
               if (
-                mentionedAuthorsMapped &&
-                mentionedAuthorsMapped[authorIndex] &&
-                mentionedAuthorsMapped[authorIndex].addresses &&
-                Array.isArray(mentionedAuthorsMapped[authorIndex].addresses)
+                originalValue &&
+                typeof(originalValue) === "string" &&
+                path && typeof(path) === "string" &&
+                typeof(authorIndex) === "number" &&
+                authorIndex >= 0 &&
+                typeof(addressIndex) === "number" &&
+                addressIndex >= 0
               ) {
-                mentionedAuthorsMapped[authorIndex]
-                  .addresses![addressIndex] = address
+                // <pubkey>
+                const address: SpasmEventAddressV2 = {
+                  value: originalValue,
+                  // Create a new format field only if a
+                  // format can be determined from a string.
+                  ...(
+                    getFormatFromAddress(originalValue)
+                      ? {format: getFormatFromAddress(originalValue)}
+                      : {}
+                  )
+                }
+
+                const formatName = tagDetails[10]
+                if (formatName && typeof(formatName) === "string") {
+                  address.format ??= {
+                    name: formatName as SpasmEventAddressFormatNameV2
+                  };
+                  address.format.name =
+                    formatName as SpasmEventAddressFormatNameV2
+                }
+
+                const formatVersion = tagDetails[11]
+                if (
+                  formatVersion &&
+                  typeof(formatVersion) === "string" &&
+                  address.format
+                ) { address.format.version = formatVersion }
+
+                const marker = tagDetails[12]
+                if (marker && typeof(marker) === "string") {
+                  address.marker = marker
+                }
+
+                const hosts: SpasmEventHostV2[] = []
+                if (
+                  tagDetails[13] &&
+                  typeof(tagDetails[13] === "string")
+                ) {
+                  const hostsStrings: string[] =
+                    tagDetails[13].split(',')
+                  if (isArrayOfStrings(hostsStrings)) {
+                    hostsStrings.forEach(host => {
+                      hosts.push({ value: host })
+                    })
+                  }
+                }
+                if (isArrayWithValues(hosts)) {
+                  address.hosts = hosts
+                }
+
+                if (path === "mentions.addresses") {
+                  // Create object it's null or undefined
+                  mentionedAuthorsMapped[authorIndex] ??= {
+                    addresses: []
+                  }
+                  // Create addresses if it's null or undefined
+                  mentionedAuthorsMapped[authorIndex]
+                    .addresses ??= []
+                  if (
+                    mentionedAuthorsMapped &&
+                    mentionedAuthorsMapped[authorIndex] &&
+                    mentionedAuthorsMapped[authorIndex].addresses &&
+                    Array.isArray(mentionedAuthorsMapped[authorIndex].addresses)
+                  ) {
+                    mentionedAuthorsMapped[authorIndex]
+                      .addresses![addressIndex] = address
+                  }
+                }
               }
             }
-          }
+          })
         }
       }
 
@@ -1864,116 +1917,125 @@ export const standardizeNostrEventV2 = (
         tag[1] && typeof(tag[1]) === 'string' &&
         isMappedTag(tag, event.tags)
       ) {
-        const tagDetails: string[] | null =
+        const arrayOfTagDetails: string[][] | null =
           getTagMappedDetails(tag, event.tags)
 
         if (
-          tagDetails && isArrayOfStrings(tagDetails) &&
-          tagDetails[1] === "spasm_aadd_1" &&
-          tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
-          tagDetails[4] === "se2"
+          arrayOfTagDetails &&
+          isArrayWithValues(arrayOfTagDetails)
         ) {
-          const originalValue =
-            getOriginalValueFromTagMappedDetails(tagDetails)
-          const path = tagDetails[5]
-          const authorIndex = Number(tagDetails[6])
-          const addressIndex = Number(tagDetails[7])
-          if (
-            originalValue &&
-            typeof(originalValue) === "string" &&
-            path && typeof(path) === "string" &&
-            typeof(authorIndex) === "number" &&
-            authorIndex >= 0 &&
-            typeof(addressIndex) === "number" &&
-            addressIndex >= 0
-          ) {
-            const address: SpasmEventAddressV2 = {
-              value: originalValue,
-              // Create a new format field only if a
-              // format can be determined from a string.
-              ...(
-                getFormatFromAddress(originalValue)
-                  ? {format: getFormatFromAddress(originalValue)}
-                  : {}
-              )
-            }
-
-            const formatName = tagDetails[10]
-            if (formatName && typeof(formatName) === "string") {
-              address.format ??= {
-                name: formatName as SpasmEventAddressFormatNameV2
-              };
-              address.format.name =
-                formatName as SpasmEventAddressFormatNameV2
-            }
-
-            const formatVersion = tagDetails[11]
+          arrayOfTagDetails.forEach((
+            tagDetails: string[] | null
+          ) => {
             if (
-              formatVersion &&
-              typeof(formatVersion) === "string" &&
-              address.format
-            ) { address.format.version = formatVersion }
-
-            const marker = tagDetails[12]
-            if (marker && typeof(marker) === "string") {
-              address.marker = marker
-            }
-
-            const hosts: SpasmEventHostV2[] = []
-            if (
-              tagDetails[13] &&
-              typeof(tagDetails[13] === "string")
+              tagDetails && isArrayOfStrings(tagDetails) &&
+              tagDetails[1] === "spasm_aadd_1" &&
+              tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
+              tagDetails[4] === "se2"
             ) {
-              const hostsStrings: string[] =
-                tagDetails[13].split(',')
-              if (isArrayOfStrings(hostsStrings)) {
-                hostsStrings.forEach(host => {
-                  hosts.push({ value: host })
-                })
-              }
-            }
-            if (isArrayWithValues(hosts)) {
-              address.hosts = hosts
-            }
-
-            if (path === "authors.addresses") {
-              // Create object it's null or undefined
-              spasmEventV2.authors ??= []
-              spasmEventV2.authors[authorIndex] ??= {
-                addresses: []
-              }
-              // Create addresses if it's null or undefined
-              spasmEventV2.authors[authorIndex]
-                .addresses ??= []
+              const originalValue =
+                getOriginalValueFromTagMappedDetails(tagDetails)
+              const path = tagDetails[5]
+              const authorIndex = Number(tagDetails[6])
+              const addressIndex = Number(tagDetails[7])
               if (
-                spasmEventV2.authors &&
-                spasmEventV2.authors[authorIndex] &&
-                spasmEventV2.authors[authorIndex].addresses &&
-                Array.isArray(spasmEventV2.authors[authorIndex].addresses)
+                originalValue &&
+                typeof(originalValue) === "string" &&
+                path && typeof(path) === "string" &&
+                typeof(authorIndex) === "number" &&
+                authorIndex >= 0 &&
+                typeof(addressIndex) === "number" &&
+                addressIndex >= 0
               ) {
-                spasmEventV2.authors[authorIndex]
-                  .addresses![addressIndex] = address
+                const address: SpasmEventAddressV2 = {
+                  value: originalValue,
+                  // Create a new format field only if a
+                  // format can be determined from a string.
+                  ...(
+                    getFormatFromAddress(originalValue)
+                      ? {format: getFormatFromAddress(originalValue)}
+                      : {}
+                  )
+                }
+
+                const formatName = tagDetails[10]
+                if (formatName && typeof(formatName) === "string") {
+                  address.format ??= {
+                    name: formatName as SpasmEventAddressFormatNameV2
+                  };
+                  address.format.name =
+                    formatName as SpasmEventAddressFormatNameV2
+                }
+
+                const formatVersion = tagDetails[11]
+                if (
+                  formatVersion &&
+                  typeof(formatVersion) === "string" &&
+                  address.format
+                ) { address.format.version = formatVersion }
+
+                const marker = tagDetails[12]
+                if (marker && typeof(marker) === "string") {
+                  address.marker = marker
+                }
+
+                const hosts: SpasmEventHostV2[] = []
+                if (
+                  tagDetails[13] &&
+                  typeof(tagDetails[13] === "string")
+                ) {
+                  const hostsStrings: string[] =
+                    tagDetails[13].split(',')
+                  if (isArrayOfStrings(hostsStrings)) {
+                    hostsStrings.forEach(host => {
+                      hosts.push({ value: host })
+                    })
+                  }
+                }
+                if (isArrayWithValues(hosts)) {
+                  address.hosts = hosts
+                }
+
+                if (path === "authors.addresses") {
+                  // Create object it's null or undefined
+                  spasmEventV2.authors ??= []
+                  spasmEventV2.authors[authorIndex] ??= {
+                    addresses: []
+                  }
+                  // Create addresses if it's null or undefined
+                  spasmEventV2.authors[authorIndex]
+                    .addresses ??= []
+                  if (
+                    spasmEventV2.authors &&
+                    spasmEventV2.authors[authorIndex] &&
+                    spasmEventV2.authors[authorIndex].addresses &&
+                    Array.isArray(spasmEventV2.authors[authorIndex].addresses)
+                  ) {
+                    spasmEventV2.authors[authorIndex]
+                      .addresses![addressIndex] = address
+                  }
+                }
+
+                //   // Create object it's null or undefined
+                //   extraAuthorsMapped[authorIndex] ??= {
+                //     addresses: []
+                //   }
+                //   // Create addresses if it's null or undefined
+                //   extraAuthorsMapped[authorIndex]
+                //     .addresses ??= []
+                //   if (
+                //     extraAuthorsMapped &&
+                //     extraAuthorsMapped[authorIndex] &&
+                //     extraAuthorsMapped[authorIndex].addresses &&
+                //     Array.isArray(extraAuthorsMapped[authorIndex].addresses)
+                //   ) {
+                //     extraAuthorsMapped[authorIndex]
+                //       .addresses![addressIndex] = address
+                //   }
+                // }
               }
             }
-
-            //   // Create object it's null or undefined
-            //   extraAuthorsMapped[authorIndex] ??= {
-            //     addresses: []
-            //   }
-            //   // Create addresses if it's null or undefined
-            //   extraAuthorsMapped[authorIndex]
-            //     .addresses ??= []
-            //   if (
-            //     extraAuthorsMapped &&
-            //     extraAuthorsMapped[authorIndex] &&
-            //     extraAuthorsMapped[authorIndex].addresses &&
-            //     Array.isArray(extraAuthorsMapped[authorIndex].addresses)
-            //   ) {
-            //     extraAuthorsMapped[authorIndex]
-            //       .addresses![addressIndex] = address
-            //   }
-            // }
-          }
+          })
         }
       }
 
@@ -2157,6 +2219,52 @@ export const standardizeNostrSpasmEventV2 = (
 
       if (Array.isArray(tag) && tag[0] === "license") {
         license = tag[1]
+      }
+
+      if (
+        Array.isArray(tag) && tag[0] === "spasm_tips" &&
+        tag[1] && typeof(tag[1]) === "string"
+      ) {
+        const tip: SpasmEventBodyTipsV2 = { address: tag[1] }
+        if (tag[2] && typeof(tag[2]) === "string") {
+          tip.text = tag[2]
+        }
+        if (tag[3] && typeof(tag[3]) === "string") {
+          const timestamp = Number(tag[3])
+          if (typeof(timestamp) === "number") {
+            tip.expiration = { timestamp: timestamp }
+          }
+        }
+        if (tag[4] && typeof(tag[4] === "string")) {
+          tip.currency ??= {}
+          tip.currency.name = tag[4]
+        }
+        if (tag[5] && typeof(tag[5] === "string")) {
+          tip.currency ??= {}
+          tip.currency.ticker = tag[5]
+        }
+        if (tag[6] && typeof(tag[6] === "string")) {
+          tip.network ??= {}
+          tip.network.name = tag[6]
+        } else if (tag[6] && typeof(tag[6] === "number")) {
+          const str = String(tag[6])
+          if (str && typeof(str) === "string") {
+            tip.network ??= {}
+            tip.network.name = tag[6]
+          }
+        }
+        if (tag[7] && typeof(tag[7] === "string")) {
+          tip.network ??= {}
+          tip.network.id = tag[7]
+        } else if (tag[7] && typeof(tag[7] === "number")) {
+          const str = String(tag[7])
+          if (str && typeof(str) === "string") {
+            tip.network ??= {}
+            tip.network.id = tag[7]
+          }
+        }
+        spasmEventV2.tips ??= []
+        spasmEventV2.tips?.push(tip)
       }
 
       if (Array.isArray(tag) && tag[0] === "spasm_category") {

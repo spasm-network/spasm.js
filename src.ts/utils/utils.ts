@@ -6,7 +6,7 @@
 import { sha256 } from "js-sha256-v0"
 import { ethers } from "ethers-v6";
 import {
-  toBeHex
+  toBeHex, toBeNpub
 } from './../utils/index.js';
 import * as DOMPurify from "isomorphic-dompurify-v2";
 
@@ -42,7 +42,8 @@ import {
   CustomConvertToRssConfig,
   CustomGenerateRssFeedConfig,
   GenerateRssFeedConfig,
-  PostSignature
+  PostSignature,
+  CustomFunctionType
 } from "./../types/interfaces.js"
 
 import { convertToSpasm } from "./../convert/convertToSpasm.js"
@@ -363,6 +364,47 @@ export const toBeFullTimestamp = toBeLongTimestamp
 export const toBeStandardizedTimestamp = toBeShortTimestamp
 export const toBeStandardTimestamp = toBeShortTimestamp
 export const toBeNostrTimestamp = toBeShortTimestamp
+
+export const toBeDate = (
+  value: string | number,
+  format: "full" | "long" | "medium" | "short" = "full"
+): string | null => {
+  if (!value || !isStringOrNumber) return null
+  let fullTimestamp = toBeFullTimestamp(value)
+  if (fullTimestamp && isStringOrNumber(fullTimestamp)) {
+    const date = new Date(fullTimestamp).toUTCString()
+    if (date && typeof(date) === "string") {
+      if (format === "full") {
+        return date
+      } else if (format === "long") {
+        return date.slice(5,25)
+      } else if (format === "medium") {
+        return date.slice(5,22)
+      } else if (format === "short") {
+        return date.slice(5,16)
+      }
+    }
+  }
+  return null
+}
+
+export const toBeDateFull = (val: string | number) => {
+  return toBeDate(val, "full")
+}
+
+export const toBeFullDate = toBeDateFull
+
+export const toBeDateLong = (val: string | number) => {
+  return toBeDate(val, "long")
+}
+
+export const toBeLongDate = toBeDateLong
+
+export const toBeDateShort = (val: string | number) => {
+  return toBeDate(val, "short")
+}
+
+export const toBeShortDate = toBeDateShort
 
 export const getNostrSpasmVersion = (
   event: NostrSpasmEvent | NostrSpasmEventSignedOpened,
@@ -1463,6 +1505,41 @@ export const sanitizeEvent = sanitizeEventWithDompurify
 export const sanitizeArray = sanitizeEventWithDompurify
 export const sanitizeAnything = sanitizeEventWithDompurify
 
+export const toLowerCaseIfValueIsString = (val: any) => {
+  if (val && typeof(val) === "string") {
+    const str = val.toLowerCase()
+    if (str && typeof(str) === "string") {
+      return str
+    }
+  }
+  return val
+}
+
+export const toLowerCaseIfString = toLowerCaseIfValueIsString
+
+export const toLowerCaseAllNestedStrings = (
+  originalItem: Object | any[]
+): void => {
+  try {
+    executeFunctionForAllNestedValuesOfType(
+      originalItem,
+      { customFunction: toLowerCaseIfString }
+    )
+  } catch (error) {
+    console.error("toLowerCase failed", error)
+    // Clearing is only used for sanitization,
+    // to make sure that unsanitized values can pass
+    // through in case of an error.
+    // However, if lowercase fails, it's better
+    // to keep the original values.
+    // if (Array.isArray(originalItem)) {
+    //   clearArray(originalItem)
+    // } else if ( isObjectWithValues(originalItem)) {
+    //   clearObject(originalItem)
+    // }
+  }
+}
+
 export const clearArray = (arr : any[]) => {
   arr.length = 0; // This clears the array
 }
@@ -1749,7 +1826,8 @@ export const getAllSigners = (
   onlyVerifiedFlag: boolean = false,
   toLowerCase: boolean = true,
   formatName?: SpasmEventAddressFormatNameV2
-            | "nostr" | "ethereum" | "spasm"
+            | "nostr" | "ethereum" | "spasm" | "any",
+  returnNostrSignersAs?: "hex" | "npub" | "any"
 ): (string | number)[] => {
   if (!isObjectWithValues(unknownEvent)) return []
 
@@ -1759,6 +1837,9 @@ export const getAllSigners = (
     !spasmEventV2 ||
     !Array.isArray(spasmEventV2.authors)
   ) return []
+
+  const nostrTo: "hex" | "npub" | "any" = 
+    returnNostrSignersAs || "hex"
 
   const signers: (string | number)[] = []
 
@@ -1781,11 +1862,28 @@ export const getAllSigners = (
           )
         ) {
           // Format name is not specified
-          if (!formatName) {
+          if (!formatName || formatName === "any") {
+            let val: string | number | null = null
             if (onlyVerifiedFlag && address.verified) {
-              signers.push(address.value)
+              val = address.value
             } else if (!onlyVerifiedFlag) {
-              signers.push(address.value)
+              val = address.value
+            }
+            if (
+              nostrTo === "npub" && address.format &&
+              address.format.name === "nostr-hex" &&
+              typeof(val) === "string"
+            ) {
+              val = toBeNpub(val)
+            } else if (
+              nostrTo === "hex" && address.format &&
+              address.format.name === "nostr-npub" &&
+              typeof(val) === "string"
+            ) {
+              val = toBeHex(val)
+            }
+            if (val) {
+              signers.push(val)
             }
           // Format name is specified
           } else {
@@ -1797,10 +1895,27 @@ export const getAllSigners = (
               address.format.name === "nostr-hex" ||
               address.format.name === "nostr-npub"
             )) {
+              let val: string | number | null = null
               if (onlyVerifiedFlag && address.verified) {
-                signers.push(address.value)
+                val = address.value
               } else if (!onlyVerifiedFlag) {
-                signers.push(address.value)
+                val = address.value
+              }
+              if (
+                nostrTo === "npub" && address.format &&
+                address.format.name === "nostr-hex" &&
+                typeof(val) === "string"
+              ) {
+                val = toBeNpub(val)
+              } else if (
+                nostrTo === "hex" && address.format &&
+                address.format.name === "nostr-npub" &&
+                typeof(val) === "string"
+              ) {
+                val = toBeHex(val)
+              }
+              if (val) {
+                signers.push(val)
               }
             } else if ((
               formatName === "ethereum" ||
@@ -1856,16 +1971,22 @@ export const getAllEthereumSigners = (
 
 export const getAllNostrSigners = (
   unknownEvent: UnknownEventV2,
+  returnNostrSignersAs?: "hex" | "npub" | "any"
 ): (string | number)[] => {
-  return getAllSigners (unknownEvent, false, true, "nostr")
+  return getAllSigners (
+    unknownEvent, false, true, "nostr", returnNostrSignersAs
+  )
 }
 
 // TODO doesn't work with events where author
 // addresses are not lowercase
 export const getVerifiedSigners = (
   unknownEvent: UnknownEventV2,
+  returnNostrSignersAs?: "hex" | "npub" | "any"
 ): (string | number)[] => {
-  return getAllSigners (unknownEvent, true, true)
+  return getAllSigners (
+    unknownEvent, true, true, "any", returnNostrSignersAs
+  )
 }
 
 export const getVerifiedSpasmSigners = (
@@ -1885,6 +2006,19 @@ export const getVerifiedNostrSigners = (
 ): (string | number)[] => {
   return getAllSigners (unknownEvent, true, true, "nostr")
 }
+
+export const hasVerifiedSigner = (
+  unknownEvent: UnknownEventV2,
+): boolean => {
+  const allSigners = getVerifiedSigners(unknownEvent)
+  if (allSigners && isArrayWithValues(allSigners)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export const hasValidSignature = hasVerifiedSigner
 
 export const getAllIdsFromArrayOfIdObjects = (
   arrayOfIdObjects: SpasmEventIdV2[],
@@ -2754,6 +2888,34 @@ export const removeDuplicatesFromArrayOfStrings = (
   }
   return [...new Set(array)];
 }
+
+/**
+ * Removes duplicate tag arrays from a Nostr tags array
+ * Each Nostr tag is an array of strings
+ */
+export const removeDuplicateTags = (
+  tags: string[][]
+): string[][] => {
+    // Convert each tag array to a string for comparison
+    const uniqueTags = new Map<string, string[]>()
+    for (const tag of tags) {
+        const tagKey = JSON.stringify(tag)
+        if (!uniqueTags.has(tagKey)) {
+            uniqueTags.set(tagKey, tag)
+        }
+    }
+    return Array.from(uniqueTags.values())
+}
+
+export const removeDuplicateNostrTags = removeDuplicateTags
+export const deduplicateTags = removeDuplicateTags
+export const deduplicateNostrTags = removeDuplicateTags
+export const uniqueTagsOnly = removeDuplicateTags
+export const uniqueNostrTagsOnly = removeDuplicateTags
+export const removeDuplicateArraysFromArrayOrArraysOfStrings =
+  removeDuplicateTags
+export const keepUniqueArraysInArrayOrArraysOfStrings =
+  removeDuplicateTags
 
 export const checkIfEventHasThisId = (
   unknownEvent: UnknownEventV2,
@@ -3728,9 +3890,82 @@ export const ifEventsHaveSameSpasmId01 = (
   return id1 === id2
 }
 
-export const deepCopyOfObject = (obj: any) => {
-  if (!obj || typeof(obj) !== "object") return {}
-  return JSON.parse(JSON.stringify(obj))
+// Using JSON.stringify method doesn't copy functions
+// export const deepCopyOfObject = (obj: any) => {
+//   if (!obj || typeof(obj) !== "object") return {}
+//   return JSON.parse(JSON.stringify(obj))
+// }
+
+export const deepCopyOfObject = (
+  obj: any, seen = new WeakMap()
+): any => {
+  // Handle primitives and functions
+  if (obj === null || typeof obj !== "object") {
+    return obj
+  }
+  
+  // Check for circular references
+  if (seen.has(obj)) {
+    return seen.get(obj)
+  }
+  
+  // Handle Date objects
+  if (obj instanceof Date) {
+    const copy = new Date(obj)
+    seen.set(obj, copy)
+    return copy
+  }
+  
+  // Handle RegExp objects
+  if (obj instanceof RegExp) {
+    const copy = new RegExp(obj.source, obj.flags)
+    seen.set(obj, copy)
+    return copy
+  }
+  
+  // Handle Map objects
+  if (obj instanceof Map) {
+    const copy = new Map()
+    seen.set(obj, copy)
+    obj.forEach((value, key) => {
+      copy.set(
+        deepCopyOfObject(key, seen),
+        deepCopyOfObject(value, seen)
+      )
+    })
+    return copy
+  }
+  
+  // Handle Set objects
+  if (obj instanceof Set) {
+    const copy = new Set()
+    seen.set(obj, copy)
+    obj.forEach(value => {
+      copy.add(deepCopyOfObject(value, seen))
+    })
+    return copy
+  }
+  
+  // Handle arrays
+  if (Array.isArray(obj)) {
+    const copy: any[] = []
+    seen.set(obj, copy)
+    for (let i = 0; i < obj.length; i++) {
+      copy[i] = deepCopyOfObject(obj[i], seen)
+    }
+    return copy
+  }
+  
+  // Handle regular objects
+  const copy: any = {}
+  seen.set(obj, copy)
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      copy[key] = deepCopyOfObject(obj[key], seen)
+    }
+  }
+  
+  return copy
 }
 
 export const copyOf = deepCopyOfObject
@@ -3753,6 +3988,11 @@ export const fakeAsAny = (val: any): any => val as any
 // Used for tests to bypass TypeScript any type checks
 export const fakeAsObject = (val: any): Record<any, any> => { 
   return val as Record<any, any>
+}
+
+// Used for tests to bypass TypeScript string type checks
+export const fakeAsFunction = (val: any): CustomFunctionType => {
+  return val as CustomFunctionType
 }
 
 export const cleanSpasmEventV2 = (

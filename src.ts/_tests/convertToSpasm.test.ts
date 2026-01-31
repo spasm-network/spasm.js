@@ -59,9 +59,11 @@ import {
   validSpasmEventBodyV2ReplyToGenesisSignedClosed,
   validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2,
   validNostrSpasmEventV2SingleSignedOpened,
-  validNostrSpasmEventV2SingleSignedOpenedConvertedToSpasmV2
+  validNostrSpasmEventV2SingleSignedOpenedConvertedToSpasmV2,
+  validSpasmEventBodyV2WithManyDuplicateValues
 } from "./_events-data.js"
 import { convertManyToSpasm, convertToSpasm } from "./../convert/convertToSpasm.js"
+import { convertToNostr } from "./../convert/convertToNostr.js"
 import {
   convertManyToSpasmEventEnvelope,
   convertToSpasmEventEnvelope
@@ -81,6 +83,7 @@ import {
   UnknownEventV2
 } from "../types/interfaces.js";
 import {copyOf} from "../utils/utils.js";
+import {getSpasmId01} from "../convert/getSpasmId.js";
 
 describe("convertToSpasm tests", () => {
   test("should return true if true", () => {
@@ -877,5 +880,29 @@ describe("convertToSpasmEventEnvelope() tests", () => {
     expect(spasmEvent?.type).toStrictEqual("SpasmEventV2");
     expect(spasmEvent?.title).toStrictEqual("genesis");
     expect("children" in spasmEvent!).toStrictEqual(false)
+  });
+});
+
+describe("convertToSpasm() tests for events with multiple duplicate values", () => {
+  const spasmEvent: SpasmEventV2 =
+    convertToSpasm(validSpasmEventBodyV2WithManyDuplicateValues)!
+  const spasmEventToNostr = convertToNostr(copyOf(spasmEvent))
+  const spasmEventToNostrToSpasm = convertToSpasm(spasmEventToNostr!)
+  const id1 = getSpasmId01(copyOf(spasmEvent))
+  const id2 = getSpasmId01(copyOf(spasmEventToNostrToSpasm))
+
+  test("IDs should have string values", () => {
+    expect(id1).not.toEqual(null);
+    expect(id1).not.toEqual(undefined);
+    expect(id1).not.toEqual("");
+    expect(typeof(id1)).toStrictEqual("string")
+    expect(id2).not.toEqual(null);
+    expect(id2).not.toEqual(undefined);
+    expect(id2).not.toEqual("");
+    expect(typeof(id2)).toStrictEqual("string")
+  });
+
+  test("IDs should be equal after converting Spasm to Nostr to Spasm", () => {
+    expect(id1).toStrictEqual(id2)
   });
 });

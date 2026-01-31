@@ -1,5 +1,5 @@
 import { convertToSpasm } from "./convertToSpasm.js";
-import { isObjectWithValues, sortArrayOfStringsAndNumbers, sortArrayOfObjects, keepTheseKeysInObject, keepTheseKeysInObjectsInArray, sortAuthorsForSpasmid01, sortHostsForSpasmid01, sortLinksForSpasmid01, sortMediasForSpasmid01, sortParentForSpasmid01, sortReferencesForSpasmid01, sortTagsForSpasmid01 } from "./../utils/utils.js";
+import { isObjectWithValues, sortArrayOfStringsAndNumbers, sortArrayOfObjects, keepTheseKeysInObject, keepTheseKeysInObjectsInArray, sortAuthorsForSpasmid01, sortHostsForSpasmid01, sortLinksForSpasmid01, sortMediasForSpasmid01, sortParentForSpasmid01, sortReferencesForSpasmid01, sortTagsForSpasmid01, toLowerCaseAllNestedStrings, copyOf } from "./../utils/utils.js";
 // Spasm V2
 export const convertToEventForSpasmid = (unknownEvent, idVersion = "01") => {
     let spasmEventV2 = {
@@ -60,6 +60,13 @@ export const convertSpasmEventV2ToEventForSpasmid01 = (spasmEvent) => {
     }
     if (spasmEvent.tips) {
         eventForSpasmid.tips = sortArrayOfObjects(spasmEvent.tips, "address");
+        if (eventForSpasmid.tips) {
+            // We need to do a deep copy to make sure that we don't
+            // mess up the original object with toLowerCase()
+            const lowerCaseTips = copyOf(eventForSpasmid.tips);
+            toLowerCaseAllNestedStrings(lowerCaseTips);
+            eventForSpasmid.tips = lowerCaseTips;
+        }
     }
     if (spasmEvent.hosts) {
         const cleanHosts = keepTheseKeysInObjectsInArray(spasmEvent.hosts, ["value", "marker"]);

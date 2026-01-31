@@ -2,10 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const _events_data_js_1 = require("./_events-data.js");
 const convertToSpasm_js_1 = require("./../convert/convertToSpasm.js");
+const convertToNostr_js_1 = require("./../convert/convertToNostr.js");
 const convertToSpasmEventEnvelope_js_1 = require("./../convert/convertToSpasmEventEnvelope.js");
 const convertToSpasmEventEnvelopeWithTree_js_1 = require("../convert/convertToSpasmEventEnvelopeWithTree.js");
 const convertToSpasmEventDatabase_js_1 = require("../convert/convertToSpasmEventDatabase.js");
 const utils_js_1 = require("../utils/utils.js");
+const getSpasmId_js_1 = require("../convert/getSpasmId.js");
 describe("convertToSpasm tests", () => {
     test("should return true if true", () => {
         expect(true).toBe(true);
@@ -654,6 +656,26 @@ describe("convertToSpasmEventEnvelope() tests", () => {
         expect(spasmEvent?.type).toStrictEqual("SpasmEventV2");
         expect(spasmEvent?.title).toStrictEqual("genesis");
         expect("children" in spasmEvent).toStrictEqual(false);
+    });
+});
+describe("convertToSpasm() tests for events with multiple duplicate values", () => {
+    const spasmEvent = (0, convertToSpasm_js_1.convertToSpasm)(_events_data_js_1.validSpasmEventBodyV2WithManyDuplicateValues);
+    const spasmEventToNostr = (0, convertToNostr_js_1.convertToNostr)((0, utils_js_1.copyOf)(spasmEvent));
+    const spasmEventToNostrToSpasm = (0, convertToSpasm_js_1.convertToSpasm)(spasmEventToNostr);
+    const id1 = (0, getSpasmId_js_1.getSpasmId01)((0, utils_js_1.copyOf)(spasmEvent));
+    const id2 = (0, getSpasmId_js_1.getSpasmId01)((0, utils_js_1.copyOf)(spasmEventToNostrToSpasm));
+    test("IDs should have string values", () => {
+        expect(id1).not.toEqual(null);
+        expect(id1).not.toEqual(undefined);
+        expect(id1).not.toEqual("");
+        expect(typeof (id1)).toStrictEqual("string");
+        expect(id2).not.toEqual(null);
+        expect(id2).not.toEqual(undefined);
+        expect(id2).not.toEqual("");
+        expect(typeof (id2)).toStrictEqual("string");
+    });
+    test("IDs should be equal after converting Spasm to Nostr to Spasm", () => {
+        expect(id1).toStrictEqual(id2);
     });
 });
 //# sourceMappingURL=convertToSpasm.test.js.map

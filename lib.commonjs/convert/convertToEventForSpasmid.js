@@ -64,6 +64,13 @@ const convertSpasmEventV2ToEventForSpasmid01 = (spasmEvent) => {
     }
     if (spasmEvent.tips) {
         eventForSpasmid.tips = (0, utils_js_1.sortArrayOfObjects)(spasmEvent.tips, "address");
+        if (eventForSpasmid.tips) {
+            // We need to do a deep copy to make sure that we don't
+            // mess up the original object with toLowerCase()
+            const lowerCaseTips = (0, utils_js_1.copyOf)(eventForSpasmid.tips);
+            (0, utils_js_1.toLowerCaseAllNestedStrings)(lowerCaseTips);
+            eventForSpasmid.tips = lowerCaseTips;
+        }
     }
     if (spasmEvent.hosts) {
         const cleanHosts = (0, utils_js_1.keepTheseKeysInObjectsInArray)(spasmEvent.hosts, ["value", "marker"]);

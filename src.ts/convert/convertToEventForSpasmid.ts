@@ -25,7 +25,9 @@ import {
   sortMediasForSpasmid01,
   sortParentForSpasmid01,
   sortReferencesForSpasmid01,
-  sortTagsForSpasmid01
+  sortTagsForSpasmid01,
+  toLowerCaseAllNestedStrings,
+  copyOf
 } from "./../utils/utils.js";
 
 // Spasm V2
@@ -124,6 +126,13 @@ export const convertSpasmEventV2ToEventForSpasmid01 = (
     eventForSpasmid.tips = sortArrayOfObjects(
       spasmEvent.tips, "address"
     )
+    if (eventForSpasmid.tips) {
+      // We need to do a deep copy to make sure that we don't
+      // mess up the original object with toLowerCase()
+      const lowerCaseTips = copyOf(eventForSpasmid.tips)
+      toLowerCaseAllNestedStrings(lowerCaseTips)
+      eventForSpasmid.tips = lowerCaseTips
+    }
   }
 
   if (spasmEvent.hosts) {

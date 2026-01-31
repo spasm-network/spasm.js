@@ -954,15 +954,18 @@ const getTagMappedDetails = (tag, tags) => {
         return null;
     const tagName = tag[0];
     const tagValue = tag[1];
-    let mappedDetails = null;
+    let mappedDetails = [];
     tags.forEach(tag => {
         if (tag[0] === "tags_mapping" &&
             tag[2] === tagName &&
             tag[3] === tagValue) {
-            mappedDetails = tag;
+            mappedDetails.push(tag);
         }
     });
-    return mappedDetails;
+    if ((0, utils_js_1.isArrayWithValues)(mappedDetails)) {
+        return mappedDetails;
+    }
+    return null;
 };
 exports.getTagMappedDetails = getTagMappedDetails;
 const isMappedTag = (tag, tags) => {
@@ -1138,7 +1141,13 @@ const standardizeNostrEventV2 = (event) => {
     let mentionedAuthors = [];
     let extraAuthors = [];
     let keywords = [];
+    // Remove duplicate tags
+    let uniqueTags = [];
     if (event.tags && Array.isArray(event.tags)) {
+        uniqueTags = (0, utils_js_1.removeDuplicateNostrTags)(event.tags);
+    }
+    if (uniqueTags && Array.isArray(uniqueTags) &&
+        (0, utils_js_1.isArrayWithValues)(uniqueTags)) {
         event.tags.forEach(function (tag) {
             // References
             // ["e", <event-id>, <relay-url>, <marker>, <pubkey>]
@@ -1146,99 +1155,125 @@ const standardizeNostrEventV2 = (event) => {
             if (Array.isArray(tag) && tag[0] === "e" &&
                 tag[1] && typeof (tag[1]) === 'string' &&
                 (0, exports.isMappedTag)(tag, event.tags)) {
-                const tagDetails = (0, exports.getTagMappedDetails)(tag, event.tags);
-                if (tagDetails && (0, utils_js_1.isArrayOfStrings)(tagDetails) &&
-                    tagDetails[1] === "spasm_id_1" &&
-                    tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
-                    tagDetails[4] === "se2") {
-                    const originalValue = (0, exports.getOriginalValueFromTagMappedDetails)(tagDetails);
-                    const path = tagDetails[5];
-                    const eventIndex = Number(tagDetails[6]);
-                    const idIndex = Number(tagDetails[7]);
-                    if (originalValue &&
-                        typeof (originalValue) === "string" &&
-                        path && typeof (path) === "string" &&
-                        typeof (eventIndex) === "number" && eventIndex >= 0 &&
-                        typeof (idIndex) === "number" && idIndex >= 0) {
-                        // <event-id>
-                        const eventId = {
-                            value: originalValue,
-                            // Create a new format field only if a
-                            // format can be determined from a string.
-                            ...((0, utils_js_1.getFormatFromId)(originalValue)
-                                ? { format: (0, utils_js_1.getFormatFromId)(originalValue) }
-                                : {})
-                        };
-                        const formatName = tagDetails[10];
-                        if (formatName && typeof (formatName) === "string") {
-                            eventId.format ??= {
-                                name: formatName
-                            };
-                            eventId.format.name =
-                                formatName;
-                        }
-                        const formatVersion = tagDetails[11];
-                        if (formatVersion &&
-                            typeof (formatVersion) === "string" &&
-                            eventId.format) {
-                            eventId.format.version = formatVersion;
-                        }
-                        const marker = tagDetails[12];
-                        if (marker && typeof (marker) === "string") {
-                            eventId.marker = marker;
-                        }
-                        const pubkey = tag[4];
-                        if (pubkey && typeof (pubkey) === "string") {
-                            if (tagDetails[1] === "spasm_id_1" &&
-                                tagDetails[14] &&
-                                typeof (tagDetails[14]) === "string") {
-                                const pubkeyMethod = tagDetails[14];
-                                // Original might be undefined or empty string
-                                const pubkeyOriginal = tagDetails[15];
-                                const pubkeyValue = (0, exports.getOriginalFromValueAndMethod)(pubkey, pubkeyMethod, pubkeyOriginal);
-                                if (pubkeyValue && typeof (pubkeyValue) === "string") {
-                                    eventId.pubkey = pubkeyValue;
+                // We have to make sure that each tags_mapping tag with
+                // associated tag is used, because there might
+                // be multiple tags_mappings tags for one tag.
+                // For example, duplicate parent IDs will have two
+                // different tags_mappings associated with the same ID,
+                // but they will have different mapped values since
+                // duplicate parent IDs on the original Spasm event will
+                // be located at the different array indexes, e.g.,
+                // parentId[0] and parentId[1].
+                // Another example is having two different mentioned
+                // authors with multiple pubkeys which share the same
+                // pubkey, e.g.:
+                // mentioned-author-1: eth-pubkey-1 && nostr-pubkey1
+                // mentioned-author-2: eth-pubkey-1 && nostr-pubkey2
+                // This might happend if an author changed his Nostr
+                // signing key during a conversation tree, but kept
+                // the same Ethereum key, e.g., if his Nostr key got
+                // compromised. In that case, there will be two
+                // different tags_mapping tags associated with
+                // eth-pubkey-1 since it's located in two different
+                // objects.
+                const arrayOfTagDetails = (0, exports.getTagMappedDetails)(tag, event.tags);
+                if (arrayOfTagDetails &&
+                    (0, utils_js_1.isArrayWithValues)(arrayOfTagDetails)) {
+                    arrayOfTagDetails.forEach((tagDetails) => {
+                        if (tagDetails && (0, utils_js_1.isArrayOfStrings)(tagDetails) &&
+                            tagDetails[1] === "spasm_id_1" &&
+                            tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
+                            tagDetails[4] === "se2") {
+                            const originalValue = (0, exports.getOriginalValueFromTagMappedDetails)(tagDetails);
+                            const path = tagDetails[5];
+                            const eventIndex = Number(tagDetails[6]);
+                            const idIndex = Number(tagDetails[7]);
+                            if (originalValue &&
+                                typeof (originalValue) === "string" &&
+                                path && typeof (path) === "string" &&
+                                typeof (eventIndex) === "number" && eventIndex >= 0 &&
+                                typeof (idIndex) === "number" && idIndex >= 0) {
+                                // <event-id>
+                                const eventId = {
+                                    value: originalValue,
+                                    // Create a new format field only if a
+                                    // format can be determined from a string.
+                                    ...((0, utils_js_1.getFormatFromId)(originalValue)
+                                        ? { format: (0, utils_js_1.getFormatFromId)(originalValue) }
+                                        : {})
+                                };
+                                const formatName = tagDetails[10];
+                                if (formatName && typeof (formatName) === "string") {
+                                    eventId.format ??= {
+                                        name: formatName
+                                    };
+                                    eventId.format.name =
+                                        formatName;
+                                }
+                                const formatVersion = tagDetails[11];
+                                if (formatVersion &&
+                                    typeof (formatVersion) === "string" &&
+                                    eventId.format) {
+                                    eventId.format.version = formatVersion;
+                                }
+                                const marker = tagDetails[12];
+                                if (marker && typeof (marker) === "string") {
+                                    eventId.marker = marker;
+                                }
+                                const pubkey = tag[4];
+                                if (pubkey && typeof (pubkey) === "string") {
+                                    if (tagDetails[1] === "spasm_id_1" &&
+                                        tagDetails[14] &&
+                                        typeof (tagDetails[14]) === "string") {
+                                        const pubkeyMethod = tagDetails[14];
+                                        // Original might be undefined or empty string
+                                        const pubkeyOriginal = tagDetails[15];
+                                        const pubkeyValue = (0, exports.getOriginalFromValueAndMethod)(pubkey, pubkeyMethod, pubkeyOriginal);
+                                        if (pubkeyValue && typeof (pubkeyValue) === "string") {
+                                            eventId.pubkey = pubkeyValue;
+                                        }
+                                    }
+                                }
+                                const hosts = [];
+                                if (tagDetails[13] &&
+                                    typeof (tagDetails[13] === "string")) {
+                                    const hostsStrings = tagDetails[13].split(',');
+                                    if ((0, utils_js_1.isArrayOfStrings)(hostsStrings)) {
+                                        hostsStrings.forEach(host => {
+                                            hosts.push({ value: host });
+                                        });
+                                    }
+                                }
+                                if ((0, utils_js_1.isArrayWithValues)(hosts)) {
+                                    eventId.hosts = hosts;
+                                }
+                                if (path === "parent.ids") {
+                                    // Create object it's null or undefined
+                                    parentEventsMapped[eventIndex] ??= { ids: [] };
+                                    // Create ids if it's null or undefined
+                                    parentEventsMapped[eventIndex].ids ??= [];
+                                    parentEventsMapped[eventIndex].ids[idIndex] =
+                                        eventId;
+                                }
+                                else if (path === "root.ids") {
+                                    // Create object it's null or undefined
+                                    rootEventsMapped[eventIndex] ??= { ids: [] };
+                                    // Create ids if it's null or undefined
+                                    rootEventsMapped[eventIndex].ids ??= [];
+                                    rootEventsMapped[eventIndex].ids[idIndex] =
+                                        eventId;
+                                }
+                                else if (path === "references.ids") {
+                                    // Create object it's null or undefined
+                                    referencedEventsMapped[eventIndex] ??= { ids: [] };
+                                    // Create ids if it's null or undefined
+                                    referencedEventsMapped[eventIndex].ids ??= [];
+                                    referencedEventsMapped[eventIndex].ids[idIndex] =
+                                        eventId;
                                 }
                             }
                         }
-                        const hosts = [];
-                        if (tagDetails[13] &&
-                            typeof (tagDetails[13] === "string")) {
-                            const hostsStrings = tagDetails[13].split(',');
-                            if ((0, utils_js_1.isArrayOfStrings)(hostsStrings)) {
-                                hostsStrings.forEach(host => {
-                                    hosts.push({ value: host });
-                                });
-                            }
-                        }
-                        if ((0, utils_js_1.isArrayWithValues)(hosts)) {
-                            eventId.hosts = hosts;
-                        }
-                        if (path === "parent.ids") {
-                            // Create object it's null or undefined
-                            parentEventsMapped[eventIndex] ??= { ids: [] };
-                            // Create ids if it's null or undefined
-                            parentEventsMapped[eventIndex].ids ??= [];
-                            parentEventsMapped[eventIndex].ids[idIndex] =
-                                eventId;
-                        }
-                        else if (path === "root.ids") {
-                            // Create object it's null or undefined
-                            rootEventsMapped[eventIndex] ??= { ids: [] };
-                            // Create ids if it's null or undefined
-                            rootEventsMapped[eventIndex].ids ??= [];
-                            rootEventsMapped[eventIndex].ids[idIndex] =
-                                eventId;
-                        }
-                        else if (path === "references.ids") {
-                            // Create object it's null or undefined
-                            referencedEventsMapped[eventIndex] ??= { ids: [] };
-                            // Create ids if it's null or undefined
-                            referencedEventsMapped[eventIndex].ids ??= [];
-                            referencedEventsMapped[eventIndex].ids[idIndex] =
-                                eventId;
-                        }
-                    }
+                    });
                 }
             }
             // Unmapped 'e' tags
@@ -1293,79 +1328,84 @@ const standardizeNostrEventV2 = (event) => {
             if (Array.isArray(tag) && tag[0] === "p" &&
                 tag[1] && typeof (tag[1]) === 'string' &&
                 (0, exports.isMappedTag)(tag, event.tags)) {
-                const tagDetails = (0, exports.getTagMappedDetails)(tag, event.tags);
-                if (tagDetails && (0, utils_js_1.isArrayOfStrings)(tagDetails) &&
-                    tagDetails[1] === "spasm_add_1" &&
-                    tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
-                    tagDetails[4] === "se2") {
-                    const originalValue = (0, exports.getOriginalValueFromTagMappedDetails)(tagDetails);
-                    const path = tagDetails[5];
-                    const authorIndex = Number(tagDetails[6]);
-                    const addressIndex = Number(tagDetails[7]);
-                    if (originalValue &&
-                        typeof (originalValue) === "string" &&
-                        path && typeof (path) === "string" &&
-                        typeof (authorIndex) === "number" &&
-                        authorIndex >= 0 &&
-                        typeof (addressIndex) === "number" &&
-                        addressIndex >= 0) {
-                        // <pubkey>
-                        const address = {
-                            value: originalValue,
-                            // Create a new format field only if a
-                            // format can be determined from a string.
-                            ...((0, utils_js_1.getFormatFromAddress)(originalValue)
-                                ? { format: (0, utils_js_1.getFormatFromAddress)(originalValue) }
-                                : {})
-                        };
-                        const formatName = tagDetails[10];
-                        if (formatName && typeof (formatName) === "string") {
-                            address.format ??= {
-                                name: formatName
-                            };
-                            address.format.name =
-                                formatName;
-                        }
-                        const formatVersion = tagDetails[11];
-                        if (formatVersion &&
-                            typeof (formatVersion) === "string" &&
-                            address.format) {
-                            address.format.version = formatVersion;
-                        }
-                        const marker = tagDetails[12];
-                        if (marker && typeof (marker) === "string") {
-                            address.marker = marker;
-                        }
-                        const hosts = [];
-                        if (tagDetails[13] &&
-                            typeof (tagDetails[13] === "string")) {
-                            const hostsStrings = tagDetails[13].split(',');
-                            if ((0, utils_js_1.isArrayOfStrings)(hostsStrings)) {
-                                hostsStrings.forEach(host => {
-                                    hosts.push({ value: host });
-                                });
+                const arrayOfTagDetails = (0, exports.getTagMappedDetails)(tag, event.tags);
+                if (arrayOfTagDetails &&
+                    (0, utils_js_1.isArrayWithValues)(arrayOfTagDetails)) {
+                    arrayOfTagDetails.forEach((tagDetails) => {
+                        if (tagDetails && (0, utils_js_1.isArrayOfStrings)(tagDetails) &&
+                            tagDetails[1] === "spasm_add_1" &&
+                            tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
+                            tagDetails[4] === "se2") {
+                            const originalValue = (0, exports.getOriginalValueFromTagMappedDetails)(tagDetails);
+                            const path = tagDetails[5];
+                            const authorIndex = Number(tagDetails[6]);
+                            const addressIndex = Number(tagDetails[7]);
+                            if (originalValue &&
+                                typeof (originalValue) === "string" &&
+                                path && typeof (path) === "string" &&
+                                typeof (authorIndex) === "number" &&
+                                authorIndex >= 0 &&
+                                typeof (addressIndex) === "number" &&
+                                addressIndex >= 0) {
+                                // <pubkey>
+                                const address = {
+                                    value: originalValue,
+                                    // Create a new format field only if a
+                                    // format can be determined from a string.
+                                    ...((0, utils_js_1.getFormatFromAddress)(originalValue)
+                                        ? { format: (0, utils_js_1.getFormatFromAddress)(originalValue) }
+                                        : {})
+                                };
+                                const formatName = tagDetails[10];
+                                if (formatName && typeof (formatName) === "string") {
+                                    address.format ??= {
+                                        name: formatName
+                                    };
+                                    address.format.name =
+                                        formatName;
+                                }
+                                const formatVersion = tagDetails[11];
+                                if (formatVersion &&
+                                    typeof (formatVersion) === "string" &&
+                                    address.format) {
+                                    address.format.version = formatVersion;
+                                }
+                                const marker = tagDetails[12];
+                                if (marker && typeof (marker) === "string") {
+                                    address.marker = marker;
+                                }
+                                const hosts = [];
+                                if (tagDetails[13] &&
+                                    typeof (tagDetails[13] === "string")) {
+                                    const hostsStrings = tagDetails[13].split(',');
+                                    if ((0, utils_js_1.isArrayOfStrings)(hostsStrings)) {
+                                        hostsStrings.forEach(host => {
+                                            hosts.push({ value: host });
+                                        });
+                                    }
+                                }
+                                if ((0, utils_js_1.isArrayWithValues)(hosts)) {
+                                    address.hosts = hosts;
+                                }
+                                if (path === "mentions.addresses") {
+                                    // Create object it's null or undefined
+                                    mentionedAuthorsMapped[authorIndex] ??= {
+                                        addresses: []
+                                    };
+                                    // Create addresses if it's null or undefined
+                                    mentionedAuthorsMapped[authorIndex]
+                                        .addresses ??= [];
+                                    if (mentionedAuthorsMapped &&
+                                        mentionedAuthorsMapped[authorIndex] &&
+                                        mentionedAuthorsMapped[authorIndex].addresses &&
+                                        Array.isArray(mentionedAuthorsMapped[authorIndex].addresses)) {
+                                        mentionedAuthorsMapped[authorIndex]
+                                            .addresses[addressIndex] = address;
+                                    }
+                                }
                             }
                         }
-                        if ((0, utils_js_1.isArrayWithValues)(hosts)) {
-                            address.hosts = hosts;
-                        }
-                        if (path === "mentions.addresses") {
-                            // Create object it's null or undefined
-                            mentionedAuthorsMapped[authorIndex] ??= {
-                                addresses: []
-                            };
-                            // Create addresses if it's null or undefined
-                            mentionedAuthorsMapped[authorIndex]
-                                .addresses ??= [];
-                            if (mentionedAuthorsMapped &&
-                                mentionedAuthorsMapped[authorIndex] &&
-                                mentionedAuthorsMapped[authorIndex].addresses &&
-                                Array.isArray(mentionedAuthorsMapped[authorIndex].addresses)) {
-                                mentionedAuthorsMapped[authorIndex]
-                                    .addresses[addressIndex] = address;
-                            }
-                        }
-                    }
+                    });
                 }
             }
             // Unmapped
@@ -1405,96 +1445,101 @@ const standardizeNostrEventV2 = (event) => {
             if (Array.isArray(tag) && tag[0] === "O" &&
                 tag[1] && typeof (tag[1]) === 'string' &&
                 (0, exports.isMappedTag)(tag, event.tags)) {
-                const tagDetails = (0, exports.getTagMappedDetails)(tag, event.tags);
-                if (tagDetails && (0, utils_js_1.isArrayOfStrings)(tagDetails) &&
-                    tagDetails[1] === "spasm_aadd_1" &&
-                    tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
-                    tagDetails[4] === "se2") {
-                    const originalValue = (0, exports.getOriginalValueFromTagMappedDetails)(tagDetails);
-                    const path = tagDetails[5];
-                    const authorIndex = Number(tagDetails[6]);
-                    const addressIndex = Number(tagDetails[7]);
-                    if (originalValue &&
-                        typeof (originalValue) === "string" &&
-                        path && typeof (path) === "string" &&
-                        typeof (authorIndex) === "number" &&
-                        authorIndex >= 0 &&
-                        typeof (addressIndex) === "number" &&
-                        addressIndex >= 0) {
-                        const address = {
-                            value: originalValue,
-                            // Create a new format field only if a
-                            // format can be determined from a string.
-                            ...((0, utils_js_1.getFormatFromAddress)(originalValue)
-                                ? { format: (0, utils_js_1.getFormatFromAddress)(originalValue) }
-                                : {})
-                        };
-                        const formatName = tagDetails[10];
-                        if (formatName && typeof (formatName) === "string") {
-                            address.format ??= {
-                                name: formatName
-                            };
-                            address.format.name =
-                                formatName;
-                        }
-                        const formatVersion = tagDetails[11];
-                        if (formatVersion &&
-                            typeof (formatVersion) === "string" &&
-                            address.format) {
-                            address.format.version = formatVersion;
-                        }
-                        const marker = tagDetails[12];
-                        if (marker && typeof (marker) === "string") {
-                            address.marker = marker;
-                        }
-                        const hosts = [];
-                        if (tagDetails[13] &&
-                            typeof (tagDetails[13] === "string")) {
-                            const hostsStrings = tagDetails[13].split(',');
-                            if ((0, utils_js_1.isArrayOfStrings)(hostsStrings)) {
-                                hostsStrings.forEach(host => {
-                                    hosts.push({ value: host });
-                                });
+                const arrayOfTagDetails = (0, exports.getTagMappedDetails)(tag, event.tags);
+                if (arrayOfTagDetails &&
+                    (0, utils_js_1.isArrayWithValues)(arrayOfTagDetails)) {
+                    arrayOfTagDetails.forEach((tagDetails) => {
+                        if (tagDetails && (0, utils_js_1.isArrayOfStrings)(tagDetails) &&
+                            tagDetails[1] === "spasm_aadd_1" &&
+                            tagDetails[2] === tag[0] && tagDetails[3] === tag[1] &&
+                            tagDetails[4] === "se2") {
+                            const originalValue = (0, exports.getOriginalValueFromTagMappedDetails)(tagDetails);
+                            const path = tagDetails[5];
+                            const authorIndex = Number(tagDetails[6]);
+                            const addressIndex = Number(tagDetails[7]);
+                            if (originalValue &&
+                                typeof (originalValue) === "string" &&
+                                path && typeof (path) === "string" &&
+                                typeof (authorIndex) === "number" &&
+                                authorIndex >= 0 &&
+                                typeof (addressIndex) === "number" &&
+                                addressIndex >= 0) {
+                                const address = {
+                                    value: originalValue,
+                                    // Create a new format field only if a
+                                    // format can be determined from a string.
+                                    ...((0, utils_js_1.getFormatFromAddress)(originalValue)
+                                        ? { format: (0, utils_js_1.getFormatFromAddress)(originalValue) }
+                                        : {})
+                                };
+                                const formatName = tagDetails[10];
+                                if (formatName && typeof (formatName) === "string") {
+                                    address.format ??= {
+                                        name: formatName
+                                    };
+                                    address.format.name =
+                                        formatName;
+                                }
+                                const formatVersion = tagDetails[11];
+                                if (formatVersion &&
+                                    typeof (formatVersion) === "string" &&
+                                    address.format) {
+                                    address.format.version = formatVersion;
+                                }
+                                const marker = tagDetails[12];
+                                if (marker && typeof (marker) === "string") {
+                                    address.marker = marker;
+                                }
+                                const hosts = [];
+                                if (tagDetails[13] &&
+                                    typeof (tagDetails[13] === "string")) {
+                                    const hostsStrings = tagDetails[13].split(',');
+                                    if ((0, utils_js_1.isArrayOfStrings)(hostsStrings)) {
+                                        hostsStrings.forEach(host => {
+                                            hosts.push({ value: host });
+                                        });
+                                    }
+                                }
+                                if ((0, utils_js_1.isArrayWithValues)(hosts)) {
+                                    address.hosts = hosts;
+                                }
+                                if (path === "authors.addresses") {
+                                    // Create object it's null or undefined
+                                    spasmEventV2.authors ??= [];
+                                    spasmEventV2.authors[authorIndex] ??= {
+                                        addresses: []
+                                    };
+                                    // Create addresses if it's null or undefined
+                                    spasmEventV2.authors[authorIndex]
+                                        .addresses ??= [];
+                                    if (spasmEventV2.authors &&
+                                        spasmEventV2.authors[authorIndex] &&
+                                        spasmEventV2.authors[authorIndex].addresses &&
+                                        Array.isArray(spasmEventV2.authors[authorIndex].addresses)) {
+                                        spasmEventV2.authors[authorIndex]
+                                            .addresses[addressIndex] = address;
+                                    }
+                                }
+                                //   // Create object it's null or undefined
+                                //   extraAuthorsMapped[authorIndex] ??= {
+                                //     addresses: []
+                                //   }
+                                //   // Create addresses if it's null or undefined
+                                //   extraAuthorsMapped[authorIndex]
+                                //     .addresses ??= []
+                                //   if (
+                                //     extraAuthorsMapped &&
+                                //     extraAuthorsMapped[authorIndex] &&
+                                //     extraAuthorsMapped[authorIndex].addresses &&
+                                //     Array.isArray(extraAuthorsMapped[authorIndex].addresses)
+                                //   ) {
+                                //     extraAuthorsMapped[authorIndex]
+                                //       .addresses![addressIndex] = address
+                                //   }
+                                // }
                             }
                         }
-                        if ((0, utils_js_1.isArrayWithValues)(hosts)) {
-                            address.hosts = hosts;
-                        }
-                        if (path === "authors.addresses") {
-                            // Create object it's null or undefined
-                            spasmEventV2.authors ??= [];
-                            spasmEventV2.authors[authorIndex] ??= {
-                                addresses: []
-                            };
-                            // Create addresses if it's null or undefined
-                            spasmEventV2.authors[authorIndex]
-                                .addresses ??= [];
-                            if (spasmEventV2.authors &&
-                                spasmEventV2.authors[authorIndex] &&
-                                spasmEventV2.authors[authorIndex].addresses &&
-                                Array.isArray(spasmEventV2.authors[authorIndex].addresses)) {
-                                spasmEventV2.authors[authorIndex]
-                                    .addresses[addressIndex] = address;
-                            }
-                        }
-                        //   // Create object it's null or undefined
-                        //   extraAuthorsMapped[authorIndex] ??= {
-                        //     addresses: []
-                        //   }
-                        //   // Create addresses if it's null or undefined
-                        //   extraAuthorsMapped[authorIndex]
-                        //     .addresses ??= []
-                        //   if (
-                        //     extraAuthorsMapped &&
-                        //     extraAuthorsMapped[authorIndex] &&
-                        //     extraAuthorsMapped[authorIndex].addresses &&
-                        //     Array.isArray(extraAuthorsMapped[authorIndex].addresses)
-                        //   ) {
-                        //     extraAuthorsMapped[authorIndex]
-                        //       .addresses![addressIndex] = address
-                        //   }
-                        // }
-                    }
+                    });
                 }
             }
             // Nostr hashtags converted to keywords
@@ -1639,6 +1684,51 @@ const standardizeNostrSpasmEventV2 = (event) => {
             }
             if (Array.isArray(tag) && tag[0] === "license") {
                 license = tag[1];
+            }
+            if (Array.isArray(tag) && tag[0] === "spasm_tips" &&
+                tag[1] && typeof (tag[1]) === "string") {
+                const tip = { address: tag[1] };
+                if (tag[2] && typeof (tag[2]) === "string") {
+                    tip.text = tag[2];
+                }
+                if (tag[3] && typeof (tag[3]) === "string") {
+                    const timestamp = Number(tag[3]);
+                    if (typeof (timestamp) === "number") {
+                        tip.expiration = { timestamp: timestamp };
+                    }
+                }
+                if (tag[4] && typeof (tag[4] === "string")) {
+                    tip.currency ??= {};
+                    tip.currency.name = tag[4];
+                }
+                if (tag[5] && typeof (tag[5] === "string")) {
+                    tip.currency ??= {};
+                    tip.currency.ticker = tag[5];
+                }
+                if (tag[6] && typeof (tag[6] === "string")) {
+                    tip.network ??= {};
+                    tip.network.name = tag[6];
+                }
+                else if (tag[6] && typeof (tag[6] === "number")) {
+                    const str = String(tag[6]);
+                    if (str && typeof (str) === "string") {
+                        tip.network ??= {};
+                        tip.network.name = tag[6];
+                    }
+                }
+                if (tag[7] && typeof (tag[7] === "string")) {
+                    tip.network ??= {};
+                    tip.network.id = tag[7];
+                }
+                else if (tag[7] && typeof (tag[7] === "number")) {
+                    const str = String(tag[7]);
+                    if (str && typeof (str) === "string") {
+                        tip.network ??= {};
+                        tip.network.id = tag[7];
+                    }
+                }
+                spasmEventV2.tips ??= [];
+                spasmEventV2.tips?.push(tip);
             }
             if (Array.isArray(tag) && tag[0] === "spasm_category") {
                 if (tag[1] && typeof (tag[1]) === "string") {

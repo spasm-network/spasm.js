@@ -23,11 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyEthereumSignature = exports.markSpasmEventAddressAsVerified = exports.sortTagsForSpasmid01 = exports.sortParentForSpasmid01 = exports.sortReferencesForSpasmid01 = exports.sortMediasForSpasmid01 = exports.sortLinksForSpasmid01 = exports.sortLinksForSpasmEventV2 = exports.sortHostsForSpasmid01 = exports.sortHostsForSpasmEventV2 = exports.sortArrayOfObjectsByKeyValue = exports.sortAuthorsForSpasmid01 = exports.sortAuthorsForSpasmEventV2 = exports.sortArrayOfObjects = exports.sortArrayOfStringsAndNumbers = exports.keepTheseKeysInObjectsInArray = exports.keepTheseKeysInObject = exports.getHashOfString = exports.getAllFormatNamesFromEvent = exports.getAllFormatNamesFromSpasmEventV2 = exports.extractAllIdFormatNamesFromSpasmEventV2 = exports.extractIdFormatNameFromSpasmEventIdV2 = exports.getFormatFromSignature = exports.getFormatFromAddress = exports.getFormatFromId = exports.getFormatFromValue = exports.createLinkObjectFromUrl = exports.isUrl = exports.isValidUrl = exports.getNostrSpasmVersion = exports.toBeNostrTimestamp = exports.toBeStandardTimestamp = exports.toBeStandardizedTimestamp = exports.toBeFullTimestamp = exports.toBeLongTimestamp = exports.toBeShortTimestamp = exports.toBeTimestamp = exports.extractSealedEvent = exports.extractVersion = exports.isArrayOfNumbersOrStrings = exports.isArrayOfStringsOrNumbers = exports.isArrayOfNumbers = exports.isArrayOfStrings = exports.isArrayWithValues = exports.isObjectWithValues = exports.ifNumberOrString = exports.ifStringOrNumber = exports.isNumberOrString = exports.isStringOrNumber = exports.hasValue = void 0;
-exports.getTotalOfReact = exports.getTotalOfActionReply = exports.getTotalOfReplyAction = exports.getTotalOfReply = exports.getTotalOfAction = exports.getTotalOfMostPopularReaction = exports.getTotalOfReaction = exports.getStatByAction = exports.getPubkeysListedIn = exports.getSignersListedIn = exports.getAllSignatures = exports.getAllRootIds = exports.getAllParentIds = exports.getAllEventIds = exports.getAllIdsFromArrayOfIdObjects = exports.getVerifiedNostrSigners = exports.getVerifiedEthereumSigners = exports.getVerifiedSpasmSigners = exports.getVerifiedSigners = exports.getAllNostrSigners = exports.getAllEthereumSigners = exports.getAllSpasmSigners = exports.getAllSigners = exports.hasSiblingWeb2 = exports.hasSiblingNostr = exports.hasSiblingDmp = exports.hasSiblingSpasm = exports.hasSiblingOfProtocol = exports.extractNostrEvents = exports.extractSignedNostrEvents = exports.extractSignedNostrEvent = exports.extractNostrEvent = exports.hasSignatureNostr = exports.hasSignatureEthereum = exports.hasSignatureOfFormat = exports.mergeGenerateRssFeedConfigs = exports.mergeConvertToRssConfigs = exports.mergeSanitizationConfigs = exports.mergeConfigs = exports.mergeObjects = exports.clearObject = exports.clearArray = exports.sanitizeAnything = exports.sanitizeArray = exports.sanitizeEvent = exports.sanitizeEventWithDompurify = exports.sanitizeStringWithDompurify = exports.sanitizeEventWith = exports.executeFunctionForAllNestedValuesOfType = exports.utilsStatus = void 0;
-exports.mergeChildrenV2 = exports.mergeStatsV2 = exports.cleanSpasmEventV2 = exports.fakeAsObject = exports.fakeAsAny = exports.fakeAsNull = exports.fakeAsArray = exports.fakeAsNumber = exports.fakeAsString = exports.copyOf = exports.deepCopyOfObject = exports.ifEventsHaveSameSpasmId01 = exports.sortSpasmEventsV2 = exports.sortSpasmEventsV2ByDbAddedTimestamp = exports.prependToArrayIfEventIsUnique = exports.unshiftToArrayIfEventIsUnique = exports.appendToArrayIfEventIsUnique = exports.pushToArrayIfEventIsUnique = exports.insertIntoArrayIfEventIsUnique = exports.mergeEventIntoArray = exports.checkIfArrayHasThisEvent = exports.checkIfArrayHasThisSpasmEventV2 = exports.mergeDifferentSpasmEventsV2 = exports.mergeSpasmEventsV2 = exports.extractSignerFromEthereumSignature = exports.toBeUniqueSpasmEventsV2 = exports.toBeSpasmEventsV2 = exports.toBeSpasmEventV2 = exports.getEventsByIds = exports.getEventById = exports.checkIfEventHasThisId = exports.removeDuplicatesFromArrayOfStrings = exports.removeDuplicatesFromArray = exports.extractRootSpasmId01 = exports.extractRootIdByFormat = exports.getRootIdByFormat = exports.extractParentSpasmId01 = exports.extractParentIdByFormat = exports.getParentIdByFormat = exports.extractSpasmId01 = exports.extractIdByFormat = exports.findMostLikelyGuid = exports.findMostLikelyUrl = exports.getIdByFormat = exports.areAllPubkeysListedIn = exports.areAllSignersListedIn = exports.isAnyPubkeyListedIn = exports.isAnySignerListedIn = exports.getTotalOfActionReact = exports.getTotalOfReactAction = void 0;
-exports.unescapeXmlCdata = exports.restoreFromCdata = exports.restoreFromRssCdata = exports.restoreFromXmlCdata = exports.prepareForCdata = exports.prepareForRssCdata = exports.prepareForXmlCdata = exports.escapeCdata = exports.escapeRssCdata = exports.escapeXmlCdata = exports.escapeXml = exports.parseFirstAudioOrVideoUrlFromString = exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString = exports.parseFirstMediaUrlFromString = exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString = exports.parseStringForMediaUrls = exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString = exports.getAllUrlsOfMediaTypeFromArrayOfUrls = exports.getAllMediaUrlsOfMimeTypeFromArrayOfUrls = exports.filterAllMediaUrlsFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls = exports.isFileNameOfMimeType = exports.ifFileNameOfMimeType = exports.parseStringForUrls = exports.extractAllUrlsFromString = exports.getAllUrlsFromString = exports.getMimeType = exports.DEFAULT_MIME_TYPE = exports.MIME_TYPE_MAP = exports.toBeString = exports.removeNbsp = exports.normalizeText = exports.isNostrHex = exports.isHex = exports.assignFormats = exports.attachEventAsParent = exports.attachEventAsRoot = exports.attachEventAsChild = exports.ifArraysHaveCommonId = exports.addRepliesToEvent = exports.addCommentsToEvent = exports.addChildrenToTree = exports.addRootToEvent = exports.addRootToTree = exports.addParentToEvent = exports.addParentToTree = exports.addEventsToTree = void 0;
-exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShortAddress = exports.autoGeneratedName = exports.unescapeCdata = exports.unescapeRssCdata = void 0;
+exports.sortLinksForSpasmEventV2 = exports.sortHostsForSpasmid01 = exports.sortHostsForSpasmEventV2 = exports.sortArrayOfObjectsByKeyValue = exports.sortAuthorsForSpasmid01 = exports.sortAuthorsForSpasmEventV2 = exports.sortArrayOfObjects = exports.sortArrayOfStringsAndNumbers = exports.keepTheseKeysInObjectsInArray = exports.keepTheseKeysInObject = exports.getHashOfString = exports.getAllFormatNamesFromEvent = exports.getAllFormatNamesFromSpasmEventV2 = exports.extractAllIdFormatNamesFromSpasmEventV2 = exports.extractIdFormatNameFromSpasmEventIdV2 = exports.getFormatFromSignature = exports.getFormatFromAddress = exports.getFormatFromId = exports.getFormatFromValue = exports.createLinkObjectFromUrl = exports.isUrl = exports.isValidUrl = exports.getNostrSpasmVersion = exports.toBeShortDate = exports.toBeDateShort = exports.toBeLongDate = exports.toBeDateLong = exports.toBeFullDate = exports.toBeDateFull = exports.toBeDate = exports.toBeNostrTimestamp = exports.toBeStandardTimestamp = exports.toBeStandardizedTimestamp = exports.toBeFullTimestamp = exports.toBeLongTimestamp = exports.toBeShortTimestamp = exports.toBeTimestamp = exports.extractSealedEvent = exports.extractVersion = exports.isArrayOfNumbersOrStrings = exports.isArrayOfStringsOrNumbers = exports.isArrayOfNumbers = exports.isArrayOfStrings = exports.isArrayWithValues = exports.isObjectWithValues = exports.ifNumberOrString = exports.ifStringOrNumber = exports.isNumberOrString = exports.isStringOrNumber = exports.hasValue = void 0;
+exports.getAllParentIds = exports.getAllEventIds = exports.getAllIdsFromArrayOfIdObjects = exports.hasValidSignature = exports.hasVerifiedSigner = exports.getVerifiedNostrSigners = exports.getVerifiedEthereumSigners = exports.getVerifiedSpasmSigners = exports.getVerifiedSigners = exports.getAllNostrSigners = exports.getAllEthereumSigners = exports.getAllSpasmSigners = exports.getAllSigners = exports.hasSiblingWeb2 = exports.hasSiblingNostr = exports.hasSiblingDmp = exports.hasSiblingSpasm = exports.hasSiblingOfProtocol = exports.extractNostrEvents = exports.extractSignedNostrEvents = exports.extractSignedNostrEvent = exports.extractNostrEvent = exports.hasSignatureNostr = exports.hasSignatureEthereum = exports.hasSignatureOfFormat = exports.mergeGenerateRssFeedConfigs = exports.mergeConvertToRssConfigs = exports.mergeSanitizationConfigs = exports.mergeConfigs = exports.mergeObjects = exports.clearObject = exports.clearArray = exports.toLowerCaseAllNestedStrings = exports.toLowerCaseIfString = exports.toLowerCaseIfValueIsString = exports.sanitizeAnything = exports.sanitizeArray = exports.sanitizeEvent = exports.sanitizeEventWithDompurify = exports.sanitizeStringWithDompurify = exports.sanitizeEventWith = exports.executeFunctionForAllNestedValuesOfType = exports.utilsStatus = exports.verifyEthereumSignature = exports.markSpasmEventAddressAsVerified = exports.sortTagsForSpasmid01 = exports.sortParentForSpasmid01 = exports.sortReferencesForSpasmid01 = exports.sortMediasForSpasmid01 = exports.sortLinksForSpasmid01 = void 0;
+exports.checkIfArrayHasThisEvent = exports.checkIfArrayHasThisSpasmEventV2 = exports.mergeDifferentSpasmEventsV2 = exports.mergeSpasmEventsV2 = exports.extractSignerFromEthereumSignature = exports.toBeUniqueSpasmEventsV2 = exports.toBeSpasmEventsV2 = exports.toBeSpasmEventV2 = exports.getEventsByIds = exports.getEventById = exports.checkIfEventHasThisId = exports.keepUniqueArraysInArrayOrArraysOfStrings = exports.removeDuplicateArraysFromArrayOrArraysOfStrings = exports.uniqueNostrTagsOnly = exports.uniqueTagsOnly = exports.deduplicateNostrTags = exports.deduplicateTags = exports.removeDuplicateNostrTags = exports.removeDuplicateTags = exports.removeDuplicatesFromArrayOfStrings = exports.removeDuplicatesFromArray = exports.extractRootSpasmId01 = exports.extractRootIdByFormat = exports.getRootIdByFormat = exports.extractParentSpasmId01 = exports.extractParentIdByFormat = exports.getParentIdByFormat = exports.extractSpasmId01 = exports.extractIdByFormat = exports.findMostLikelyGuid = exports.findMostLikelyUrl = exports.getIdByFormat = exports.areAllPubkeysListedIn = exports.areAllSignersListedIn = exports.isAnyPubkeyListedIn = exports.isAnySignerListedIn = exports.getTotalOfActionReact = exports.getTotalOfReactAction = exports.getTotalOfReact = exports.getTotalOfActionReply = exports.getTotalOfReplyAction = exports.getTotalOfReply = exports.getTotalOfAction = exports.getTotalOfMostPopularReaction = exports.getTotalOfReaction = exports.getStatByAction = exports.getPubkeysListedIn = exports.getSignersListedIn = exports.getAllSignatures = exports.getAllRootIds = void 0;
+exports.getAllMediaUrlsOfMimeTypeFromArrayOfUrls = exports.filterAllMediaUrlsFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls = exports.isFileNameOfMimeType = exports.ifFileNameOfMimeType = exports.parseStringForUrls = exports.extractAllUrlsFromString = exports.getAllUrlsFromString = exports.getMimeType = exports.DEFAULT_MIME_TYPE = exports.MIME_TYPE_MAP = exports.toBeString = exports.removeNbsp = exports.normalizeText = exports.isNostrHex = exports.isHex = exports.assignFormats = exports.attachEventAsParent = exports.attachEventAsRoot = exports.attachEventAsChild = exports.ifArraysHaveCommonId = exports.addRepliesToEvent = exports.addCommentsToEvent = exports.addChildrenToTree = exports.addRootToEvent = exports.addRootToTree = exports.addParentToEvent = exports.addParentToTree = exports.addEventsToTree = exports.mergeChildrenV2 = exports.mergeStatsV2 = exports.cleanSpasmEventV2 = exports.fakeAsFunction = exports.fakeAsObject = exports.fakeAsAny = exports.fakeAsNull = exports.fakeAsArray = exports.fakeAsNumber = exports.fakeAsString = exports.copyOf = exports.deepCopyOfObject = exports.ifEventsHaveSameSpasmId01 = exports.sortSpasmEventsV2 = exports.sortSpasmEventsV2ByDbAddedTimestamp = exports.prependToArrayIfEventIsUnique = exports.unshiftToArrayIfEventIsUnique = exports.appendToArrayIfEventIsUnique = exports.pushToArrayIfEventIsUnique = exports.insertIntoArrayIfEventIsUnique = exports.mergeEventIntoArray = void 0;
+exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShortAddress = exports.autoGeneratedName = exports.unescapeCdata = exports.unescapeRssCdata = exports.unescapeXmlCdata = exports.restoreFromCdata = exports.restoreFromRssCdata = exports.restoreFromXmlCdata = exports.prepareForCdata = exports.prepareForRssCdata = exports.prepareForXmlCdata = exports.escapeCdata = exports.escapeRssCdata = exports.escapeXmlCdata = exports.escapeXml = exports.parseFirstAudioOrVideoUrlFromString = exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString = exports.parseFirstMediaUrlFromString = exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString = exports.parseStringForMediaUrls = exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString = exports.getAllUrlsOfMediaTypeFromArrayOfUrls = void 0;
 /*
  * Using sha256 from 'js-sha256' npm package, because
  * built-in 'crypto' module works only in a server-side
@@ -335,6 +335,45 @@ exports.toBeFullTimestamp = exports.toBeLongTimestamp;
 exports.toBeStandardizedTimestamp = exports.toBeShortTimestamp;
 exports.toBeStandardTimestamp = exports.toBeShortTimestamp;
 exports.toBeNostrTimestamp = exports.toBeShortTimestamp;
+const toBeDate = (value, format = "full") => {
+    if (!value || !exports.isStringOrNumber)
+        return null;
+    let fullTimestamp = (0, exports.toBeFullTimestamp)(value);
+    if (fullTimestamp && (0, exports.isStringOrNumber)(fullTimestamp)) {
+        const date = new Date(fullTimestamp).toUTCString();
+        if (date && typeof (date) === "string") {
+            if (format === "full") {
+                return date;
+            }
+            else if (format === "long") {
+                return date.slice(5, 25);
+            }
+            else if (format === "medium") {
+                return date.slice(5, 22);
+            }
+            else if (format === "short") {
+                return date.slice(5, 16);
+            }
+        }
+    }
+    return null;
+};
+exports.toBeDate = toBeDate;
+const toBeDateFull = (val) => {
+    return (0, exports.toBeDate)(val, "full");
+};
+exports.toBeDateFull = toBeDateFull;
+exports.toBeFullDate = exports.toBeDateFull;
+const toBeDateLong = (val) => {
+    return (0, exports.toBeDate)(val, "long");
+};
+exports.toBeDateLong = toBeDateLong;
+exports.toBeLongDate = exports.toBeDateLong;
+const toBeDateShort = (val) => {
+    return (0, exports.toBeDate)(val, "short");
+};
+exports.toBeDateShort = toBeDateShort;
+exports.toBeShortDate = exports.toBeDateShort;
 const getNostrSpasmVersion = (event) => {
     let nostrSpasmVersion = null;
     if (event.tags && Array.isArray(event.tags)) {
@@ -1117,6 +1156,36 @@ exports.sanitizeEventWithDompurify = sanitizeEventWithDompurify;
 exports.sanitizeEvent = exports.sanitizeEventWithDompurify;
 exports.sanitizeArray = exports.sanitizeEventWithDompurify;
 exports.sanitizeAnything = exports.sanitizeEventWithDompurify;
+const toLowerCaseIfValueIsString = (val) => {
+    if (val && typeof (val) === "string") {
+        const str = val.toLowerCase();
+        if (str && typeof (str) === "string") {
+            return str;
+        }
+    }
+    return val;
+};
+exports.toLowerCaseIfValueIsString = toLowerCaseIfValueIsString;
+exports.toLowerCaseIfString = exports.toLowerCaseIfValueIsString;
+const toLowerCaseAllNestedStrings = (originalItem) => {
+    try {
+        (0, exports.executeFunctionForAllNestedValuesOfType)(originalItem, { customFunction: exports.toLowerCaseIfString });
+    }
+    catch (error) {
+        console.error("toLowerCase failed", error);
+        // Clearing is only used for sanitization,
+        // to make sure that unsanitized values can pass
+        // through in case of an error.
+        // However, if lowercase fails, it's better
+        // to keep the original values.
+        // if (Array.isArray(originalItem)) {
+        //   clearArray(originalItem)
+        // } else if ( isObjectWithValues(originalItem)) {
+        //   clearObject(originalItem)
+        // }
+    }
+};
+exports.toLowerCaseAllNestedStrings = toLowerCaseAllNestedStrings;
 const clearArray = (arr) => {
     arr.length = 0; // This clears the array
 };
@@ -1319,13 +1388,14 @@ const hasSiblingWeb2 = (spasmEvent) => {
     return (0, exports.hasSiblingOfProtocol)(spasmEvent, "web2");
 };
 exports.hasSiblingWeb2 = hasSiblingWeb2;
-const getAllSigners = (unknownEvent, onlyVerifiedFlag = false, toLowerCase = true, formatName) => {
+const getAllSigners = (unknownEvent, onlyVerifiedFlag = false, toLowerCase = true, formatName, returnNostrSignersAs) => {
     if (!(0, exports.isObjectWithValues)(unknownEvent))
         return [];
     const spasmEventV2 = (0, exports.toBeSpasmEventV2)(unknownEvent);
     if (!spasmEventV2 ||
         !Array.isArray(spasmEventV2.authors))
         return [];
+    const nostrTo = returnNostrSignersAs || "hex";
     const signers = [];
     spasmEventV2.authors.forEach(author => {
         if (author &&
@@ -1340,12 +1410,26 @@ const getAllSigners = (unknownEvent, onlyVerifiedFlag = false, toLowerCase = tru
                     (typeof (address.value) === "string" ||
                         typeof (address.value) === "number")) {
                     // Format name is not specified
-                    if (!formatName) {
+                    if (!formatName || formatName === "any") {
+                        let val = null;
                         if (onlyVerifiedFlag && address.verified) {
-                            signers.push(address.value);
+                            val = address.value;
                         }
                         else if (!onlyVerifiedFlag) {
-                            signers.push(address.value);
+                            val = address.value;
+                        }
+                        if (nostrTo === "npub" && address.format &&
+                            address.format.name === "nostr-hex" &&
+                            typeof (val) === "string") {
+                            val = (0, index_js_1.toBeNpub)(val);
+                        }
+                        else if (nostrTo === "hex" && address.format &&
+                            address.format.name === "nostr-npub" &&
+                            typeof (val) === "string") {
+                            val = (0, index_js_1.toBeHex)(val);
+                        }
+                        if (val) {
+                            signers.push(val);
                         }
                         // Format name is specified
                     }
@@ -1354,11 +1438,25 @@ const getAllSigners = (unknownEvent, onlyVerifiedFlag = false, toLowerCase = tru
                             formatName === "nostr-hex" ||
                             formatName === "nostr-npub") && address.format && (address.format.name === "nostr-hex" ||
                             address.format.name === "nostr-npub")) {
+                            let val = null;
                             if (onlyVerifiedFlag && address.verified) {
-                                signers.push(address.value);
+                                val = address.value;
                             }
                             else if (!onlyVerifiedFlag) {
-                                signers.push(address.value);
+                                val = address.value;
+                            }
+                            if (nostrTo === "npub" && address.format &&
+                                address.format.name === "nostr-hex" &&
+                                typeof (val) === "string") {
+                                val = (0, index_js_1.toBeNpub)(val);
+                            }
+                            else if (nostrTo === "hex" && address.format &&
+                                address.format.name === "nostr-npub" &&
+                                typeof (val) === "string") {
+                                val = (0, index_js_1.toBeHex)(val);
+                            }
+                            if (val) {
+                                signers.push(val);
                             }
                         }
                         else if ((formatName === "ethereum" ||
@@ -1402,14 +1500,14 @@ const getAllEthereumSigners = (unknownEvent) => {
     return (0, exports.getAllSigners)(unknownEvent, false, true, "ethereum");
 };
 exports.getAllEthereumSigners = getAllEthereumSigners;
-const getAllNostrSigners = (unknownEvent) => {
-    return (0, exports.getAllSigners)(unknownEvent, false, true, "nostr");
+const getAllNostrSigners = (unknownEvent, returnNostrSignersAs) => {
+    return (0, exports.getAllSigners)(unknownEvent, false, true, "nostr", returnNostrSignersAs);
 };
 exports.getAllNostrSigners = getAllNostrSigners;
 // TODO doesn't work with events where author
 // addresses are not lowercase
-const getVerifiedSigners = (unknownEvent) => {
-    return (0, exports.getAllSigners)(unknownEvent, true, true);
+const getVerifiedSigners = (unknownEvent, returnNostrSignersAs) => {
+    return (0, exports.getAllSigners)(unknownEvent, true, true, "any", returnNostrSignersAs);
 };
 exports.getVerifiedSigners = getVerifiedSigners;
 const getVerifiedSpasmSigners = (unknownEvent) => {
@@ -1424,6 +1522,17 @@ const getVerifiedNostrSigners = (unknownEvent) => {
     return (0, exports.getAllSigners)(unknownEvent, true, true, "nostr");
 };
 exports.getVerifiedNostrSigners = getVerifiedNostrSigners;
+const hasVerifiedSigner = (unknownEvent) => {
+    const allSigners = (0, exports.getVerifiedSigners)(unknownEvent);
+    if (allSigners && (0, exports.isArrayWithValues)(allSigners)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+exports.hasVerifiedSigner = hasVerifiedSigner;
+exports.hasValidSignature = exports.hasVerifiedSigner;
 const getAllIdsFromArrayOfIdObjects = (arrayOfIdObjects, toLowerCase = true) => {
     if (!arrayOfIdObjects || !Array.isArray(arrayOfIdObjects)) {
         return [];
@@ -2119,6 +2228,29 @@ const removeDuplicatesFromArrayOfStrings = (array) => {
     return [...new Set(array)];
 };
 exports.removeDuplicatesFromArrayOfStrings = removeDuplicatesFromArrayOfStrings;
+/**
+ * Removes duplicate tag arrays from a Nostr tags array
+ * Each Nostr tag is an array of strings
+ */
+const removeDuplicateTags = (tags) => {
+    // Convert each tag array to a string for comparison
+    const uniqueTags = new Map();
+    for (const tag of tags) {
+        const tagKey = JSON.stringify(tag);
+        if (!uniqueTags.has(tagKey)) {
+            uniqueTags.set(tagKey, tag);
+        }
+    }
+    return Array.from(uniqueTags.values());
+};
+exports.removeDuplicateTags = removeDuplicateTags;
+exports.removeDuplicateNostrTags = exports.removeDuplicateTags;
+exports.deduplicateTags = exports.removeDuplicateTags;
+exports.deduplicateNostrTags = exports.removeDuplicateTags;
+exports.uniqueTagsOnly = exports.removeDuplicateTags;
+exports.uniqueNostrTagsOnly = exports.removeDuplicateTags;
+exports.removeDuplicateArraysFromArrayOrArraysOfStrings = exports.removeDuplicateTags;
+exports.keepUniqueArraysInArrayOrArraysOfStrings = exports.removeDuplicateTags;
 const checkIfEventHasThisId = (unknownEvent, id, shortIdLength) => {
     if (!id || !(0, exports.isStringOrNumber)(id)) {
         return false;
@@ -2860,10 +2992,68 @@ const ifEventsHaveSameSpasmId01 = (event1, event2) => {
     return id1 === id2;
 };
 exports.ifEventsHaveSameSpasmId01 = ifEventsHaveSameSpasmId01;
-const deepCopyOfObject = (obj) => {
-    if (!obj || typeof (obj) !== "object")
-        return {};
-    return JSON.parse(JSON.stringify(obj));
+// Using JSON.stringify method doesn't copy functions
+// export const deepCopyOfObject = (obj: any) => {
+//   if (!obj || typeof(obj) !== "object") return {}
+//   return JSON.parse(JSON.stringify(obj))
+// }
+const deepCopyOfObject = (obj, seen = new WeakMap()) => {
+    // Handle primitives and functions
+    if (obj === null || typeof obj !== "object") {
+        return obj;
+    }
+    // Check for circular references
+    if (seen.has(obj)) {
+        return seen.get(obj);
+    }
+    // Handle Date objects
+    if (obj instanceof Date) {
+        const copy = new Date(obj);
+        seen.set(obj, copy);
+        return copy;
+    }
+    // Handle RegExp objects
+    if (obj instanceof RegExp) {
+        const copy = new RegExp(obj.source, obj.flags);
+        seen.set(obj, copy);
+        return copy;
+    }
+    // Handle Map objects
+    if (obj instanceof Map) {
+        const copy = new Map();
+        seen.set(obj, copy);
+        obj.forEach((value, key) => {
+            copy.set((0, exports.deepCopyOfObject)(key, seen), (0, exports.deepCopyOfObject)(value, seen));
+        });
+        return copy;
+    }
+    // Handle Set objects
+    if (obj instanceof Set) {
+        const copy = new Set();
+        seen.set(obj, copy);
+        obj.forEach(value => {
+            copy.add((0, exports.deepCopyOfObject)(value, seen));
+        });
+        return copy;
+    }
+    // Handle arrays
+    if (Array.isArray(obj)) {
+        const copy = [];
+        seen.set(obj, copy);
+        for (let i = 0; i < obj.length; i++) {
+            copy[i] = (0, exports.deepCopyOfObject)(obj[i], seen);
+        }
+        return copy;
+    }
+    // Handle regular objects
+    const copy = {};
+    seen.set(obj, copy);
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            copy[key] = (0, exports.deepCopyOfObject)(obj[key], seen);
+        }
+    }
+    return copy;
 };
 exports.deepCopyOfObject = deepCopyOfObject;
 exports.copyOf = exports.deepCopyOfObject;
@@ -2887,6 +3077,11 @@ const fakeAsObject = (val) => {
     return val;
 };
 exports.fakeAsObject = fakeAsObject;
+// Used for tests to bypass TypeScript string type checks
+const fakeAsFunction = (val) => {
+    return val;
+};
+exports.fakeAsFunction = fakeAsFunction;
 const cleanSpasmEventV2 = (spasmEvent) => {
     if (!spasmEvent)
         return;
