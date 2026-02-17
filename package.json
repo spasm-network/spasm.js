@@ -1,6 +1,6 @@
 {
   "name": "spasm.js",
-  "version": "2.0.0-rc.24",
+  "version": "2.0.0-rc.26",
   "description": "Tools for developing Signer and Protocol Agnostic Social Media (Spasm) apps.",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -38,14 +38,14 @@
   "devDependencies": {
     "@types/jest": "29.5.12",
     "jest": "29.7.0",
-    "ts-jest": "29.1.5",
+    "ts-jest": "29.4.6",
     "typescript": "5.5.3"
   },
   "dependencies": {
     "@types/node": "20.14.9",
     "bech32-v2": "npm:bech32@2.0.0",
     "ethers-v6": "npm:ethers@6.13.1",
-    "isomorphic-dompurify-v2": "npm:isomorphic-dompurify@2.12.0",
+    "isomorphic-dompurify-v2": "npm:isomorphic-dompurify@2.21.0",
     "js-sha256-v0": "npm:js-sha256@0.11.0",
     "marked": "15.0.12",
     "nostr-tools-v2": "npm:nostr-tools@2.7.0"
