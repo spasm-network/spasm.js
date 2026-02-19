@@ -4945,6 +4945,7 @@ export const getAllUrlsFromString = (
   const INVALID_CHARS = new Set([
     ' ', '\t', '\n', '\r', '<', '|', '\\',
     '\u00A0', '\u200B', '\u200C', '\u200D',
+    ')', // eg [![img](https://b.ot/i.jpg)](https://b.ot/a.mp3)
     ' ' // nbsp
   ]);
 

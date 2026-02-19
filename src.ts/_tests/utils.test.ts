@@ -5191,6 +5191,12 @@ describe("getAllMediaUrlsFromString() function tests", () => {
     )).toStrictEqual(
       ["https://degenrocket.space/video1.mp4"]
     )
+    // markdown inside image
+    expect(getAllMediaUrlsFromString(
+      "The first track [![cover](https://degenrocket.space/image.jpg)](https://degenrocket.space/audio.mp3)"
+    )).toStrictEqual(
+      ["https://degenrocket.space/image.jpg", "https://degenrocket.space/audio.mp3"]
+    )
     // markdown, multiple lines, multiple media files
     expect(getAllMediaUrlsFromString(
       "Watch the first episode [here](https://degenrocket.space/video1.mp4)!\nWatch the second episode [here](https://degenrocket.space/video2.mp4)!\nSubscribe to [RSS feed](https://degenrocket.space/api/events?format=rss)"
@@ -5271,6 +5277,11 @@ describe("getAllMediaUrlsFromString() function tests", () => {
       "https://degenrocket.space/ and https://forum.spasm.network/ \n![image](https://forum.spasm.network/image.jpeg)\nMore episodes:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4\nAnd audio files: https://degenrocket.space/audio1.mp3, https://degenrocket.space/audio2.mp3\nAnd duplicates:\nhttps://degenrocket.space/video1.mp4\nhttps://degenrocket.space/video2.mp4"
     )).toStrictEqual(
       "https://degenrocket.space/video1.mp4"
+    )
+    expect(parseFirstAudioOrVideoUrlFromString(
+      "The first track [![cover](https://degenrocket.space/image.jpg)](https://degenrocket.space/audio.mp3)"
+    )).toStrictEqual(
+      "https://degenrocket.space/audio.mp3"
     )
   });
 });
