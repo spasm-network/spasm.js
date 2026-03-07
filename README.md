@@ -254,8 +254,18 @@ link
 
 ## Installation
 
+Option 1. Install with npm.
+
 ```bash
 npm install spasm.js
+```
+
+Option 2. Include the bundled version in HTML
+
+```js
+// Dowload the bundle file from dist/spasm.min.js
+// Add the following tag to your HTML file:
+<script src="dist/spasm.min.js"></script>
 ```
 
 ## Usage
@@ -359,7 +369,34 @@ const info = spasm.identifyObject(event)
 const spasmEvent = spasm.convertToSpasm(event)
 ```
 
+#### Static HTML (bundle)
+
+```html
+<script src="dist/spasm.min.js"></script>
+<script>
+    // Display status in console (should be "success")
+    spasm.utilsStatus();
+
+    const event = {
+      // some event
+    };
+
+    // Convert to Spasm
+    const spasmEvent = spasm.convertToSpasm(event);
+</script>
+```
+
 ## Utils
+
+```js
+// Spasm Envelope is a compressed version of Spasm Event.
+// It's used to reduce bandwidth when exchanging events.
+
+// Convert one event to Spasm Envelope
+const spasmEnvelope = spasm.convertToSpasmEventEnvelope(event)
+// Convert many events to Spasm Envelopes
+const spasmEnvelopes = spasm.convertManyToSpasmEventEnvelope(event)
+```
 
 ```js
 // Get an array of all signers/pubkeys from the event
