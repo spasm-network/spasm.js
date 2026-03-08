@@ -2354,4 +2354,5 @@ export declare const validRssFeedChannelEmpty: string;
 export declare const validRssFeedChannelEmptyWithEthereumSigner: string;
 export declare const validRssFeedChannelEmptyWithNostrSigner: string;
 export declare const validSpasmEventBodyV2WithManyDuplicateValues: SpasmEventBodyV2;
+export declare const validEventWithUpperCasePubkey: SpasmEventEnvelopeV2;
 //# sourceMappingURL=_events-data.d.ts.map

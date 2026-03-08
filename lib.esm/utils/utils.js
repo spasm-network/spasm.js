@@ -966,6 +966,11 @@ export const markSpasmEventAddressAsVerified = (spasmEvent, verifiedAddress, ver
                         if (address.value === verifiedAddress) {
                             address.verified = true;
                         }
+                        else if (typeof (address.value) === "string" &&
+                            typeof (verifiedAddress) === "string" &&
+                            address.value.toLowerCase() === verifiedAddress.toLowerCase()) {
+                            address.verified = true;
+                        }
                     });
                 }
             });

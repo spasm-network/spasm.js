@@ -1726,6 +1726,10 @@ describe("getAllSigners() function tests", () => {
             "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
             "npub195ke7xdf3efncf6spe0s26322mdcl6frj0n6yy6akcadxqzgdapqjsm60y"
         ]);
+        // Test an event with upper case pubkeys
+        expect((0, index_js_1.getVerifiedSigners)(_events_data_js_1.validEventWithUpperCasePubkey)).toEqual([
+            "0xae4e282bca7c7dacaa4f65522e33340317c47292",
+        ]);
         // getNostrSigners
         expect((0, index_js_1.getAllNostrSigners)(_events_data_js_1.validMultiSignedSpasmEventV2WithMediaLinks)).toEqual([
             "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42"

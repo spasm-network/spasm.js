@@ -1,6 +1,8 @@
 Signer and Protocol Agnostic Social Media (Spasm)
 =================================================
 
+![cover](https://media.spasm.network/spasmim012d64ac17ad56680f1e1eda5776460dfb8d92cb428f2aa9c64ff4cffd05280817.png)
+
 ## Overview
 
 The future of social media is agnostic to signing keys, messaging formats, transport protocols and storage infrastructure. However, such design places significant burden on developers, who must maintain a myriad of protocols, formats, and architectures.
@@ -388,6 +390,7 @@ const spasmEvent = spasm.convertToSpasm(event)
 
 ## Utils
 
+
 ```js
 // Spasm Envelope is a compressed version of Spasm Event.
 // It's used to reduce bandwidth when exchanging events.
@@ -396,6 +399,17 @@ const spasmEvent = spasm.convertToSpasm(event)
 const spasmEnvelope = spasm.convertToSpasmEventEnvelope(event)
 // Convert many events to Spasm Envelopes
 const spasmEnvelopes = spasm.convertManyToSpasmEventEnvelope(event)
+```
+
+```js
+// Spasm Event is an uncompressed version of Spasm Event.
+// It's important to convert received envelopes to Spasm
+// events because that will verify signatures.
+
+// Convert one event to Spasm Event
+const spasmEvent = spasm.convertToSpasm(event)
+// Convert many events to Spasm Events
+const spasmEvents = spasm.convertManyToSpasm(events)
 ```
 
 ```js
@@ -865,7 +879,20 @@ const spasmEvent: SpasmEventV2 = {
   siblings: [
     {
       type: "SiblingNostrSpasmSignedV2",
-      originalObject: validNostrSpasmEventSignedOpened,
+      originalObject: {
+        kind: 1,
+        created_at: 1705462957,
+        tags:[
+          ["license","SPDX-License-Identifier: CC0-1.0"],
+          ["spasm_version","1.0.0"],
+          ["spasm_action","post"],
+          ["spasm_title","Nostr Spasm genesis"]
+        ],
+        content: "Walled gardens became prisons, and Spasm is the second step towards tearing down the prison walls.",
+        pubkey: "2d2d9f19a98e533c27500e5f056a2a56db8fe92393e7a2135db63ad300486f42",
+        id: "db300d320853b25b57fa03c586d18f69ad9786ec5e21114253fc3762b22a5651",
+        sig: "db60516accfc025582bf556e3c7660c89e3982d2a656201aaea4189c6d3e3779b202c60302e55ad782ca711df20550384516abe4d7387470bc83ac757ed8f0f1"
+        },
       protocol: {
         name: "nostr",
         hasExtraSpasmFields: true,
@@ -1058,3 +1085,13 @@ const spasmEvent: SpasmEvent = {
 ## License
 
 MIT License
+
+
+---
+
+Learn more at [spasm.network](https://spasm.network) or **spasmnetwork.eth**
+
+**Unplug from slave tech!**
+
+![unplug-from-slave-tech](https://media.spasm.network/spasmim015be887d352784380ddbfc3952c06ac17c9d0401509231723cc89360f1df0d030.jpeg)
+

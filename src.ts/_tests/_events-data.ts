@@ -6176,3 +6176,5 @@ export const validSpasmEventBodyV2WithManyDuplicateValues: SpasmEventBodyV2 = {
     }
   ],
 }
+
+export const validEventWithUpperCasePubkey: SpasmEventEnvelopeV2 = {"type":"SpasmEventEnvelopeV2","ids":[{"value":"spasmid0199302c939a273aa7d4fbb6f78a8c8ab83688116ecebe3a7e9a7fb848db604afb","format":{"name":"spasmid","version":"01"}}],"siblings":[{"type":"SiblingSpasmSignedV2","protocol":{"name":"spasm","version":"2.0.0"},"signatures":[{"value":"0x0ccc1b158d1ebd74a6509e6afbd0cb4b0da3a6a6efbd0937cc6da0ef3588f5302994a9cbdd58c5157833c0455f4a98e7b7b15d8382b4194cb47dba206e6df14b1c","format":{"name":"ethereum-sig"},"pubkey":"0xae4e282bca7c7dacaa4f65522e33340317c47292"}],"signedString":"{\"type\":\"SpasmEventBodyV2\",\"action\":\"post\",\"title\":\"test1\",\"content\":\"test1\",\"timestamp\":1772827646219,\"authors\":[{\"addresses\":[{\"value\":\"0xae4e282bcA7c7DACaA4F65522E33340317C47292\",\"format\":{\"name\":\"ethereum-pubkey\"}}]}]}"}]}

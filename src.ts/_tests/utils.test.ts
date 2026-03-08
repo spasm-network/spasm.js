@@ -188,7 +188,8 @@ import {
   validPostWithRssItem,
   validSpasmEventBodyV2ConvertedToSpasmV2,
   validSpasmEventBodySignedClosedV2ConvertedToSpasmV2,
-  validMultiSignedSpasmEventV2WithMediaLinks
+  validMultiSignedSpasmEventV2WithMediaLinks,
+  validEventWithUpperCasePubkey
 } from "./_events-data.js"
 
 import {
@@ -2126,6 +2127,10 @@ describe("getAllSigners() function tests", () => {
     )).toEqual([
       "0x29e00e23ca1b5b3ccc26c9aa9279c18ce65c9c7e",
       "npub195ke7xdf3efncf6spe0s26322mdcl6frj0n6yy6akcadxqzgdapqjsm60y"
+    ]);
+    // Test an event with upper case pubkeys
+    expect(getVerifiedSigners(validEventWithUpperCasePubkey)).toEqual([
+      "0xae4e282bca7c7dacaa4f65522e33340317c47292",
     ]);
 
     // getNostrSigners
