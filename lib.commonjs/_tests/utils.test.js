@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const convertToSpasm_js_1 = require("../convert/convertToSpasm.js");
+const convertToNostr_js_1 = require("../convert/convertToNostr.js");
 const interfaces_js_1 = require("../types/interfaces.js");
 const index_js_1 = require("./../utils/index.js");
 const _events_data_js_1 = require("./_events-data.js");
@@ -3955,6 +3956,45 @@ describe("getSpasmTagByName() function tests", () => {
         const output = input.tags[3];
         expect((0, index_js_1.getSpasmTagByName)(input, "01")).toStrictEqual(null);
         expect((0, index_js_1.getOneTagByName)(input, "tag5-0")).toStrictEqual(output);
+    });
+});
+// addSchemaToSpasmEventBody()
+// getSchemaFromSpasmEvent()
+describe("add/get schema to/from event() function tests", () => {
+    test("add/get schema to/from event() should return true if true", () => {
+        const spasmEventBody = (0, index_js_1.copyOf)(_events_data_js_1.validSpasmEventBodyV2);
+        const notBody = (0, index_js_1.copyOf)(_events_data_js_1.validSpasmEventV2WithTwoParentUrlIds);
+        const schema = {
+            name: "my-schema",
+            version: "1.0",
+            kind: "text",
+            cid: "",
+            time: "123456",
+            timeStr: "123456789",
+            yes: "true",
+            no: "false",
+            media_type: "audio",
+            array_key: [1, "two", { three: "four" }],
+            object_key: { five: "six", seven: [8] }
+        };
+        (0, index_js_1.addSchema)(spasmEventBody, schema);
+        const spasmEvent = (0, convertToSpasm_js_1.convertToSpasm)(spasmEventBody);
+        const spasmId1 = (0, index_js_1.extractSpasmId01)(spasmEvent);
+        const extractedSchema = (0, index_js_1.getSchemaFromSpasmEvent)(spasmEvent, "my-schema");
+        expect(schema).toStrictEqual(extractedSchema);
+        const nostrEvent = (0, convertToNostr_js_1.convertToNostr)(spasmEvent);
+        const spasmEventAgain = (0, convertToSpasm_js_1.convertToSpasm)(nostrEvent);
+        const spasmId2 = (0, index_js_1.extractSpasmId01)(spasmEventAgain);
+        expect(spasmId1).toStrictEqual(spasmId2);
+        const extractedSchemaNostr = (0, index_js_1.getSchema)(spasmEventAgain, "my-schema");
+        expect(schema).toStrictEqual(extractedSchemaNostr);
+        const consoleErrorSpy = jest.spyOn(console, 'error');
+        // Hide console errors for passing invalid event types
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addSchemaToSpasmEventBody)(notBody, schema);
+        expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+        // Restore console errors
+        jest.restoreAllMocks();
     });
 });
 // template()

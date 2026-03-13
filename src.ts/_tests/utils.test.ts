@@ -1,4 +1,5 @@
 import {convertToSpasm} from '../convert/convertToSpasm.js';
+import {convertToNostr} from '../convert/convertToNostr.js';
 import {
   ConvertToSpasmConfig,
   CustomConvertToSpasmConfig,
@@ -128,7 +129,11 @@ import {
   toLowerCaseAllNestedStrings,
   toLowerCaseIfString,
   getSpasmTagByName,
-  getOneTagByName
+  getOneTagByName,
+  addSchemaToSpasmEventBody,
+  getSchemaFromSpasmEvent,
+  addSchema,
+  getSchema
 } from './../utils/index.js';
 import {
   validDmpEvent, validDmpEventSignedClosed,
@@ -192,7 +197,8 @@ import {
   validSpasmEventBodySignedClosedV2ConvertedToSpasmV2,
   validMultiSignedSpasmEventV2WithMediaLinks,
   validEventWithUpperCasePubkey,
-  SpasmEventV2ToTestSpasmid01
+  SpasmEventV2ToTestSpasmid01,
+  validSpasmEventBodyV2
 } from "./_events-data.js"
 
 import {
@@ -5382,6 +5388,50 @@ describe("getSpasmTagByName() function tests", () => {
     const output = input.tags[3]
     expect(getSpasmTagByName(input, "01")).toStrictEqual(null);
     expect(getOneTagByName(input, "tag5-0")).toStrictEqual(output);
+  });
+});
+
+
+// addSchemaToSpasmEventBody()
+// getSchemaFromSpasmEvent()
+describe("add/get schema to/from event() function tests", () => {
+  test("add/get schema to/from event() should return true if true", () => {
+    const spasmEventBody = copyOf(validSpasmEventBodyV2)
+    const notBody = copyOf(validSpasmEventV2WithTwoParentUrlIds)
+    const schema = {
+      name: "my-schema",
+      version: "1.0",
+      kind: "text",
+      cid: "",
+      time: "123456",
+      timeStr: "123456789",
+      yes: "true",
+      no: "false",
+      media_type: "audio",
+      array_key: [ 1, "two", { three: "four" } ],
+      object_key: { five: "six", seven: [ 8 ] }
+    }
+    addSchema(spasmEventBody, schema)
+    const spasmEvent = convertToSpasm(spasmEventBody)
+    const spasmId1 = extractSpasmId01(spasmEvent!)
+    const extractedSchema = getSchemaFromSpasmEvent(spasmEvent!, "my-schema")
+    expect(schema).toStrictEqual(extractedSchema)
+
+    const nostrEvent = convertToNostr(spasmEvent!)
+    const spasmEventAgain = convertToSpasm(nostrEvent!)
+    const spasmId2 = extractSpasmId01(spasmEventAgain!)
+    expect(spasmId1).toStrictEqual(spasmId2)
+
+    const extractedSchemaNostr = getSchema(spasmEventAgain!, "my-schema")
+    expect(schema).toStrictEqual(extractedSchemaNostr)
+
+    const consoleErrorSpy = jest.spyOn(console, 'error');
+    // Hide console errors for passing invalid event types
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addSchemaToSpasmEventBody(notBody, schema)
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+    // Restore console errors
+    jest.restoreAllMocks();
   });
 });
 

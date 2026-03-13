@@ -1568,6 +1568,12 @@ const standardizeNostrEventV2 = (event) => {
                     referencedEvents.push(referencedEvent);
                 }
             }
+            // Spasm extra schemas
+            if (tag && (0, utils_js_1.isArrayWithValues)(tag) &&
+                tag[0] === "spasm_custom_schema") {
+                spasmEventV2.tags ??= [];
+                spasmEventV2.tags?.push(tag);
+            }
         });
     }
     // Add mapped events

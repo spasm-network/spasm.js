@@ -109,6 +109,10 @@ export type SpasmAction = Web3MessageAction;
 export type ExtraObject = {
     [key: string | number | symbol]: any;
 };
+export interface ExtraSchema extends ExtraObject {
+    name: string | number;
+}
+export type CustomSchema = ExtraSchema;
 export interface HashFormat {
     name?: string;
     version?: string;

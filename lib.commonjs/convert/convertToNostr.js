@@ -155,6 +155,14 @@ const convertSpasmEventV2ToNostrSpasmV2 = (spasmEventV2) => {
             }
         });
     }
+    if ("tags" in spasmEventV2 && spasmEventV2.tags) {
+        spasmEventV2.tags.forEach((spasmTag) => {
+            if (spasmTag && (0, utils_js_1.isArrayOfStrings)(spasmTag)) {
+                nostrEvent.tags ??= [];
+                nostrEvent.tags.push(spasmTag);
+            }
+        });
+    }
     if ("tips" in spasmEventV2 && spasmEventV2.tips &&
         (0, utils_js_1.isArrayWithValues)(spasmEventV2.tips)) {
         spasmEventV2.tips.forEach(tip => {

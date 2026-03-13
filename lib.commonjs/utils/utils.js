@@ -7,7 +7,8 @@ exports.sortLinksForSpasmEventV2 = exports.sortHostsForSpasmid01 = exports.sortH
 exports.getAllParentIds = exports.getAllEventIds = exports.getAllIdsFromArrayOfIdObjects = exports.hasValidSignature = exports.hasVerifiedSigner = exports.getVerifiedNostrSigners = exports.getVerifiedEthereumSigners = exports.getVerifiedSpasmSigners = exports.getVerifiedSigners = exports.getAllNostrSigners = exports.getAllEthereumSigners = exports.getAllSpasmSigners = exports.getAllSigners = exports.hasSiblingWeb2 = exports.hasSiblingNostr = exports.hasSiblingDmp = exports.hasSiblingSpasm = exports.hasSiblingOfProtocol = exports.extractNostrEvents = exports.extractSignedNostrEvents = exports.extractSignedNostrEvent = exports.extractNostrEvent = exports.hasSignatureNostr = exports.hasSignatureEthereum = exports.hasSignatureOfFormat = exports.mergeGenerateRssFeedConfigs = exports.mergeConvertToRssConfigs = exports.mergeSanitizationConfigs = exports.mergeConfigs = exports.mergeObjects = exports.clearObject = exports.clearArray = exports.toLowerCaseAllNestedStrings = exports.toLowerCaseIfString = exports.toLowerCaseIfValueIsString = exports.sanitizeAnything = exports.sanitizeArray = exports.sanitizeEvent = exports.sanitizeEventWithDompurify = exports.sanitizeStringWithDompurify = exports.sanitizeEventWith = exports.executeFunctionForAllNestedValuesOfType = exports.utilsStatus = exports.verifyEthereumSignature = exports.markSpasmEventAddressAsVerified = exports.sortTagsForSpasmid01 = exports.sortParentForSpasmid01 = exports.sortReferencesForSpasmid01 = exports.sortMediasForSpasmid01 = exports.sortLinksForSpasmid01 = void 0;
 exports.checkIfArrayHasThisEvent = exports.checkIfArrayHasThisSpasmEventV2 = exports.mergeDifferentSpasmEventsV2 = exports.mergeSpasmEventsV2 = exports.extractSignerFromEthereumSignature = exports.toBeUniqueSpasmEventsV2 = exports.toBeSpasmEventsV2 = exports.toBeSpasmEventV2 = exports.getEventsByIds = exports.getEventById = exports.checkIfEventHasThisId = exports.keepUniqueArraysInArrayOrArraysOfStrings = exports.removeDuplicateArraysFromArrayOrArraysOfStrings = exports.uniqueNostrTagsOnly = exports.uniqueTagsOnly = exports.deduplicateNostrTags = exports.deduplicateTags = exports.removeDuplicateNostrTags = exports.removeDuplicateTags = exports.removeDuplicatesFromArrayOfStrings = exports.removeDuplicatesFromArray = exports.extractRootSpasmId01 = exports.extractRootIdByFormat = exports.getRootIdByFormat = exports.extractParentSpasmId01 = exports.extractParentIdByFormat = exports.getParentIdByFormat = exports.extractSpasmId01 = exports.extractIdByFormat = exports.findMostLikelyGuid = exports.findMostLikelyUrl = exports.getIdByFormat = exports.areAllPubkeysListedIn = exports.areAllSignersListedIn = exports.isAnyPubkeyListedIn = exports.isAnySignerListedIn = exports.getTotalOfActionReact = exports.getTotalOfReactAction = exports.getTotalOfReact = exports.getTotalOfActionReply = exports.getTotalOfReplyAction = exports.getTotalOfReply = exports.getTotalOfAction = exports.getTotalOfMostPopularReaction = exports.getTotalOfReaction = exports.getStatByAction = exports.getPubkeysListedIn = exports.getSignersListedIn = exports.getAllSignatures = exports.getAllRootIds = void 0;
 exports.getAllMediaUrlsOfMimeTypeFromArrayOfUrls = exports.filterAllMediaUrlsFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls = exports.isFileNameOfMimeType = exports.ifFileNameOfMimeType = exports.parseStringForUrls = exports.extractAllUrlsFromString = exports.getAllUrlsFromString = exports.getMimeType = exports.DEFAULT_MIME_TYPE = exports.MIME_TYPE_MAP = exports.toBeString = exports.removeNbsp = exports.normalizeText = exports.isNostrHex = exports.isHex = exports.assignFormats = exports.attachEventAsParent = exports.attachEventAsRoot = exports.attachEventAsChild = exports.ifArraysHaveCommonId = exports.addRepliesToEvent = exports.addCommentsToEvent = exports.addChildrenToTree = exports.addRootToEvent = exports.addRootToTree = exports.addParentToEvent = exports.addParentToTree = exports.addEventsToTree = exports.mergeChildrenV2 = exports.mergeStatsV2 = exports.cleanSpasmEventV2 = exports.fakeAsFunction = exports.fakeAsObject = exports.fakeAsAny = exports.fakeAsNull = exports.fakeAsArray = exports.fakeAsNumber = exports.fakeAsString = exports.copyOf = exports.deepCopyOfObject = exports.ifEventsHaveSameSpasmId01 = exports.sortSpasmEventsV2 = exports.sortSpasmEventsV2ByDbAddedTimestamp = exports.prependToArrayIfEventIsUnique = exports.unshiftToArrayIfEventIsUnique = exports.appendToArrayIfEventIsUnique = exports.pushToArrayIfEventIsUnique = exports.insertIntoArrayIfEventIsUnique = exports.mergeEventIntoArray = void 0;
-exports.getOneSpasmTagByName = exports.getOneTagByName = exports.getTagByName = exports.getSpasmTagByName = exports.getAllSpasmTagsByName = exports.getAllTagsByName = exports.getTagsByName = exports.getSpasmTagsByName = exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShortAddress = exports.autoGeneratedName = exports.unescapeCdata = exports.unescapeRssCdata = exports.unescapeXmlCdata = exports.restoreFromCdata = exports.restoreFromRssCdata = exports.restoreFromXmlCdata = exports.prepareForCdata = exports.prepareForRssCdata = exports.prepareForXmlCdata = exports.escapeCdata = exports.escapeRssCdata = exports.escapeXmlCdata = exports.escapeXml = exports.parseFirstAudioOrVideoUrlFromString = exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString = exports.parseFirstMediaUrlFromString = exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString = exports.parseStringForMediaUrls = exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString = exports.getAllUrlsOfMediaTypeFromArrayOfUrls = void 0;
+exports.addExtraConfigToSpasmEventBody = exports.addCustomConfigToSpasmEventBody = exports.addConfigToSpasmEventBody = exports.addConfig = exports.addExtraSchemaToSpasmEventBody = exports.addCustomSchemaToSpasmEventBody = exports.addSchema = exports.addSchemaToSpasmEventBody = exports.extractOneSpasmTagByName = exports.extractSpasmTagByName = exports.extractTagByName = exports.getOneSpasmTagByName = exports.getOneTagByName = exports.getTagByName = exports.getSpasmTagByName = exports.extractAllSpasmTagsByName = exports.extractSpasmTagsByName = exports.extractTagsByName = exports.getAllSpasmTagsByName = exports.getAllTagsByName = exports.getTagsByName = exports.getSpasmTagsByName = exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShortAddress = exports.autoGeneratedName = exports.unescapeCdata = exports.unescapeRssCdata = exports.unescapeXmlCdata = exports.restoreFromCdata = exports.restoreFromRssCdata = exports.restoreFromXmlCdata = exports.prepareForCdata = exports.prepareForRssCdata = exports.prepareForXmlCdata = exports.escapeCdata = exports.escapeRssCdata = exports.escapeXmlCdata = exports.escapeXml = exports.parseFirstAudioOrVideoUrlFromString = exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString = exports.parseFirstMediaUrlFromString = exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString = exports.parseStringForMediaUrls = exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString = exports.getAllUrlsOfMediaTypeFromArrayOfUrls = void 0;
+exports.getConfigFromTag = exports.getSchemaFromTag = exports.extractConfigFromTag = exports.extractSchemaFromTag = exports.getConfigFromSpasmTag = exports.getSchemaFromSpasmTag = exports.extractConfigFromSpasmTag = exports.extractSchemaFromSpasmTag = exports.getAllConfigsFromSpasmTags = exports.getConfigsFromSpasmTags = exports.getAllSchemasFromSpasmTags = exports.getSchemasFromSpasmTags = exports.extractAllConfigsFromSpasmTags = exports.extractConfigsFromSpasmTags = exports.extractAllSchemasFromSpasmTags = exports.extractSchemasFromSpasmTags = exports.extractConfigFromSpasmEvent = exports.getConfigFromSpasmEvent = exports.getSchemaFromSpasmEvent = exports.extractConfig = exports.extractSchema = exports.getConfig = exports.getSchema = exports.extractSchemaFromSpasmEvent = exports.getConfigTagsFromSpasmEvent = exports.getSchemaTagsFromSpasmEvent = exports.extractConfigTagsFromSpasmEvent = exports.extractSchemaTagsFromSpasmEvent = exports.constructTagFromConfig = exports.constructSpasmTagFromConfig = exports.createTagFromConfig = exports.createSpasmTagFromConfig = exports.constructTagFromSchema = exports.constructSpasmTagFromSchema = exports.createTagFromSchema = exports.createSpasmTagFromSchema = void 0;
 /*
  * Using sha256 from 'js-sha256' npm package, because
  * built-in 'crypto' module works only in a server-side
@@ -4289,29 +4290,38 @@ const randomNumber = (min = 1, max = 1000000) => {
 };
 exports.randomNumber = randomNumber;
 const getSpasmTagsByName = (originalEvent, tagName) => {
-    if (!tagName || !(0, exports.isStringOrNumber)(tagName))
-        return null;
-    const spasmEventV2 = (0, exports.toBeSpasmEventV2)(originalEvent);
-    if (!spasmEventV2 || !(0, exports.isObjectWithValues)(spasmEventV2)) {
+    try {
+        if (!tagName || !(0, exports.isStringOrNumber)(tagName))
+            return null;
+        const spasmEventV2 = (0, exports.toBeSpasmEventV2)(originalEvent);
+        if (!spasmEventV2 || !(0, exports.isObjectWithValues)(spasmEventV2)) {
+            return null;
+        }
+        if (spasmEventV2.tags && (0, exports.isArrayWithValues)(spasmEventV2.tags)) {
+            const matchedTags = [];
+            spasmEventV2.tags.forEach(tag => {
+                if (tag && (0, exports.isArrayWithValues)(tag) &&
+                    tag[0] && tag[0] === tagName) {
+                    matchedTags.push(tag);
+                }
+            });
+            if ((0, exports.isArrayWithValues)(matchedTags))
+                return matchedTags;
+        }
         return null;
     }
-    if (spasmEventV2.tags && (0, exports.isArrayWithValues)(spasmEventV2.tags)) {
-        const matchedTags = [];
-        spasmEventV2.tags.forEach(tag => {
-            if (tag && (0, exports.isArrayWithValues)(tag) &&
-                tag[0] && tag[0] === tagName) {
-                matchedTags.push(tag);
-            }
-        });
-        if ((0, exports.isArrayWithValues)(matchedTags))
-            return matchedTags;
+    catch (err) {
+        console.error(err);
+        return null;
     }
-    return null;
 };
 exports.getSpasmTagsByName = getSpasmTagsByName;
 exports.getTagsByName = exports.getSpasmTagsByName;
 exports.getAllTagsByName = exports.getSpasmTagsByName;
 exports.getAllSpasmTagsByName = exports.getSpasmTagsByName;
+exports.extractTagsByName = exports.getSpasmTagsByName;
+exports.extractSpasmTagsByName = exports.getSpasmTagsByName;
+exports.extractAllSpasmTagsByName = exports.getSpasmTagsByName;
 const getSpasmTagByName = (originalEvent, tagName) => {
     const tags = (0, exports.getTagsByName)(originalEvent, tagName);
     if (tags && (0, exports.isArrayWithValues)(tags) &&
@@ -4324,4 +4334,224 @@ exports.getSpasmTagByName = getSpasmTagByName;
 exports.getTagByName = exports.getSpasmTagByName;
 exports.getOneTagByName = exports.getSpasmTagByName;
 exports.getOneSpasmTagByName = exports.getSpasmTagByName;
+exports.extractTagByName = exports.getSpasmTagByName;
+exports.extractSpasmTagByName = exports.getSpasmTagByName;
+exports.extractOneSpasmTagByName = exports.getSpasmTagByName;
+const addSchemaToSpasmEventBody = (spasmEventBodyV2, schema) => {
+    try {
+        if (!schema || typeof (schema) !== "object")
+            return;
+        if (!spasmEventBodyV2)
+            return;
+        if (spasmEventBodyV2.type !== "SpasmEventBodyV2") {
+            console.error("Custom schema can only be added to SpasmEventBodyV2");
+            return;
+        }
+        spasmEventBodyV2.tags ??= [];
+        const tag = (0, exports.createTagFromSchema)(schema);
+        if (tag && (0, exports.isArrayWithValues)(tag)) {
+            spasmEventBodyV2.tags.push(tag);
+        }
+        return;
+    }
+    catch (err) {
+        console.error(err);
+        return;
+    }
+};
+exports.addSchemaToSpasmEventBody = addSchemaToSpasmEventBody;
+exports.addSchema = exports.addSchemaToSpasmEventBody;
+exports.addCustomSchemaToSpasmEventBody = exports.addSchemaToSpasmEventBody;
+exports.addExtraSchemaToSpasmEventBody = exports.addSchemaToSpasmEventBody;
+exports.addConfig = exports.addSchemaToSpasmEventBody;
+exports.addConfigToSpasmEventBody = exports.addSchemaToSpasmEventBody;
+exports.addCustomConfigToSpasmEventBody = exports.addSchemaToSpasmEventBody;
+exports.addExtraConfigToSpasmEventBody = exports.addSchemaToSpasmEventBody;
+const createSpasmTagFromSchema = (schema) => {
+    if (!schema || typeof (schema) !== "object" ||
+        !schema.name || !String(schema.name))
+        return null;
+    const tag = [
+        "spasm_custom_schema", String(schema.name)
+    ];
+    try {
+        // Extract keys and sort them alphabetically
+        const keys = Object.keys(schema).filter(key => key !== "name").sort();
+        // Add key-value pairs to tag
+        for (const key of keys) {
+            const value = schema[key];
+            // Convert value to string properly
+            tag.push(key, typeof value === 'object'
+                ? JSON.stringify(value) : String(value));
+        }
+        return tag;
+    }
+    catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+exports.createSpasmTagFromSchema = createSpasmTagFromSchema;
+exports.createTagFromSchema = exports.createSpasmTagFromSchema;
+exports.constructSpasmTagFromSchema = exports.createSpasmTagFromSchema;
+exports.constructTagFromSchema = exports.createSpasmTagFromSchema;
+exports.createSpasmTagFromConfig = exports.createSpasmTagFromSchema;
+exports.createTagFromConfig = exports.createSpasmTagFromSchema;
+exports.constructSpasmTagFromConfig = exports.createSpasmTagFromSchema;
+exports.constructTagFromConfig = exports.createSpasmTagFromSchema;
+const extractSchemaTagsFromSpasmEvent = (originalEvent, schemaFlag) => {
+    if (!schemaFlag || !(0, exports.isStringOrNumber)(schemaFlag))
+        return null;
+    try {
+        const spasmEventV2 = (0, exports.toBeSpasmEventV2)(originalEvent);
+        if (!spasmEventV2 || !(0, exports.isObjectWithValues)(spasmEventV2)) {
+            return null;
+        }
+        const tags = (0, exports.getTagsByName)(spasmEventV2, schemaFlag);
+        if (tags && (0, exports.isArrayWithValues)(tags)) {
+            const schemaTags = [];
+            tags.forEach(tag => {
+                if (tag && Array.isArray(tag) &&
+                    tag[0] === schemaFlag &&
+                    tag[1] && (0, exports.isStringOrNumber)(tag[1])) {
+                    schemaTags.push(tag);
+                }
+            });
+            if (schemaTags && (0, exports.isArrayWithValues)(schemaTags)) {
+                return schemaTags;
+            }
+        }
+        return null;
+    }
+    catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+exports.extractSchemaTagsFromSpasmEvent = extractSchemaTagsFromSpasmEvent;
+exports.extractConfigTagsFromSpasmEvent = exports.extractSchemaTagsFromSpasmEvent;
+exports.getSchemaTagsFromSpasmEvent = exports.extractSchemaTagsFromSpasmEvent;
+exports.getConfigTagsFromSpasmEvent = exports.extractSchemaTagsFromSpasmEvent;
+const extractSchemaFromSpasmEvent = (originalEvent, schemaName) => {
+    try {
+        if (!schemaName || !(0, exports.isStringOrNumber)(schemaName)) {
+            return null;
+        }
+        const spasmEventV2 = (0, exports.toBeSpasmEventV2)(originalEvent);
+        if (!spasmEventV2 || !(0, exports.isObjectWithValues)(spasmEventV2)) {
+            return null;
+        }
+        /**
+         * There might be different flags for marking schema tag.
+         * The first flag is "spasm_custom_schema".
+         * Once other flags are introduced, we can simply add them
+         * to schemaFlags array
+         */
+        const schemaFlags = ["spasm_custom_schema"];
+        const schemaTags = [];
+        schemaFlags.forEach(flag => {
+            const schemaTagsForThisFlag = (0, exports.extractSchemaTagsFromSpasmEvent)(spasmEventV2, flag);
+            if (schemaTagsForThisFlag &&
+                (0, exports.isArrayWithValues)(schemaTagsForThisFlag)) {
+                schemaTags.push(...schemaTagsForThisFlag);
+            }
+        });
+        if (!schemaTags || !(0, exports.isArrayWithValues)(schemaTags)) {
+            return null;
+        }
+        const schemas = (0, exports.extractSchemasFromSpasmTags)(schemaTags);
+        if (!schemas || !(0, exports.isArrayWithValues)(schemas)) {
+            return null;
+        }
+        const matchedSchema = schemas.find(schema => schema.name === schemaName);
+        if (matchedSchema && (0, exports.isObjectWithValues)(matchedSchema)) {
+            return matchedSchema;
+        }
+        return null;
+    }
+    catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+exports.extractSchemaFromSpasmEvent = extractSchemaFromSpasmEvent;
+exports.getSchema = exports.extractSchemaFromSpasmEvent;
+exports.getConfig = exports.extractSchemaFromSpasmEvent;
+exports.extractSchema = exports.extractSchemaFromSpasmEvent;
+exports.extractConfig = exports.extractSchemaFromSpasmEvent;
+exports.getSchemaFromSpasmEvent = exports.extractSchemaFromSpasmEvent;
+exports.getConfigFromSpasmEvent = exports.extractSchemaFromSpasmEvent;
+exports.extractConfigFromSpasmEvent = exports.extractSchemaFromSpasmEvent;
+const extractSchemasFromSpasmTags = (tags) => {
+    if (!tags || !(0, exports.isArrayWithValues)(tags))
+        return null;
+    const schemas = [];
+    tags.forEach(tag => {
+        const schema = (0, exports.extractSchemaFromSpasmTag)(tag);
+        if (schema && (0, exports.isObjectWithValues)(schema)) {
+            schemas.push(schema);
+        }
+    });
+    if (schemas && (0, exports.isArrayWithValues)(schemas))
+        return schemas;
+    return null;
+};
+exports.extractSchemasFromSpasmTags = extractSchemasFromSpasmTags;
+exports.extractAllSchemasFromSpasmTags = exports.extractSchemasFromSpasmTags;
+exports.extractConfigsFromSpasmTags = exports.extractSchemasFromSpasmTags;
+exports.extractAllConfigsFromSpasmTags = exports.extractSchemasFromSpasmTags;
+exports.getSchemasFromSpasmTags = exports.extractSchemasFromSpasmTags;
+exports.getAllSchemasFromSpasmTags = exports.extractSchemasFromSpasmTags;
+exports.getConfigsFromSpasmTags = exports.extractSchemasFromSpasmTags;
+exports.getAllConfigsFromSpasmTags = exports.extractSchemasFromSpasmTags;
+const extractSchemaFromSpasmTag = (tag) => {
+    if (!tag || !(0, exports.isArrayWithValues)(tag))
+        return null;
+    /**
+     * There might be different flags for marking schema tag.
+     * The first flag is "spasm_custom_schema".
+     * Once other flags are introduced, we can simply add new
+     * logic to this function for other flags.
+     */
+    if (tag[0] === "spasm_custom_schema") {
+        if (!tag[1] || !(0, exports.isStringOrNumber)(tag[1]))
+            return null;
+        const schema = { name: tag[1] };
+        // Loop through the tag array starting from the 2nd index
+        for (let i = 2; i < tag.length; i += 2) {
+            const key = tag[i];
+            const value = tag[i + 1];
+            // Try to parse objects or arrays
+            try {
+                const parsedValue = JSON.parse(value);
+                // Only assign parsed objects and arrays because other
+                // types like "string" can lead to loss of data. For
+                // example, if we JSON.parse("1.0") version, it will
+                // return number 1, so some data will be lost.
+                if ((0, exports.isObjectWithValues)(parsedValue) ||
+                    (0, exports.isArrayWithValues)(parsedValue)) {
+                    schema[key] = parsedValue;
+                }
+                else {
+                    schema[key] = value;
+                }
+            }
+            catch {
+                // In case of parsing error, assign as string
+                schema[key] = value;
+            }
+        }
+        return schema;
+    }
+    // Check for other flags marking schema tags
+    return null;
+};
+exports.extractSchemaFromSpasmTag = extractSchemaFromSpasmTag;
+exports.extractConfigFromSpasmTag = exports.extractSchemaFromSpasmTag;
+exports.getSchemaFromSpasmTag = exports.extractSchemaFromSpasmTag;
+exports.getConfigFromSpasmTag = exports.extractSchemaFromSpasmTag;
+exports.extractSchemaFromTag = exports.extractSchemaFromSpasmTag;
+exports.extractConfigFromTag = exports.extractSchemaFromSpasmTag;
+exports.getSchemaFromTag = exports.extractSchemaFromSpasmTag;
+exports.getConfigFromTag = exports.extractSchemaFromSpasmTag;
 //# sourceMappingURL=utils.js.map

@@ -2072,7 +2072,16 @@ export const standardizeNostrEventV2 = (
           referencedEvents.push(referencedEvent)
         }
       }
-    });
+
+      // Spasm extra schemas
+      if (
+        tag && isArrayWithValues(tag) &&
+        tag[0] === "spasm_custom_schema"
+      ) {
+        spasmEventV2.tags ??= []
+        spasmEventV2.tags?.push(tag)
+      }
+    })
   }
 
   // Add mapped events

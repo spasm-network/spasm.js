@@ -728,6 +728,41 @@ getOneSpasmTagByName()
 ```
 
 ```js
+// Add custom schema to SpasmEventBodyV2 before signing an event
+const spasmEventBody =  {
+  type: "SpasmEventBodyV2",
+  // other key-value pairs
+}
+
+// The first "name" key is necessary, other keys are optional
+// and might have different names. The recommended value for
+// each key is "string", but other values like objects and
+// arrays can be used. If you pass numbers and booleans, they
+// will be extraced as strings.
+const schema = {
+  name: "my-schema",
+  version: "1.0",
+  kind: "text",
+  cid: "",
+  time: "123456",
+  yes: "true",
+  no: "false",
+  media_type: "audio",
+  array_key: [ 1, "two", { three: "four" } ],
+  object_key: { five: "six", seven: [ 8 ] }
+}
+
+// Add schema
+addSchema(spasmEventBody, schema)
+
+// Extract custom schema from SpasmEventV2
+const spasmEvent = convertToSpasm(unknownEvent)
+const mySchema = getSchema(spasmEvent, "my-schema")
+
+// Schemas are added to tags, compatible with Spasm and Nostr
+```
+
+```js
 // Merge stats
 const mergedStats = mergeStatsV2(arrayOfStats)
 ```

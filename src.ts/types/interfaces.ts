@@ -203,6 +203,12 @@ export type ExtraObject = {
   [key: string | number | symbol]: any
 }
 
+export interface ExtraSchema extends ExtraObject {
+  name: string | number
+}
+
+export type CustomSchema = ExtraSchema
+
 export interface HashFormat {
   // value: string
   name?: string // eg "SHA-3"

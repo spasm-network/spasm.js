@@ -4127,28 +4127,37 @@ export const randomNumber = (min = 1, max = 1000000) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 export const getSpasmTagsByName = (originalEvent, tagName) => {
-    if (!tagName || !isStringOrNumber(tagName))
-        return null;
-    const spasmEventV2 = toBeSpasmEventV2(originalEvent);
-    if (!spasmEventV2 || !isObjectWithValues(spasmEventV2)) {
+    try {
+        if (!tagName || !isStringOrNumber(tagName))
+            return null;
+        const spasmEventV2 = toBeSpasmEventV2(originalEvent);
+        if (!spasmEventV2 || !isObjectWithValues(spasmEventV2)) {
+            return null;
+        }
+        if (spasmEventV2.tags && isArrayWithValues(spasmEventV2.tags)) {
+            const matchedTags = [];
+            spasmEventV2.tags.forEach(tag => {
+                if (tag && isArrayWithValues(tag) &&
+                    tag[0] && tag[0] === tagName) {
+                    matchedTags.push(tag);
+                }
+            });
+            if (isArrayWithValues(matchedTags))
+                return matchedTags;
+        }
         return null;
     }
-    if (spasmEventV2.tags && isArrayWithValues(spasmEventV2.tags)) {
-        const matchedTags = [];
-        spasmEventV2.tags.forEach(tag => {
-            if (tag && isArrayWithValues(tag) &&
-                tag[0] && tag[0] === tagName) {
-                matchedTags.push(tag);
-            }
-        });
-        if (isArrayWithValues(matchedTags))
-            return matchedTags;
+    catch (err) {
+        console.error(err);
+        return null;
     }
-    return null;
 };
 export const getTagsByName = getSpasmTagsByName;
 export const getAllTagsByName = getSpasmTagsByName;
 export const getAllSpasmTagsByName = getSpasmTagsByName;
+export const extractTagsByName = getSpasmTagsByName;
+export const extractSpasmTagsByName = getSpasmTagsByName;
+export const extractAllSpasmTagsByName = getSpasmTagsByName;
 export const getSpasmTagByName = (originalEvent, tagName) => {
     const tags = getTagsByName(originalEvent, tagName);
     if (tags && isArrayWithValues(tags) &&
@@ -4160,4 +4169,218 @@ export const getSpasmTagByName = (originalEvent, tagName) => {
 export const getTagByName = getSpasmTagByName;
 export const getOneTagByName = getSpasmTagByName;
 export const getOneSpasmTagByName = getSpasmTagByName;
+export const extractTagByName = getSpasmTagByName;
+export const extractSpasmTagByName = getSpasmTagByName;
+export const extractOneSpasmTagByName = getSpasmTagByName;
+export const addSchemaToSpasmEventBody = (spasmEventBodyV2, schema) => {
+    try {
+        if (!schema || typeof (schema) !== "object")
+            return;
+        if (!spasmEventBodyV2)
+            return;
+        if (spasmEventBodyV2.type !== "SpasmEventBodyV2") {
+            console.error("Custom schema can only be added to SpasmEventBodyV2");
+            return;
+        }
+        spasmEventBodyV2.tags ??= [];
+        const tag = createTagFromSchema(schema);
+        if (tag && isArrayWithValues(tag)) {
+            spasmEventBodyV2.tags.push(tag);
+        }
+        return;
+    }
+    catch (err) {
+        console.error(err);
+        return;
+    }
+};
+export const addSchema = addSchemaToSpasmEventBody;
+export const addCustomSchemaToSpasmEventBody = addSchemaToSpasmEventBody;
+export const addExtraSchemaToSpasmEventBody = addSchemaToSpasmEventBody;
+export const addConfig = addSchemaToSpasmEventBody;
+export const addConfigToSpasmEventBody = addSchemaToSpasmEventBody;
+export const addCustomConfigToSpasmEventBody = addSchemaToSpasmEventBody;
+export const addExtraConfigToSpasmEventBody = addSchemaToSpasmEventBody;
+export const createSpasmTagFromSchema = (schema) => {
+    if (!schema || typeof (schema) !== "object" ||
+        !schema.name || !String(schema.name))
+        return null;
+    const tag = [
+        "spasm_custom_schema", String(schema.name)
+    ];
+    try {
+        // Extract keys and sort them alphabetically
+        const keys = Object.keys(schema).filter(key => key !== "name").sort();
+        // Add key-value pairs to tag
+        for (const key of keys) {
+            const value = schema[key];
+            // Convert value to string properly
+            tag.push(key, typeof value === 'object'
+                ? JSON.stringify(value) : String(value));
+        }
+        return tag;
+    }
+    catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+export const createTagFromSchema = createSpasmTagFromSchema;
+export const constructSpasmTagFromSchema = createSpasmTagFromSchema;
+export const constructTagFromSchema = createSpasmTagFromSchema;
+export const createSpasmTagFromConfig = createSpasmTagFromSchema;
+export const createTagFromConfig = createSpasmTagFromSchema;
+export const constructSpasmTagFromConfig = createSpasmTagFromSchema;
+export const constructTagFromConfig = createSpasmTagFromSchema;
+export const extractSchemaTagsFromSpasmEvent = (originalEvent, schemaFlag) => {
+    if (!schemaFlag || !isStringOrNumber(schemaFlag))
+        return null;
+    try {
+        const spasmEventV2 = toBeSpasmEventV2(originalEvent);
+        if (!spasmEventV2 || !isObjectWithValues(spasmEventV2)) {
+            return null;
+        }
+        const tags = getTagsByName(spasmEventV2, schemaFlag);
+        if (tags && isArrayWithValues(tags)) {
+            const schemaTags = [];
+            tags.forEach(tag => {
+                if (tag && Array.isArray(tag) &&
+                    tag[0] === schemaFlag &&
+                    tag[1] && isStringOrNumber(tag[1])) {
+                    schemaTags.push(tag);
+                }
+            });
+            if (schemaTags && isArrayWithValues(schemaTags)) {
+                return schemaTags;
+            }
+        }
+        return null;
+    }
+    catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+export const extractConfigTagsFromSpasmEvent = extractSchemaTagsFromSpasmEvent;
+export const getSchemaTagsFromSpasmEvent = extractSchemaTagsFromSpasmEvent;
+export const getConfigTagsFromSpasmEvent = extractSchemaTagsFromSpasmEvent;
+export const extractSchemaFromSpasmEvent = (originalEvent, schemaName) => {
+    try {
+        if (!schemaName || !isStringOrNumber(schemaName)) {
+            return null;
+        }
+        const spasmEventV2 = toBeSpasmEventV2(originalEvent);
+        if (!spasmEventV2 || !isObjectWithValues(spasmEventV2)) {
+            return null;
+        }
+        /**
+         * There might be different flags for marking schema tag.
+         * The first flag is "spasm_custom_schema".
+         * Once other flags are introduced, we can simply add them
+         * to schemaFlags array
+         */
+        const schemaFlags = ["spasm_custom_schema"];
+        const schemaTags = [];
+        schemaFlags.forEach(flag => {
+            const schemaTagsForThisFlag = extractSchemaTagsFromSpasmEvent(spasmEventV2, flag);
+            if (schemaTagsForThisFlag &&
+                isArrayWithValues(schemaTagsForThisFlag)) {
+                schemaTags.push(...schemaTagsForThisFlag);
+            }
+        });
+        if (!schemaTags || !isArrayWithValues(schemaTags)) {
+            return null;
+        }
+        const schemas = extractSchemasFromSpasmTags(schemaTags);
+        if (!schemas || !isArrayWithValues(schemas)) {
+            return null;
+        }
+        const matchedSchema = schemas.find(schema => schema.name === schemaName);
+        if (matchedSchema && isObjectWithValues(matchedSchema)) {
+            return matchedSchema;
+        }
+        return null;
+    }
+    catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+export const getSchema = extractSchemaFromSpasmEvent;
+export const getConfig = extractSchemaFromSpasmEvent;
+export const extractSchema = extractSchemaFromSpasmEvent;
+export const extractConfig = extractSchemaFromSpasmEvent;
+export const getSchemaFromSpasmEvent = extractSchemaFromSpasmEvent;
+export const getConfigFromSpasmEvent = extractSchemaFromSpasmEvent;
+export const extractConfigFromSpasmEvent = extractSchemaFromSpasmEvent;
+export const extractSchemasFromSpasmTags = (tags) => {
+    if (!tags || !isArrayWithValues(tags))
+        return null;
+    const schemas = [];
+    tags.forEach(tag => {
+        const schema = extractSchemaFromSpasmTag(tag);
+        if (schema && isObjectWithValues(schema)) {
+            schemas.push(schema);
+        }
+    });
+    if (schemas && isArrayWithValues(schemas))
+        return schemas;
+    return null;
+};
+export const extractAllSchemasFromSpasmTags = extractSchemasFromSpasmTags;
+export const extractConfigsFromSpasmTags = extractSchemasFromSpasmTags;
+export const extractAllConfigsFromSpasmTags = extractSchemasFromSpasmTags;
+export const getSchemasFromSpasmTags = extractSchemasFromSpasmTags;
+export const getAllSchemasFromSpasmTags = extractSchemasFromSpasmTags;
+export const getConfigsFromSpasmTags = extractSchemasFromSpasmTags;
+export const getAllConfigsFromSpasmTags = extractSchemasFromSpasmTags;
+export const extractSchemaFromSpasmTag = (tag) => {
+    if (!tag || !isArrayWithValues(tag))
+        return null;
+    /**
+     * There might be different flags for marking schema tag.
+     * The first flag is "spasm_custom_schema".
+     * Once other flags are introduced, we can simply add new
+     * logic to this function for other flags.
+     */
+    if (tag[0] === "spasm_custom_schema") {
+        if (!tag[1] || !isStringOrNumber(tag[1]))
+            return null;
+        const schema = { name: tag[1] };
+        // Loop through the tag array starting from the 2nd index
+        for (let i = 2; i < tag.length; i += 2) {
+            const key = tag[i];
+            const value = tag[i + 1];
+            // Try to parse objects or arrays
+            try {
+                const parsedValue = JSON.parse(value);
+                // Only assign parsed objects and arrays because other
+                // types like "string" can lead to loss of data. For
+                // example, if we JSON.parse("1.0") version, it will
+                // return number 1, so some data will be lost.
+                if (isObjectWithValues(parsedValue) ||
+                    isArrayWithValues(parsedValue)) {
+                    schema[key] = parsedValue;
+                }
+                else {
+                    schema[key] = value;
+                }
+            }
+            catch {
+                // In case of parsing error, assign as string
+                schema[key] = value;
+            }
+        }
+        return schema;
+    }
+    // Check for other flags marking schema tags
+    return null;
+};
+export const extractConfigFromSpasmTag = extractSchemaFromSpasmTag;
+export const getSchemaFromSpasmTag = extractSchemaFromSpasmTag;
+export const getConfigFromSpasmTag = extractSchemaFromSpasmTag;
+export const extractSchemaFromTag = extractSchemaFromSpasmTag;
+export const extractConfigFromTag = extractSchemaFromSpasmTag;
+export const getSchemaFromTag = extractSchemaFromSpasmTag;
+export const getConfigFromTag = extractSchemaFromSpasmTag;
 //# sourceMappingURL=utils.js.map
