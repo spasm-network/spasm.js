@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GenerateRssFeedConfig = exports.ConvertToRssConfig = exports.SanitizationConfig = exports.ConvertToSpasmConfig = exports.IgnoreWhitelistFor = void 0;
+exports.GenerateRssFeedConfig = exports.ConvertToRssConfig = exports.RssFeed = exports.SanitizationConfig = exports.ConvertToSpasmConfig = exports.IgnoreWhitelistFor = void 0;
 const utils_js_1 = require("./../utils/utils.js");
 class IgnoreWhitelistFor {
     action;
@@ -57,6 +57,24 @@ class SanitizationConfig {
     }
 }
 exports.SanitizationConfig = SanitizationConfig;
+// Parsed RSS feed (or Atom)
+class RssFeed {
+    title;
+    description;
+    link;
+    feedUrl;
+    lastBuildDate;
+    updated;
+    author;
+    isoDate;
+    language;
+    image;
+    paginationLinks;
+    items;
+    item;
+    entry;
+}
+exports.RssFeed = RssFeed;
 class ConvertToRssConfig {
     to;
     customDomain;

@@ -29,3 +29,4 @@ export {
   convertToEventForSpasmid
 } from "./convertToEventForSpasmid.js"
 export {getSpasmId } from "./getSpasmId.js"
+export * from "./convertRssFeedToSpasm.js"

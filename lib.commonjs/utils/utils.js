@@ -1,33 +1,13 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sortLinksForSpasmEventV2 = exports.sortHostsForSpasmid01 = exports.sortHostsForSpasmEventV2 = exports.sortArrayOfObjectsByKeyValue = exports.sortAuthorsForSpasmid01 = exports.sortAuthorsForSpasmEventV2 = exports.sortArrayOfObjects = exports.sortArrayOfStringsAndNumbers = exports.keepTheseKeysInObjectsInArray = exports.keepTheseKeysInObject = exports.getHashOfString = exports.getAllFormatNamesFromEvent = exports.getAllFormatNamesFromSpasmEventV2 = exports.extractAllIdFormatNamesFromSpasmEventV2 = exports.extractIdFormatNameFromSpasmEventIdV2 = exports.getFormatFromSignature = exports.getFormatFromAddress = exports.getFormatFromId = exports.getFormatFromValue = exports.createLinkObjectFromUrl = exports.isUrl = exports.isValidUrl = exports.getNostrSpasmVersion = exports.toBeShortDate = exports.toBeDateShort = exports.toBeLongDate = exports.toBeDateLong = exports.toBeFullDate = exports.toBeDateFull = exports.toBeDate = exports.toBeNostrTimestamp = exports.toBeStandardTimestamp = exports.toBeStandardizedTimestamp = exports.toBeFullTimestamp = exports.toBeLongTimestamp = exports.toBeShortTimestamp = exports.toBeTimestamp = exports.extractSealedEvent = exports.extractVersion = exports.isArrayOfNumbersOrStrings = exports.isArrayOfStringsOrNumbers = exports.isArrayOfNumbers = exports.isArrayOfStrings = exports.isArrayWithValues = exports.isObjectWithValues = exports.ifNumberOrString = exports.ifStringOrNumber = exports.isNumberOrString = exports.isStringOrNumber = exports.hasValue = void 0;
 exports.getAllParentIds = exports.getAllEventIds = exports.getAllIdsFromArrayOfIdObjects = exports.hasValidSignature = exports.hasVerifiedSigner = exports.getVerifiedNostrSigners = exports.getVerifiedEthereumSigners = exports.getVerifiedSpasmSigners = exports.getVerifiedSigners = exports.getAllNostrSigners = exports.getAllEthereumSigners = exports.getAllSpasmSigners = exports.getAllSigners = exports.hasSiblingWeb2 = exports.hasSiblingNostr = exports.hasSiblingDmp = exports.hasSiblingSpasm = exports.hasSiblingOfProtocol = exports.extractNostrEvents = exports.extractSignedNostrEvents = exports.extractSignedNostrEvent = exports.extractNostrEvent = exports.hasSignatureNostr = exports.hasSignatureEthereum = exports.hasSignatureOfFormat = exports.mergeGenerateRssFeedConfigs = exports.mergeConvertToRssConfigs = exports.mergeSanitizationConfigs = exports.mergeConfigs = exports.mergeObjects = exports.clearObject = exports.clearArray = exports.toLowerCaseAllNestedStrings = exports.toLowerCaseIfString = exports.toLowerCaseIfValueIsString = exports.sanitizeAnything = exports.sanitizeArray = exports.sanitizeEvent = exports.sanitizeEventWithDompurify = exports.sanitizeStringWithDompurify = exports.sanitizeEventWith = exports.executeFunctionForAllNestedValuesOfType = exports.utilsStatus = exports.verifyEthereumSignature = exports.markSpasmEventAddressAsVerified = exports.sortTagsForSpasmid01 = exports.sortParentForSpasmid01 = exports.sortReferencesForSpasmid01 = exports.sortMediasForSpasmid01 = exports.sortLinksForSpasmid01 = void 0;
 exports.checkIfArrayHasThisEvent = exports.checkIfArrayHasThisSpasmEventV2 = exports.mergeDifferentSpasmEventsV2 = exports.mergeSpasmEventsV2 = exports.extractSignerFromEthereumSignature = exports.toBeUniqueSpasmEventsV2 = exports.toBeSpasmEventsV2 = exports.toBeSpasmEventV2 = exports.getEventsByIds = exports.getEventById = exports.checkIfEventHasThisId = exports.keepUniqueArraysInArrayOrArraysOfStrings = exports.removeDuplicateArraysFromArrayOrArraysOfStrings = exports.uniqueNostrTagsOnly = exports.uniqueTagsOnly = exports.deduplicateNostrTags = exports.deduplicateTags = exports.removeDuplicateNostrTags = exports.removeDuplicateTags = exports.removeDuplicatesFromArrayOfStrings = exports.removeDuplicatesFromArray = exports.extractRootSpasmId01 = exports.extractRootIdByFormat = exports.getRootIdByFormat = exports.extractParentSpasmId01 = exports.extractParentIdByFormat = exports.getParentIdByFormat = exports.extractSpasmId01 = exports.extractIdByFormat = exports.findMostLikelyGuid = exports.findMostLikelyUrl = exports.getIdByFormat = exports.areAllPubkeysListedIn = exports.areAllSignersListedIn = exports.isAnyPubkeyListedIn = exports.isAnySignerListedIn = exports.getTotalOfActionReact = exports.getTotalOfReactAction = exports.getTotalOfReact = exports.getTotalOfActionReply = exports.getTotalOfReplyAction = exports.getTotalOfReply = exports.getTotalOfAction = exports.getTotalOfMostPopularReaction = exports.getTotalOfReaction = exports.getStatByAction = exports.getPubkeysListedIn = exports.getSignersListedIn = exports.getAllSignatures = exports.getAllRootIds = void 0;
 exports.getAllMediaUrlsOfMimeTypeFromArrayOfUrls = exports.filterAllMediaUrlsFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls = exports.isFileNameOfMimeType = exports.ifFileNameOfMimeType = exports.parseStringForUrls = exports.extractAllUrlsFromString = exports.getAllUrlsFromString = exports.getMimeType = exports.DEFAULT_MIME_TYPE = exports.MIME_TYPE_MAP = exports.toBeString = exports.removeNbsp = exports.normalizeText = exports.isNostrHex = exports.isHex = exports.assignFormats = exports.attachEventAsParent = exports.attachEventAsRoot = exports.attachEventAsChild = exports.ifArraysHaveCommonId = exports.addRepliesToEvent = exports.addCommentsToEvent = exports.addChildrenToTree = exports.addRootToEvent = exports.addRootToTree = exports.addParentToEvent = exports.addParentToTree = exports.addEventsToTree = exports.mergeChildrenV2 = exports.mergeStatsV2 = exports.cleanSpasmEventV2 = exports.fakeAsFunction = exports.fakeAsObject = exports.fakeAsAny = exports.fakeAsNull = exports.fakeAsArray = exports.fakeAsNumber = exports.fakeAsString = exports.copyOf = exports.deepCopyOfObject = exports.ifEventsHaveSameSpasmId01 = exports.sortSpasmEventsV2 = exports.sortSpasmEventsV2ByDbAddedTimestamp = exports.prependToArrayIfEventIsUnique = exports.unshiftToArrayIfEventIsUnique = exports.appendToArrayIfEventIsUnique = exports.pushToArrayIfEventIsUnique = exports.insertIntoArrayIfEventIsUnique = exports.mergeEventIntoArray = void 0;
-exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShortAddress = exports.autoGeneratedName = exports.unescapeCdata = exports.unescapeRssCdata = exports.unescapeXmlCdata = exports.restoreFromCdata = exports.restoreFromRssCdata = exports.restoreFromXmlCdata = exports.prepareForCdata = exports.prepareForRssCdata = exports.prepareForXmlCdata = exports.escapeCdata = exports.escapeRssCdata = exports.escapeXmlCdata = exports.escapeXml = exports.parseFirstAudioOrVideoUrlFromString = exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString = exports.parseFirstMediaUrlFromString = exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString = exports.parseStringForMediaUrls = exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString = exports.getAllUrlsOfMediaTypeFromArrayOfUrls = void 0;
+exports.getOneSpasmTagByName = exports.getOneTagByName = exports.getTagByName = exports.getSpasmTagByName = exports.getAllSpasmTagsByName = exports.getAllTagsByName = exports.getTagsByName = exports.getSpasmTagsByName = exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShortAddress = exports.autoGeneratedName = exports.unescapeCdata = exports.unescapeRssCdata = exports.unescapeXmlCdata = exports.restoreFromCdata = exports.restoreFromRssCdata = exports.restoreFromXmlCdata = exports.prepareForCdata = exports.prepareForRssCdata = exports.prepareForXmlCdata = exports.escapeCdata = exports.escapeRssCdata = exports.escapeXmlCdata = exports.escapeXml = exports.parseFirstAudioOrVideoUrlFromString = exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString = exports.parseFirstMediaUrlFromString = exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString = exports.parseStringForMediaUrls = exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString = exports.getAllUrlsOfMediaTypeFromArrayOfUrls = void 0;
 /*
  * Using sha256 from 'js-sha256' npm package, because
  * built-in 'crypto' module works only in a server-side
@@ -36,7 +16,7 @@ exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShor
 const js_sha256_v0_1 = require("js-sha256-v0");
 const ethers_v6_1 = require("ethers-v6");
 const index_js_1 = require("./../utils/index.js");
-const DOMPurify = __importStar(require("isomorphic-dompurify-v2"));
+const isomorphic_dompurify_v2_1 = __importDefault(require("isomorphic-dompurify-v2"));
 const interfaces_js_1 = require("./../types/interfaces.js");
 const convertToSpasm_js_1 = require("./../convert/convertToSpasm.js");
 // Filter out undefined, null, 0, '', false, NaN, {}, []
@@ -1149,7 +1129,7 @@ const sanitizeEventWith = (originalItem, config) => {
 exports.sanitizeEventWith = sanitizeEventWith;
 const sanitizeStringWithDompurify = (val) => {
     if (typeof (val) === "string") {
-        return DOMPurify.sanitize(val);
+        return isomorphic_dompurify_v2_1.default.sanitize(val);
     }
     return val;
 };
@@ -4308,4 +4288,40 @@ const randomNumber = (min = 1, max = 1000000) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 exports.randomNumber = randomNumber;
+const getSpasmTagsByName = (originalEvent, tagName) => {
+    if (!tagName || !(0, exports.isStringOrNumber)(tagName))
+        return null;
+    const spasmEventV2 = (0, exports.toBeSpasmEventV2)(originalEvent);
+    if (!spasmEventV2 || !(0, exports.isObjectWithValues)(spasmEventV2)) {
+        return null;
+    }
+    if (spasmEventV2.tags && (0, exports.isArrayWithValues)(spasmEventV2.tags)) {
+        const matchedTags = [];
+        spasmEventV2.tags.forEach(tag => {
+            if (tag && (0, exports.isArrayWithValues)(tag) &&
+                tag[0] && tag[0] === tagName) {
+                matchedTags.push(tag);
+            }
+        });
+        if ((0, exports.isArrayWithValues)(matchedTags))
+            return matchedTags;
+    }
+    return null;
+};
+exports.getSpasmTagsByName = getSpasmTagsByName;
+exports.getTagsByName = exports.getSpasmTagsByName;
+exports.getAllTagsByName = exports.getSpasmTagsByName;
+exports.getAllSpasmTagsByName = exports.getSpasmTagsByName;
+const getSpasmTagByName = (originalEvent, tagName) => {
+    const tags = (0, exports.getTagsByName)(originalEvent, tagName);
+    if (tags && (0, exports.isArrayWithValues)(tags) &&
+        tags[0] && (0, exports.isArrayWithValues)(tags[0])) {
+        return tags[0];
+    }
+    return null;
+};
+exports.getSpasmTagByName = getSpasmTagByName;
+exports.getTagByName = exports.getSpasmTagByName;
+exports.getOneTagByName = exports.getSpasmTagByName;
+exports.getOneSpasmTagByName = exports.getSpasmTagByName;
 //# sourceMappingURL=utils.js.map

@@ -17,10 +17,10 @@ export interface Post {
   // web2 only
   // guid, source, author, url, description, pubdate
   // are usually taken from the RSS feed.
-  guid?: string | null // spasmEvent.links.guid || spasmEvent.id
+  guid?: string | null // spasmEvent.id
   source?: string | null // spasmEvent.source
   author?: string | null // spasmEvent.author
-  url?: PostUrl // spasmEvent.links.http/ipfs || spasmEvent.id
+  url?: PostUrl // spasmEvent.id
   description?: string | null // spasmEvent.content
   pubdate?: string | null // spasmEvent.timestamp
 
@@ -275,12 +275,13 @@ export interface StandardizedEvent {
 }
 
 export interface SpasmEventSource {
-  // TODO add network? (spasm, nostr, rss)
+  network?: "spasm" | "nostr" | "rss"
   name?: string
   uiUrl?: string
   apiUrl?: string
   query?: string
   showSource?: boolean
+  category?: string | number | SpasmEventCategoryV2
 }
 
 export class IgnoreWhitelistFor {
@@ -1022,6 +1023,53 @@ export type CustomConvertToSpasmConfig =
 export type CustomSanitizationConfig =
   MakeOptional<SanitizationConfig>
 
+// Parsed RSS feed (or Atom)
+export class RssFeed {
+  title?: string
+  description?: string
+  link?: string
+  feedUrl?: string
+  lastBuildDate?: string
+  updated?: string;
+  author?: string;
+  isoDate?: string
+  language?: string
+  image?: {
+    link?: string,
+    url?: string,
+    title?: string
+  }
+  paginationLinks?: { self?: string }
+  items?: RssItem[] | RssEvent[] | RssItem | RssEvent
+  item?: RssItem[] | RssEvent[] | RssItem | RssEvent
+  entry?: RssItem[] | RssEvent[]
+}
+
+// Traditional RSS item after parsing the feed
+export interface RssItem {
+  creator?: string
+  author?: string
+  title?: string
+  description?: string
+  content?: string
+  contentSnippet?: string
+  summary?: string
+  'content:encoded'?: string
+  'content:encodedSnippet'?: string
+  guid?: string
+  link?: string
+  pubDate?: string
+  published?: string
+  updated?: string
+  id?: string
+  isoDate?: string
+  enclosureUrl?: string
+  imgAlt?: string
+  mediaThumbnailUrl?: string
+  categories?: string[];
+}
+
+// Spasm event converted into RSS event
 export interface RssEvent {
   type?: "RssEvent"
   spasmEnvelope?: string
@@ -1138,15 +1186,21 @@ export type CustomGenerateRssFeedConfig =
 
 export interface FeedFiltersV2 {
   format?: "spasm" | "rss" | null
-  webType?: FiltersWebType | null
+  webType?: FiltersWebType | FiltersWebType[] | null
   signer?: string | string[] | null
-  parentId?: string | number | null
+  parentId?: string | number | (string | number)[] | null
   action?: string | number | (string | number)[] | null
   category?: FiltersCategory | FiltersCategory[] | null
-  source?: string | null
-  activity?: FiltersActivity | null
+  source?: string | string[] | null
+  activity?: FiltersActivity | FiltersActivity[] | null
   keyword?: string | string[] | null
   limit?: number | string
+}
+
+export interface FetchEventsConfig extends FeedFiltersV2 {
+  url?: string | string[] | null
+  timeout?: string | number | null
+  short?: boolean | null
 }
 
 // Ideas:

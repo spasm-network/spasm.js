@@ -98,9 +98,9 @@ event*
 │       ├── protocol                 #01 SE Body --- ---- DB
 │       ├── proof                    #01 SE Body --- ---- DB
 │       └── provider                 #01 SE Body --- ---- DB
-├── categories[]                     #01 SE Body --- ---- DB
-│   ├── name                         #01 SE Body --- ---- DB
-│   └── sub (recursive category)     #01 SE Body --- ---- DB
+├── categories[]                     --- SE Body --- ---- DB
+│   ├── name                         --- SE Body --- ---- DB
+│   └── sub (recursive category)     --- SE Body --- ---- DB
 ├── tips[]                           #01 SE Body --- ---- DB
 │   ├── address                      #01 SE Body --- ---- DB
 │   ├── text                         #01 SE Body --- ---- DB
@@ -243,6 +243,44 @@ link
 ├── port
 └── originalProtocolKey
 ```
+
+### Spasm ID
+
+The Spasm ID of version `01` is a sha256 hash of some values of a Spasm event prepended with identifiers. The exact key-value pairs used for calculating the Spasm ID can be found by examining EventForSpasmid01. Many key-value pairs are not used because of various reasons. For example, a source will be different on different instances; the same event can be submitted to different instances with different PoW values; categories can be signed by the author, but can also be attached on the instance, e.g., for web2 unsigned events fetched from legacy RSS feeds.
+
+Here is a hash of a [genesis](https://forum.spasm.network/news/spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f) message 'not your keys, not your words':
+
+```
+spasmid01192d1f9994bf436f50841459d0a43c0de13ef4aaa5233827bdfe2ea2bc030d6f
+```
+
+`spasm` - identifies that this is a Spasm hash
+
+`id` - identifies that this is a hash of an event
+
+`01` - identifies a hash version
+
+
+### Spasm media hashes
+
+[Video](https://media.spasm.network/spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee.mp4) files are hashed and prepended with `spasmvi01`.
+
+```
+spasmvi01f316a39a710c2bef7288a8f8485876c48a87ede8f4f23941d4577c05617101ee
+```
+
+[Image](https://media.spasm.network/spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa.jpeg) files are hashed and prepended with `spasmim01`.
+
+```
+spasmim01b6b7dc9972c02b70eec2d1ae4a5b95d9b3f0ebb04725d03bfd93664646ca41aa
+```
+
+Audio files are hashed and prepended with `spasmau01`.
+
+Other files are hashed and prepended with `spasmfl01`.
+
+Using hashes for file names enables instances to locate files across different domains, even if the original domain is offline. This method is part of a broader concept known as "content-addressing" that ensures that files can be retrieved based on their content rather than their location, promoting resilience and decentralization in data management.
+
 
 ### Features
 
@@ -672,6 +710,24 @@ const ifSameEvent = ifEventsHaveSameSpasmId01(event1, event2)
 ```
 
 ```js
+// Get Spasm tags by name
+const tags = getSpasmTagsByName(event, "my-tag")
+
+// Aliases
+getTagsByName()
+getAllTagsByName()
+getAllSpasmTagsByName()
+
+// Get Spasm tag by name
+const tag = getSpasmTagByName(event, "my-tag")
+
+// Aliases
+getTagByName()
+getOneTagByName()
+getOneSpasmTagByName()
+```
+
+```js
 // Merge stats
 const mergedStats = mergeStatsV2(arrayOfStats)
 ```
@@ -708,6 +764,30 @@ const rssEvent = convertToRssEvent(event, config)
 ```
 
 ## Examples
+
+### Sign SpasmEventBodyV2
+
+```js
+// Single-signing with one private key
+const signSpasmEventBodyV2 = async (
+  spasmEventBodyV2: SpasmEventBodyV2
+): Promise<SpasmEventV2 | null> => {
+  const stringToSign: string = JSON.stringify(spasmEventBodyV2)
+
+  const signature: string = await signString(stringToSign)
+
+  const signedEvent: SpasmEventBodySignedClosedV2 = {
+    type: "SpasmEventBodySignedClosedV2",
+    signedString: stringToSign,
+    signature,
+    signer: signerAddress.toLowerCase()
+  }
+
+  const spasmEvent: SpasmEventV2 = spasm.convertToSpasm(signedEvent)
+
+  return spasmEvent
+}
+```
 
 ### Convert DmpEventSignedClosed to Spasm
 

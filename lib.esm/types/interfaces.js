@@ -51,6 +51,23 @@ export class SanitizationConfig {
             this.maxDepth = 100;
     }
 }
+// Parsed RSS feed (or Atom)
+export class RssFeed {
+    title;
+    description;
+    link;
+    feedUrl;
+    lastBuildDate;
+    updated;
+    author;
+    isoDate;
+    language;
+    image;
+    paginationLinks;
+    items;
+    item;
+    entry;
+}
 export class ConvertToRssConfig {
     to;
     customDomain;

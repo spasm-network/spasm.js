@@ -3948,6 +3948,15 @@ describe("removeDuplicateTags() function tests", () => {
         ]);
     });
 });
+// getSpasmTagByName()
+describe("getSpasmTagByName() function tests", () => {
+    test("getSpasmTagByName() should return true if true", () => {
+        const input = (0, index_js_1.copyOf)(_events_data_js_1.SpasmEventV2ToTestSpasmid01);
+        const output = input.tags[3];
+        expect((0, index_js_1.getSpasmTagByName)(input, "01")).toStrictEqual(null);
+        expect((0, index_js_1.getOneTagByName)(input, "tag5-0")).toStrictEqual(output);
+    });
+});
 // template()
 describe("template() function tests", () => {
     test("template() should return true if true", () => {

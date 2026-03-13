@@ -1,4 +1,18 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSpasmId = exports.convertToEventForSpasmid = exports.convertManyToSpasmEventEnvelopeWithTree = exports.convertToSpasmEventEnvelopeWithTree = exports.convertManyToSpasmEventEnvelope = exports.convertToSpasmEventEnvelope = exports.convertManyToSpasmEventDatabase = exports.convertToSpasmEventDatabase = exports.generateRssFeed = exports.convertToRss = exports.convertToNostr = exports.getOriginalValueFromTagMappedDetails = exports.getOriginalFromValueAndMethod = exports.getTagMappedDetails = exports.isMappedTag = exports.convertManyToSpasm = exports.convertToSpasm = void 0;
 var convertToSpasm_js_1 = require("./convertToSpasm.js");
@@ -26,4 +40,5 @@ var convertToEventForSpasmid_js_1 = require("./convertToEventForSpasmid.js");
 Object.defineProperty(exports, "convertToEventForSpasmid", { enumerable: true, get: function () { return convertToEventForSpasmid_js_1.convertToEventForSpasmid; } });
 var getSpasmId_js_1 = require("./getSpasmId.js");
 Object.defineProperty(exports, "getSpasmId", { enumerable: true, get: function () { return getSpasmId_js_1.getSpasmId; } });
+__exportStar(require("./convertRssFeedToSpasm.js"), exports);
 //# sourceMappingURL=index.js.map

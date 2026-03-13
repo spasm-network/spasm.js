@@ -6,4 +6,5 @@ export { convertToSpasmEventEnvelope, convertManyToSpasmEventEnvelope } from "./
 export { convertToSpasmEventEnvelopeWithTree, convertManyToSpasmEventEnvelopeWithTree } from "./convertToSpasmEventEnvelopeWithTree.js";
 export { convertToEventForSpasmid } from "./convertToEventForSpasmid.js";
 export { getSpasmId } from "./getSpasmId.js";
+export * from "./convertRssFeedToSpasm.js";
 //# sourceMappingURL=index.js.map

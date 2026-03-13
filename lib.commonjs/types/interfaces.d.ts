@@ -158,11 +158,13 @@ export interface StandardizedEvent {
     signedDate?: string;
 }
 export interface SpasmEventSource {
+    network?: "spasm" | "nostr" | "rss";
     name?: string;
     uiUrl?: string;
     apiUrl?: string;
     query?: string;
     showSource?: boolean;
+    category?: string | number | SpasmEventCategoryV2;
 }
 export declare class IgnoreWhitelistFor {
     action: {
@@ -682,6 +684,50 @@ type MakeOptional<T> = {
 };
 export type CustomConvertToSpasmConfig = MakeOptional<ConvertToSpasmConfig>;
 export type CustomSanitizationConfig = MakeOptional<SanitizationConfig>;
+export declare class RssFeed {
+    title?: string;
+    description?: string;
+    link?: string;
+    feedUrl?: string;
+    lastBuildDate?: string;
+    updated?: string;
+    author?: string;
+    isoDate?: string;
+    language?: string;
+    image?: {
+        link?: string;
+        url?: string;
+        title?: string;
+    };
+    paginationLinks?: {
+        self?: string;
+    };
+    items?: RssItem[] | RssEvent[] | RssItem | RssEvent;
+    item?: RssItem[] | RssEvent[] | RssItem | RssEvent;
+    entry?: RssItem[] | RssEvent[];
+}
+export interface RssItem {
+    creator?: string;
+    author?: string;
+    title?: string;
+    description?: string;
+    content?: string;
+    contentSnippet?: string;
+    summary?: string;
+    'content:encoded'?: string;
+    'content:encodedSnippet'?: string;
+    guid?: string;
+    link?: string;
+    pubDate?: string;
+    published?: string;
+    updated?: string;
+    id?: string;
+    isoDate?: string;
+    enclosureUrl?: string;
+    imgAlt?: string;
+    mediaThumbnailUrl?: string;
+    categories?: string[];
+}
 export interface RssEvent {
     type?: "RssEvent";
     spasmEnvelope?: string;
@@ -771,15 +817,20 @@ export declare class GenerateRssFeedConfig {
 export type CustomGenerateRssFeedConfig = MakeOptional<GenerateRssFeedConfig>;
 export interface FeedFiltersV2 {
     format?: "spasm" | "rss" | null;
-    webType?: FiltersWebType | null;
+    webType?: FiltersWebType | FiltersWebType[] | null;
     signer?: string | string[] | null;
-    parentId?: string | number | null;
+    parentId?: string | number | (string | number)[] | null;
     action?: string | number | (string | number)[] | null;
     category?: FiltersCategory | FiltersCategory[] | null;
-    source?: string | null;
-    activity?: FiltersActivity | null;
+    source?: string | string[] | null;
+    activity?: FiltersActivity | FiltersActivity[] | null;
     keyword?: string | string[] | null;
     limit?: number | string;
+}
+export interface FetchEventsConfig extends FeedFiltersV2 {
+    url?: string | string[] | null;
+    timeout?: string | number | null;
+    short?: boolean | null;
 }
 export {};
 //# sourceMappingURL=interfaces.d.ts.map

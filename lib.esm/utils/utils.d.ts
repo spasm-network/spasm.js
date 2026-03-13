@@ -237,5 +237,13 @@ export declare const toBeShortAddress: (longAddress: string | number, ifPrefixWi
 export declare const sliceAddress: (address?: string | PostSignature, start?: number, end?: number) => string;
 export declare const sliceId: (id: string | number, start?: number, end?: number, max?: number) => string;
 export declare const randomNumber: (min?: number, max?: number) => number;
+export declare const getSpasmTagsByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[][] | null;
+export declare const getTagsByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[][] | null;
+export declare const getAllTagsByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[][] | null;
+export declare const getAllSpasmTagsByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[][] | null;
+export declare const getSpasmTagByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[] | null;
+export declare const getTagByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[] | null;
+export declare const getOneTagByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[] | null;
+export declare const getOneSpasmTagByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[] | null;
 export {};
 //# sourceMappingURL=utils.d.ts.map

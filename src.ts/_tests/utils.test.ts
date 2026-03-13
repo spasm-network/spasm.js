@@ -126,7 +126,9 @@ import {
   removeDuplicateTags,
   removeDuplicateNostrTags,
   toLowerCaseAllNestedStrings,
-  toLowerCaseIfString
+  toLowerCaseIfString,
+  getSpasmTagByName,
+  getOneTagByName
 } from './../utils/index.js';
 import {
   validDmpEvent, validDmpEventSignedClosed,
@@ -189,7 +191,8 @@ import {
   validSpasmEventBodyV2ConvertedToSpasmV2,
   validSpasmEventBodySignedClosedV2ConvertedToSpasmV2,
   validMultiSignedSpasmEventV2WithMediaLinks,
-  validEventWithUpperCasePubkey
+  validEventWithUpperCasePubkey,
+  SpasmEventV2ToTestSpasmid01
 } from "./_events-data.js"
 
 import {
@@ -5371,6 +5374,17 @@ describe("removeDuplicateTags() function tests", () => {
         ]);
     });
 });
+
+// getSpasmTagByName()
+describe("getSpasmTagByName() function tests", () => {
+  test("getSpasmTagByName() should return true if true", () => {
+    const input = copyOf(SpasmEventV2ToTestSpasmid01)
+    const output = input.tags[3]
+    expect(getSpasmTagByName(input, "01")).toStrictEqual(null);
+    expect(getOneTagByName(input, "tag5-0")).toStrictEqual(output);
+  });
+});
+
 
 // template()
 describe("template() function tests", () => {

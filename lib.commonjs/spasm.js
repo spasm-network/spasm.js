@@ -15,6 +15,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./convert/index.js"), exports);
+__exportStar(require("./fetch/index.js"), exports);
 __exportStar(require("./identify/index.js"), exports);
 __exportStar(require("./sort/index.js"), exports);
 __exportStar(require("./utils/index.js"), exports);

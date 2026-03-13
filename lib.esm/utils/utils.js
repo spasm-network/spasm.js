@@ -6,7 +6,7 @@
 import { sha256 } from "js-sha256-v0";
 import { ethers } from "ethers-v6";
 import { toBeHex, toBeNpub } from './../utils/index.js';
-import * as DOMPurify from "isomorphic-dompurify-v2";
+import DOMPurify from "isomorphic-dompurify-v2";
 import { SanitizationConfig } from "./../types/interfaces.js";
 import { convertToSpasm } from "./../convert/convertToSpasm.js";
 // Filter out undefined, null, 0, '', false, NaN, {}, []
@@ -4126,4 +4126,38 @@ export const sliceId = (id, start = 6, end = 4, max // used for URL length
 export const randomNumber = (min = 1, max = 1000000) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+export const getSpasmTagsByName = (originalEvent, tagName) => {
+    if (!tagName || !isStringOrNumber(tagName))
+        return null;
+    const spasmEventV2 = toBeSpasmEventV2(originalEvent);
+    if (!spasmEventV2 || !isObjectWithValues(spasmEventV2)) {
+        return null;
+    }
+    if (spasmEventV2.tags && isArrayWithValues(spasmEventV2.tags)) {
+        const matchedTags = [];
+        spasmEventV2.tags.forEach(tag => {
+            if (tag && isArrayWithValues(tag) &&
+                tag[0] && tag[0] === tagName) {
+                matchedTags.push(tag);
+            }
+        });
+        if (isArrayWithValues(matchedTags))
+            return matchedTags;
+    }
+    return null;
+};
+export const getTagsByName = getSpasmTagsByName;
+export const getAllTagsByName = getSpasmTagsByName;
+export const getAllSpasmTagsByName = getSpasmTagsByName;
+export const getSpasmTagByName = (originalEvent, tagName) => {
+    const tags = getTagsByName(originalEvent, tagName);
+    if (tags && isArrayWithValues(tags) &&
+        tags[0] && isArrayWithValues(tags[0])) {
+        return tags[0];
+    }
+    return null;
+};
+export const getTagByName = getSpasmTagByName;
+export const getOneTagByName = getSpasmTagByName;
+export const getOneSpasmTagByName = getSpasmTagByName;
 //# sourceMappingURL=utils.js.map

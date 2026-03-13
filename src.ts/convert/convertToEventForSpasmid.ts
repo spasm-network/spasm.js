@@ -1,3 +1,7 @@
+/**
+ * Many key-value pairs of the Spasm event are not used to
+ * calculate Spasm IDs. See README.md for more information.
+ */
 import {
   UnknownEventV2,
   EventForSpasmid01,

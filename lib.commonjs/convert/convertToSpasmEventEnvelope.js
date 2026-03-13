@@ -30,6 +30,16 @@ const convertManyToSpasmEventEnvelope = (unknownEvents, envelopeVersion = "2.0.0
 exports.convertManyToSpasmEventEnvelope = convertManyToSpasmEventEnvelope;
 // Spasm V2
 const convertToSpasmEventEnvelope = (unknownEvent, envelopeVersion = "2.0.0") => {
+    if (!unknownEvent)
+        return null;
+    if (typeof (unknownEvent) === "string") {
+        const eventParsed = JSON.parse(unknownEvent);
+        if (eventParsed && (0, utils_js_1.isObjectWithValues)(eventParsed)) {
+            unknownEvent = eventParsed;
+        }
+    }
+    if (!(0, utils_js_1.isObjectWithValues)(unknownEvent))
+        return null;
     // Already SpasmEventEnvelopeV2
     if ('type' in unknownEvent &&
         unknownEvent.type === "SpasmEventEnvelopeV2") {

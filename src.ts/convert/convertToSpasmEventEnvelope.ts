@@ -36,6 +36,17 @@ export const convertToSpasmEventEnvelope = (
   unknownEvent: UnknownEventV2,
   envelopeVersion = "2.0.0"
 ): SpasmEventEnvelopeV2 | null => {
+  if (!unknownEvent) return null
+
+  if (typeof(unknownEvent) === "string") {
+    const eventParsed = JSON.parse(unknownEvent)
+    if (eventParsed && isObjectWithValues(eventParsed)) {
+      unknownEvent = eventParsed
+    }
+  }
+
+  if (!isObjectWithValues(unknownEvent)) return null
+
   // Already SpasmEventEnvelopeV2
   if (
     'type' in unknownEvent &&

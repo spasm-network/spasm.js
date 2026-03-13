@@ -5,6 +5,8 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
+    // set target to es2020 or higher for better async/await support
+    // "target": "es2020",
     "moduleResolution": "Node",
     "outDir": "./lib.commonjs"
   }
