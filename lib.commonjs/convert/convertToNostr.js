@@ -159,7 +159,9 @@ const convertSpasmEventV2ToNostrSpasmV2 = (spasmEventV2) => {
         spasmEventV2.tags.forEach((spasmTag) => {
             if (spasmTag && (0, utils_js_1.isArrayOfStrings)(spasmTag)) {
                 nostrEvent.tags ??= [];
-                nostrEvent.tags.push(spasmTag);
+                // Using copyOf() because otherwise multi-signing
+                // doesn't work since tags is a proxy.
+                nostrEvent.tags.push((0, utils_js_1.copyOf)(spasmTag));
             }
         });
     }

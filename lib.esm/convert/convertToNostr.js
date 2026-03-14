@@ -1,6 +1,6 @@
 import { isNostrEvent, } from "../identify/identifyEvent.js";
 import { toBeHex, convertValueToNostrTagsMapping } from "../utils/nostrUtils.js";
-import { getAllNostrSigners, isArrayOfStrings, isArrayWithValues, isHex, isStringOrNumber, toBeLongTimestamp, toBeShortTimestamp, toBeSpasmEventV2, extractIdFormatNameFromSpasmEventIdV2, isObjectWithValues, toBeString } from "../utils/utils.js";
+import { getAllNostrSigners, isArrayOfStrings, isArrayWithValues, isHex, isStringOrNumber, toBeLongTimestamp, toBeShortTimestamp, toBeSpasmEventV2, extractIdFormatNameFromSpasmEventIdV2, isObjectWithValues, toBeString, copyOf } from "../utils/utils.js";
 // TODO convertManyToNostr()
 export const convertToNostr = (unknownEvent, nostrSpasmVersion = "2.0.0") => {
     // Already Nostr event
@@ -155,7 +155,9 @@ export const convertSpasmEventV2ToNostrSpasmV2 = (spasmEventV2) => {
         spasmEventV2.tags.forEach((spasmTag) => {
             if (spasmTag && isArrayOfStrings(spasmTag)) {
                 nostrEvent.tags ??= [];
-                nostrEvent.tags.push(spasmTag);
+                // Using copyOf() because otherwise multi-signing
+                // doesn't work since tags is a proxy.
+                nostrEvent.tags.push(copyOf(spasmTag));
             }
         });
     }
