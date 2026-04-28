@@ -3,7 +3,7 @@ Signer and Protocol Agnostic Social Media (Spasm)
 
 ![cover](https://media.spasm.network/spasmim012d64ac17ad56680f1e1eda5776460dfb8d92cb428f2aa9c64ff4cffd05280817.png)
 
-Mirrors: [Forgejo](https://git.spasm.network/spasm-network/spasm.js) [Codeberg](https://codeberg.org/spasm-network/spasm.js) [Github](https://github.com/spasm-network/spasm)
+Mirrors: [Forgejo](https://git.spasm.network/spasm-network/spasm.js) [Codeberg](https://codeberg.org/spasm-network/spasm.js) [Github](https://github.com/spasm-network/spasm.js)
 
 ## Overview
 
