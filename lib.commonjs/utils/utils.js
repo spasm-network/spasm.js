@@ -4,11 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sortLinksForSpasmEventV2 = exports.sortHostsForSpasmid01 = exports.sortHostsForSpasmEventV2 = exports.sortArrayOfObjectsByKeyValue = exports.sortAuthorsForSpasmid01 = exports.sortAuthorsForSpasmEventV2 = exports.sortArrayOfObjects = exports.sortArrayOfStringsAndNumbers = exports.keepTheseKeysInObjectsInArray = exports.keepTheseKeysInObject = exports.getHashOfString = exports.getAllFormatNamesFromEvent = exports.getAllFormatNamesFromSpasmEventV2 = exports.extractAllIdFormatNamesFromSpasmEventV2 = exports.extractIdFormatNameFromSpasmEventIdV2 = exports.getFormatFromSignature = exports.getFormatFromAddress = exports.getFormatFromId = exports.getFormatFromValue = exports.createLinkObjectFromUrl = exports.isUrl = exports.isValidUrl = exports.getNostrSpasmVersion = exports.toBeShortDate = exports.toBeDateShort = exports.toBeLongDate = exports.toBeDateLong = exports.toBeFullDate = exports.toBeDateFull = exports.toBeDate = exports.toBeNostrTimestamp = exports.toBeStandardTimestamp = exports.toBeStandardizedTimestamp = exports.toBeFullTimestamp = exports.toBeLongTimestamp = exports.toBeShortTimestamp = exports.toBeTimestamp = exports.extractSealedEvent = exports.extractVersion = exports.isArrayOfNumbersOrStrings = exports.isArrayOfStringsOrNumbers = exports.isArrayOfNumbers = exports.isArrayOfStrings = exports.isArrayWithValues = exports.isObjectWithValues = exports.ifNumberOrString = exports.ifStringOrNumber = exports.isNumberOrString = exports.isStringOrNumber = exports.hasValue = void 0;
-exports.getAllParentIds = exports.getAllEventIds = exports.getAllIdsFromArrayOfIdObjects = exports.hasValidSignature = exports.hasVerifiedSigner = exports.getVerifiedNostrSigners = exports.getVerifiedEthereumSigners = exports.getVerifiedSpasmSigners = exports.getVerifiedSigners = exports.getAllNostrSigners = exports.getAllEthereumSigners = exports.getAllSpasmSigners = exports.getAllSigners = exports.hasSiblingWeb2 = exports.hasSiblingNostr = exports.hasSiblingDmp = exports.hasSiblingSpasm = exports.hasSiblingOfProtocol = exports.extractNostrEvents = exports.extractSignedNostrEvents = exports.extractSignedNostrEvent = exports.extractNostrEvent = exports.hasSignatureNostr = exports.hasSignatureEthereum = exports.hasSignatureOfFormat = exports.mergeGenerateRssFeedConfigs = exports.mergeConvertToRssConfigs = exports.mergeSanitizationConfigs = exports.mergeConfigs = exports.mergeObjects = exports.clearObject = exports.clearArray = exports.toLowerCaseAllNestedStrings = exports.toLowerCaseIfString = exports.toLowerCaseIfValueIsString = exports.sanitizeAnything = exports.sanitizeArray = exports.sanitizeEvent = exports.sanitizeEventWithDompurify = exports.sanitizeStringWithDompurify = exports.sanitizeEventWith = exports.executeFunctionForAllNestedValuesOfType = exports.utilsStatus = exports.verifyEthereumSignature = exports.markSpasmEventAddressAsVerified = exports.sortTagsForSpasmid01 = exports.sortParentForSpasmid01 = exports.sortReferencesForSpasmid01 = exports.sortMediasForSpasmid01 = exports.sortLinksForSpasmid01 = void 0;
-exports.checkIfArrayHasThisEvent = exports.checkIfArrayHasThisSpasmEventV2 = exports.mergeDifferentSpasmEventsV2 = exports.mergeSpasmEventsV2 = exports.extractSignerFromEthereumSignature = exports.toBeUniqueSpasmEventsV2 = exports.toBeSpasmEventsV2 = exports.toBeSpasmEventV2 = exports.getEventsByIds = exports.getEventById = exports.checkIfEventHasThisId = exports.keepUniqueArraysInArrayOrArraysOfStrings = exports.removeDuplicateArraysFromArrayOrArraysOfStrings = exports.uniqueNostrTagsOnly = exports.uniqueTagsOnly = exports.deduplicateNostrTags = exports.deduplicateTags = exports.removeDuplicateNostrTags = exports.removeDuplicateTags = exports.removeDuplicatesFromArrayOfStrings = exports.removeDuplicatesFromArray = exports.extractRootSpasmId01 = exports.extractRootIdByFormat = exports.getRootIdByFormat = exports.extractParentSpasmId01 = exports.extractParentIdByFormat = exports.getParentIdByFormat = exports.extractSpasmId01 = exports.extractIdByFormat = exports.findMostLikelyGuid = exports.findMostLikelyUrl = exports.getIdByFormat = exports.areAllPubkeysListedIn = exports.areAllSignersListedIn = exports.isAnyPubkeyListedIn = exports.isAnySignerListedIn = exports.getTotalOfActionReact = exports.getTotalOfReactAction = exports.getTotalOfReact = exports.getTotalOfActionReply = exports.getTotalOfReplyAction = exports.getTotalOfReply = exports.getTotalOfAction = exports.getTotalOfMostPopularReaction = exports.getTotalOfReaction = exports.getStatByAction = exports.getPubkeysListedIn = exports.getSignersListedIn = exports.getAllSignatures = exports.getAllRootIds = void 0;
-exports.getAllMediaUrlsOfMimeTypeFromArrayOfUrls = exports.filterAllMediaUrlsFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls = exports.isFileNameOfMimeType = exports.ifFileNameOfMimeType = exports.parseStringForUrls = exports.extractAllUrlsFromString = exports.getAllUrlsFromString = exports.getMimeType = exports.DEFAULT_MIME_TYPE = exports.MIME_TYPE_MAP = exports.toBeString = exports.removeNbsp = exports.normalizeText = exports.isNostrHex = exports.isHex = exports.assignFormats = exports.attachEventAsParent = exports.attachEventAsRoot = exports.attachEventAsChild = exports.ifArraysHaveCommonId = exports.addRepliesToEvent = exports.addCommentsToEvent = exports.addChildrenToTree = exports.addRootToEvent = exports.addRootToTree = exports.addParentToEvent = exports.addParentToTree = exports.addEventsToTree = exports.mergeChildrenV2 = exports.mergeStatsV2 = exports.cleanSpasmEventV2 = exports.fakeAsFunction = exports.fakeAsObject = exports.fakeAsAny = exports.fakeAsNull = exports.fakeAsArray = exports.fakeAsNumber = exports.fakeAsString = exports.copyOf = exports.deepCopyOfObject = exports.ifEventsHaveSameSpasmId01 = exports.sortSpasmEventsV2 = exports.sortSpasmEventsV2ByDbAddedTimestamp = exports.prependToArrayIfEventIsUnique = exports.unshiftToArrayIfEventIsUnique = exports.appendToArrayIfEventIsUnique = exports.pushToArrayIfEventIsUnique = exports.insertIntoArrayIfEventIsUnique = exports.mergeEventIntoArray = void 0;
-exports.addExtraConfigToSpasmEventBody = exports.addCustomConfigToSpasmEventBody = exports.addConfigToSpasmEventBody = exports.addConfig = exports.addExtraSchemaToSpasmEventBody = exports.addCustomSchemaToSpasmEventBody = exports.addSchema = exports.addSchemaToSpasmEventBody = exports.extractOneSpasmTagByName = exports.extractSpasmTagByName = exports.extractTagByName = exports.getOneSpasmTagByName = exports.getOneTagByName = exports.getTagByName = exports.getSpasmTagByName = exports.extractAllSpasmTagsByName = exports.extractSpasmTagsByName = exports.extractTagsByName = exports.getAllSpasmTagsByName = exports.getAllTagsByName = exports.getTagsByName = exports.getSpasmTagsByName = exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShortAddress = exports.autoGeneratedName = exports.unescapeCdata = exports.unescapeRssCdata = exports.unescapeXmlCdata = exports.restoreFromCdata = exports.restoreFromRssCdata = exports.restoreFromXmlCdata = exports.prepareForCdata = exports.prepareForRssCdata = exports.prepareForXmlCdata = exports.escapeCdata = exports.escapeRssCdata = exports.escapeXmlCdata = exports.escapeXml = exports.parseFirstAudioOrVideoUrlFromString = exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString = exports.parseFirstMediaUrlFromString = exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString = exports.parseStringForMediaUrls = exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString = exports.getAllUrlsOfMediaTypeFromArrayOfUrls = void 0;
-exports.getConfigFromTag = exports.getSchemaFromTag = exports.extractConfigFromTag = exports.extractSchemaFromTag = exports.getConfigFromSpasmTag = exports.getSchemaFromSpasmTag = exports.extractConfigFromSpasmTag = exports.extractSchemaFromSpasmTag = exports.getAllConfigsFromSpasmTags = exports.getConfigsFromSpasmTags = exports.getAllSchemasFromSpasmTags = exports.getSchemasFromSpasmTags = exports.extractAllConfigsFromSpasmTags = exports.extractConfigsFromSpasmTags = exports.extractAllSchemasFromSpasmTags = exports.extractSchemasFromSpasmTags = exports.extractConfigFromSpasmEvent = exports.getConfigFromSpasmEvent = exports.getSchemaFromSpasmEvent = exports.extractConfig = exports.extractSchema = exports.getConfig = exports.getSchema = exports.extractSchemaFromSpasmEvent = exports.getConfigTagsFromSpasmEvent = exports.getSchemaTagsFromSpasmEvent = exports.extractConfigTagsFromSpasmEvent = exports.extractSchemaTagsFromSpasmEvent = exports.constructTagFromConfig = exports.constructSpasmTagFromConfig = exports.createTagFromConfig = exports.createSpasmTagFromConfig = exports.constructTagFromSchema = exports.constructSpasmTagFromSchema = exports.createTagFromSchema = exports.createSpasmTagFromSchema = void 0;
+exports.getAllEventIds = exports.getAllIdsFromArrayOfIdObjects = exports.hasValidSignature = exports.hasVerifiedSigner = exports.getVerifiedNostrSigners = exports.getVerifiedEthereumSigners = exports.getVerifiedSpasmSigners = exports.getVerifiedSigners = exports.getAllNostrSigners = exports.getAllEthereumSigners = exports.getAllSpasmSigners = exports.getAllSigners = exports.hasSiblingWeb2 = exports.hasSiblingNostr = exports.hasSiblingDmp = exports.hasSiblingSpasm = exports.hasSiblingOfProtocol = exports.extractNostrEvents = exports.extractSignedNostrEvents = exports.extractSignedNostrEvent = exports.extractNostrEvent = exports.hasSignatureNostr = exports.hasSignatureEthereum = exports.hasSignatureOfFormat = exports.mergeConvertToSpasmSimpleConfigs = exports.mergeGenerateRssFeedConfigs = exports.mergeConvertToRssConfigs = exports.mergeSanitizationConfigs = exports.mergeConfigs = exports.mergeObjects = exports.clearObject = exports.clearArray = exports.toLowerCaseAllNestedStrings = exports.toLowerCaseIfString = exports.toLowerCaseIfValueIsString = exports.sanitizeAnything = exports.sanitizeArray = exports.sanitizeEvent = exports.sanitizeEventWithDompurify = exports.sanitizeStringWithDompurify = exports.sanitizeEventWith = exports.executeFunctionForAllNestedValuesOfType = exports.utilsStatus = exports.verifyEthereumSignature = exports.markSpasmEventAddressAsVerified = exports.sortTagsForSpasmid01 = exports.sortParentForSpasmid01 = exports.sortReferencesForSpasmid01 = exports.sortMediasForSpasmid01 = exports.sortLinksForSpasmid01 = void 0;
+exports.checkIfArrayHasThisSpasmEventV2 = exports.mergeDifferentSpasmEventsV2 = exports.mergeSpasmEventsV2 = exports.extractSignerFromEthereumSignature = exports.toBeUniqueSpasmEventsV2 = exports.toBeSpasmEventsV2 = exports.toBeSpasmEventV2 = exports.getEventsByIds = exports.getEventById = exports.checkIfEventHasThisId = exports.keepUniqueArraysInArrayOrArraysOfStrings = exports.removeDuplicateArraysFromArrayOrArraysOfStrings = exports.uniqueNostrTagsOnly = exports.uniqueTagsOnly = exports.deduplicateNostrTags = exports.deduplicateTags = exports.removeDuplicateNostrTags = exports.removeDuplicateTags = exports.removeDuplicatesFromArrayOfStrings = exports.removeDuplicatesFromArray = exports.extractRootSpasmId01 = exports.extractRootIdByFormat = exports.getRootIdByFormat = exports.extractParentSpasmId01 = exports.extractParentIdByFormat = exports.getParentIdByFormat = exports.extractSpasmId01 = exports.extractIdByFormat = exports.findMostLikelyGuid = exports.findMostLikelyUrl = exports.getIdByFormat = exports.areAllPubkeysListedIn = exports.areAllSignersListedIn = exports.isAnyPubkeyListedIn = exports.isAnySignerListedIn = exports.getTotalOfActionReact = exports.getTotalOfReactAction = exports.getTotalOfReact = exports.getTotalOfActionReply = exports.getTotalOfReplyAction = exports.getTotalOfReply = exports.getTotalOfAction = exports.getTotalOfMostPopularReaction = exports.getTotalOfReaction = exports.getStatByAction = exports.getPubkeysListedIn = exports.getSignersListedIn = exports.getAllSignatures = exports.getAllRootIds = exports.getAllParentIds = void 0;
+exports.filterAllMediaUrlsFromArrayOfUrls = exports.getAllMediaUrlsFromArrayOfUrls = exports.isFileNameOfMimeType = exports.ifFileNameOfMimeType = exports.parseStringForUrls = exports.extractAllUrlsFromString = exports.getAllUrlsFromString = exports.getMimeType = exports.DEFAULT_MIME_TYPE = exports.MIME_TYPE_MAP = exports.toBeString = exports.removeNbsp = exports.normalizeText = exports.isNostrHex = exports.isHex = exports.assignFormats = exports.attachEventAsParent = exports.attachEventAsRoot = exports.attachEventAsChild = exports.ifArraysHaveCommonId = exports.addRepliesToEvent = exports.addCommentsToEvent = exports.addChildrenToTree = exports.addRootToEvent = exports.addRootToTree = exports.addParentToEvent = exports.addParentToTree = exports.addEventsToTree = exports.mergeChildrenV2 = exports.mergeStatsV2 = exports.cleanSpasmEventV2 = exports.fakeAsFunction = exports.fakeAsObject = exports.fakeAsAny = exports.fakeAsNull = exports.fakeAsArray = exports.fakeAsNumber = exports.fakeAsString = exports.copyOf = exports.deepCopyOfObject = exports.ifEventsHaveSameSpasmId01 = exports.sortSpasmEventsV2 = exports.sortSpasmEventsV2ByDbAddedTimestamp = exports.prependToArrayIfEventIsUnique = exports.unshiftToArrayIfEventIsUnique = exports.appendToArrayIfEventIsUnique = exports.pushToArrayIfEventIsUnique = exports.insertIntoArrayIfEventIsUnique = exports.mergeEventIntoArray = exports.checkIfArrayHasThisEvent = void 0;
+exports.getOneCategory = exports.extractCategory = exports.extractOneCategory = exports.getCategories = exports.getAllCategories = exports.extractCategories = exports.extractAllCategories = exports.extractOneSpasmTagByName = exports.extractSpasmTagByName = exports.extractTagByName = exports.getOneSpasmTagByName = exports.getOneTagByName = exports.getTagByName = exports.getSpasmTagByName = exports.extractAllSpasmTagsByName = exports.extractSpasmTagsByName = exports.extractTagsByName = exports.getAllSpasmTagsByName = exports.getAllTagsByName = exports.getTagsByName = exports.getSpasmTagsByName = exports.randomNumber = exports.sliceId = exports.sliceAddress = exports.toBeShortAddress = exports.autoGeneratedName = exports.unescapeCdata = exports.unescapeRssCdata = exports.unescapeXmlCdata = exports.restoreFromCdata = exports.restoreFromRssCdata = exports.restoreFromXmlCdata = exports.prepareForCdata = exports.prepareForRssCdata = exports.prepareForXmlCdata = exports.escapeCdata = exports.escapeRssCdata = exports.escapeXmlCdata = exports.escapeXml = exports.parseFirstAudioOrVideoUrlFromString = exports.extractFirstAudioOrVideoUrlFromString = exports.getFirstAudioOrVideoUrlFromString = exports.parseFirstMediaUrlFromString = exports.extractFirstMediaUrlFromString = exports.getFirstMediaUrlFromString = exports.parseStringForMediaUrls = exports.extractAllMediaUrlsFromString = exports.getAllMediaUrlsFromString = exports.getAllUrlsOfMediaTypeFromArrayOfUrls = exports.getAllMediaUrlsOfMimeTypeFromArrayOfUrls = void 0;
+exports.flattenMixedArray = exports.flattenArrayOfStringsAndNumbers = exports.joinStringOrNumber = exports.joinStringOrNum = exports.flattenArrayOfStringsAndNumbersIntoString = exports.getConfigFromTag = exports.getSchemaFromTag = exports.extractConfigFromTag = exports.extractSchemaFromTag = exports.getConfigFromSpasmTag = exports.getSchemaFromSpasmTag = exports.extractConfigFromSpasmTag = exports.extractSchemaFromSpasmTag = exports.getAllConfigsFromSpasmTags = exports.getConfigsFromSpasmTags = exports.getAllSchemasFromSpasmTags = exports.getSchemasFromSpasmTags = exports.extractAllConfigsFromSpasmTags = exports.extractConfigsFromSpasmTags = exports.extractAllSchemasFromSpasmTags = exports.extractSchemasFromSpasmTags = exports.extractConfigFromSpasmEvent = exports.getConfigFromSpasmEvent = exports.getSchemaFromSpasmEvent = exports.extractConfig = exports.extractSchema = exports.getConfig = exports.getSchema = exports.extractSchemaFromSpasmEvent = exports.getConfigTagsFromSpasmEvent = exports.getSchemaTagsFromSpasmEvent = exports.extractConfigTagsFromSpasmEvent = exports.extractSchemaTagsFromSpasmEvent = exports.constructTagFromConfig = exports.constructSpasmTagFromConfig = exports.createTagFromConfig = exports.createSpasmTagFromConfig = exports.constructTagFromSchema = exports.constructSpasmTagFromSchema = exports.createTagFromSchema = exports.createSpasmTagFromSchema = exports.addExtraConfigToSpasmEventBody = exports.addCustomConfigToSpasmEventBody = exports.addConfigToSpasmEventBody = exports.addConfig = exports.addExtraSchemaToSpasmEventBody = exports.addCustomSchemaToSpasmEventBody = exports.addSchema = exports.addSchemaToSpasmEventBody = exports.getCategory = void 0;
+exports.flattenArray = void 0;
 /*
  * Using sha256 from 'js-sha256' npm package, because
  * built-in 'crypto' module works only in a server-side
@@ -1239,6 +1240,11 @@ const mergeGenerateRssFeedConfigs = (defaultConfig, customConfig, handleArrays =
     return newConfig;
 };
 exports.mergeGenerateRssFeedConfigs = mergeGenerateRssFeedConfigs;
+const mergeConvertToSpasmSimpleConfigs = (defaultConfig, customConfig, handleArrays = "overwriteArrays") => {
+    const newConfig = (0, exports.mergeObjects)(defaultConfig, customConfig, handleArrays);
+    return newConfig;
+};
+exports.mergeConvertToSpasmSimpleConfigs = mergeConvertToSpasmSimpleConfigs;
 const hasSignatureOfFormat = (spasmEvent, signatureFormat) => {
     if (!spasmEvent)
         return false;
@@ -4337,6 +4343,61 @@ exports.getOneSpasmTagByName = exports.getSpasmTagByName;
 exports.extractTagByName = exports.getSpasmTagByName;
 exports.extractSpasmTagByName = exports.getSpasmTagByName;
 exports.extractOneSpasmTagByName = exports.getSpasmTagByName;
+const extractAllCategories = (originalEvent, ifIncludeSubCategory = true) => {
+    try {
+        const spasmEventV2 = (0, exports.toBeSpasmEventV2)(originalEvent);
+        if (!spasmEventV2 ||
+            !spasmEventV2?.categories ||
+            !Array.isArray(spasmEventV2.categories)) {
+            return [];
+        }
+        const cats = [];
+        spasmEventV2.categories.forEach(cat => {
+            if ((0, exports.isObjectWithValues)(cat)) {
+                if (cat.name && (0, exports.isStringOrNumber)(cat.name)) {
+                    cats.push(cat.name);
+                }
+                if (ifIncludeSubCategory &&
+                    cat.sub && (0, exports.isObjectWithValues)(cat.sub) &&
+                    (0, exports.isStringOrNumber)(cat.sub.name)) {
+                    cats.push(cat.sub.name);
+                    if (cat.sub.sub && (0, exports.isObjectWithValues)(cat.sub.sub) &&
+                        (0, exports.isStringOrNumber)(cat.sub.sub.name)) {
+                        cats.push(cat.sub.sub.name);
+                        if (cat.sub.sub.sub &&
+                            (0, exports.isObjectWithValues)(cat.sub.sub.sub) &&
+                            (0, exports.isStringOrNumber)(cat.sub.sub.sub.name)) {
+                            cats.push(cat.sub.sub.sub.name);
+                        }
+                    }
+                }
+            }
+        });
+        if ((0, exports.isArrayWithValues)(cats))
+            return cats;
+    }
+    catch (err) {
+        console.error(err);
+        return [];
+    }
+    return [];
+};
+exports.extractAllCategories = extractAllCategories;
+exports.extractCategories = exports.extractAllCategories;
+exports.getAllCategories = exports.extractCategories;
+exports.getCategories = exports.extractCategories;
+const extractOneCategory = (originalEvent) => {
+    const cat = (0, exports.extractAllCategories)(originalEvent);
+    if (cat && Array.isArray(cat) &&
+        cat[0] && (0, exports.isStringOrNumber)(cat[0])) {
+        return cat[0];
+    }
+    return null;
+};
+exports.extractOneCategory = extractOneCategory;
+exports.extractCategory = exports.extractOneCategory;
+exports.getOneCategory = exports.extractCategory;
+exports.getCategory = exports.extractCategory;
 const addSchemaToSpasmEventBody = (spasmEventBodyV2, schema) => {
     try {
         if (!schema || typeof (schema) !== "object")
@@ -4554,4 +4615,17 @@ exports.extractSchemaFromTag = exports.extractSchemaFromSpasmTag;
 exports.extractConfigFromTag = exports.extractSchemaFromSpasmTag;
 exports.getSchemaFromTag = exports.extractSchemaFromSpasmTag;
 exports.getConfigFromTag = exports.extractSchemaFromSpasmTag;
+const flattenArrayOfStringsAndNumbersIntoString = (arr, separator = ",") => {
+    return (arr
+        // .filter(Boolean) // keep 0
+        .filter(exports.isStringOrNumber)
+        .map(String)
+        .join(separator));
+};
+exports.flattenArrayOfStringsAndNumbersIntoString = flattenArrayOfStringsAndNumbersIntoString;
+exports.joinStringOrNum = exports.flattenArrayOfStringsAndNumbersIntoString;
+exports.joinStringOrNumber = exports.flattenArrayOfStringsAndNumbersIntoString;
+exports.flattenArrayOfStringsAndNumbers = exports.flattenArrayOfStringsAndNumbersIntoString;
+exports.flattenMixedArray = exports.flattenArrayOfStringsAndNumbersIntoString;
+exports.flattenArray = exports.flattenArrayOfStringsAndNumbersIntoString;
 //# sourceMappingURL=utils.js.map

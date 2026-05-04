@@ -11,14 +11,15 @@ spasm.utilsStatus();
 const args = process.argv.slice(2);
 
 if (args.length < 1) {
-    console.error('Usage: spasm-fetch-events <url>');
+    console.error('Usage: spasm-fetch-events-from-urls <url1> <url2> ... <urlN>');
     process.exit(1);
 }
 
-const [url] = args;
+// const [url] = args;
+const urls = args;
 
 try {
-  const result = await spasm.fetchEventsFromUrl(url)
+  const result = await spasm.fetchEventsFromUrls(urls)
   console.log("spasm-fetch-events result:", result)
 } catch (err) {
   console.error(err);

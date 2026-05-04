@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GenerateRssFeedConfig = exports.ConvertToRssConfig = exports.RssFeed = exports.SanitizationConfig = exports.ConvertToSpasmConfig = exports.IgnoreWhitelistFor = void 0;
+exports.ConvertToSpasmSimpleConfig = exports.GenerateRssFeedConfig = exports.ConvertToRssConfig = exports.RssFeed = exports.SanitizationConfig = exports.ConvertToSpasmConfig = exports.IgnoreWhitelistFor = void 0;
 const utils_js_1 = require("./../utils/utils.js");
 class IgnoreWhitelistFor {
     action;
@@ -136,6 +136,25 @@ class GenerateRssFeedConfig {
     }
 }
 exports.GenerateRssFeedConfig = GenerateRssFeedConfig;
+class ConvertToSpasmSimpleConfig {
+    version;
+    limit;
+    constructor() {
+        this.version = "2.0.0";
+        this.limit = {
+            title: 256,
+            content: 2048,
+            timestamp: 30,
+            author: 256,
+            action: 256,
+            parentId: 256,
+            categories: 256,
+            source: 256,
+            ids: 256
+        };
+    }
+}
+exports.ConvertToSpasmSimpleConfig = ConvertToSpasmSimpleConfig;
 // Ideas:
 // - Short names? SE2 SE2Body SE2Envelope SE2EnvelopeWithTree
 //# sourceMappingURL=interfaces.js.map

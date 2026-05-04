@@ -1175,6 +1175,10 @@ export const mergeGenerateRssFeedConfigs = (defaultConfig, customConfig, handleA
     const newConfig = mergeObjects(defaultConfig, customConfig, handleArrays);
     return newConfig;
 };
+export const mergeConvertToSpasmSimpleConfigs = (defaultConfig, customConfig, handleArrays = "overwriteArrays") => {
+    const newConfig = mergeObjects(defaultConfig, customConfig, handleArrays);
+    return newConfig;
+};
 export const hasSignatureOfFormat = (spasmEvent, signatureFormat) => {
     if (!spasmEvent)
         return false;
@@ -4172,6 +4176,59 @@ export const getOneSpasmTagByName = getSpasmTagByName;
 export const extractTagByName = getSpasmTagByName;
 export const extractSpasmTagByName = getSpasmTagByName;
 export const extractOneSpasmTagByName = getSpasmTagByName;
+export const extractAllCategories = (originalEvent, ifIncludeSubCategory = true) => {
+    try {
+        const spasmEventV2 = toBeSpasmEventV2(originalEvent);
+        if (!spasmEventV2 ||
+            !spasmEventV2?.categories ||
+            !Array.isArray(spasmEventV2.categories)) {
+            return [];
+        }
+        const cats = [];
+        spasmEventV2.categories.forEach(cat => {
+            if (isObjectWithValues(cat)) {
+                if (cat.name && isStringOrNumber(cat.name)) {
+                    cats.push(cat.name);
+                }
+                if (ifIncludeSubCategory &&
+                    cat.sub && isObjectWithValues(cat.sub) &&
+                    isStringOrNumber(cat.sub.name)) {
+                    cats.push(cat.sub.name);
+                    if (cat.sub.sub && isObjectWithValues(cat.sub.sub) &&
+                        isStringOrNumber(cat.sub.sub.name)) {
+                        cats.push(cat.sub.sub.name);
+                        if (cat.sub.sub.sub &&
+                            isObjectWithValues(cat.sub.sub.sub) &&
+                            isStringOrNumber(cat.sub.sub.sub.name)) {
+                            cats.push(cat.sub.sub.sub.name);
+                        }
+                    }
+                }
+            }
+        });
+        if (isArrayWithValues(cats))
+            return cats;
+    }
+    catch (err) {
+        console.error(err);
+        return [];
+    }
+    return [];
+};
+export const extractCategories = extractAllCategories;
+export const getAllCategories = extractCategories;
+export const getCategories = extractCategories;
+export const extractOneCategory = (originalEvent) => {
+    const cat = extractAllCategories(originalEvent);
+    if (cat && Array.isArray(cat) &&
+        cat[0] && isStringOrNumber(cat[0])) {
+        return cat[0];
+    }
+    return null;
+};
+export const extractCategory = extractOneCategory;
+export const getOneCategory = extractCategory;
+export const getCategory = extractCategory;
 export const addSchemaToSpasmEventBody = (spasmEventBodyV2, schema) => {
     try {
         if (!schema || typeof (schema) !== "object")
@@ -4383,4 +4440,16 @@ export const extractSchemaFromTag = extractSchemaFromSpasmTag;
 export const extractConfigFromTag = extractSchemaFromSpasmTag;
 export const getSchemaFromTag = extractSchemaFromSpasmTag;
 export const getConfigFromTag = extractSchemaFromSpasmTag;
+export const flattenArrayOfStringsAndNumbersIntoString = (arr, separator = ",") => {
+    return (arr
+        // .filter(Boolean) // keep 0
+        .filter(isStringOrNumber)
+        .map(String)
+        .join(separator));
+};
+export const joinStringOrNum = flattenArrayOfStringsAndNumbersIntoString;
+export const joinStringOrNumber = flattenArrayOfStringsAndNumbersIntoString;
+export const flattenArrayOfStringsAndNumbers = flattenArrayOfStringsAndNumbersIntoString;
+export const flattenMixedArray = flattenArrayOfStringsAndNumbersIntoString;
+export const flattenArray = flattenArrayOfStringsAndNumbersIntoString;
 //# sourceMappingURL=utils.js.map

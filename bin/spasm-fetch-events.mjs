@@ -1,11 +1,14 @@
 #!/usr/bin/env node
-// import * as mylib from './../lib.esm/index.js';
+// import * as spasm from './../lib.esm/index.js';
+// import { SPASM_API_PATH } from './config.js';
+// const spasmApiPath = SPASM_API_PATH || "/api/events"
+const spasmApiPath = "/api/events"
 
 const args = process.argv.slice(2);
 
 if (args.length < 1) {
   console.error('Usage: node bin/fetch-events.mjs --url <url> --flag val...');
-  console.error('Example: node bin/fetch-events.mjs --url "https://forum.spasm.network/api/events" --activity rising --limit 10');
+  console.error(`Example: node bin/fetch-events.mjs --url "https://forum.spasm.network${spasmApiPath}" --activity rising --limit 10`);
   process.exit(1);
 }
 
@@ -151,7 +154,7 @@ for (let i = 0; i < args.length; i++) {
 
 try {
   // TODO
-  // const result = await mylib.fetchEvents(config);
+  // const result = await spasm.fetchEvents(config);
   // console.log("result:", result);
   console.log("config:", config);
 } catch (err) {
@@ -162,8 +165,8 @@ try {
 function appendApiEvents(url) {
     try {
         if (
-          url.endsWith("/api/event") ||
-          url.endsWith("/api/events/")
+          url.endsWith(`${spasmApiPath}`) ||
+          url.endsWith(`${spasmApiPath}/`)
         ) { return url }
 
         // Create a URL object to parse the input URL
@@ -174,8 +177,8 @@ function appendApiEvents(url) {
           parsedUrl.pathname === '' || parsedUrl.pathname === '/' ||
           parsedUrl.pathname === '/?' || parsedUrl.pathname === '//'
         ) {
-            // Append /api/events if there's no existing path
-            return `${parsedUrl.origin}/api/events`;
+            // Append spasmApiPath if there's no existing path
+            return `${parsedUrl.origin}${spasmApiPath}`;
         }
 
         // Return the URL unchanged if it has a longer path
@@ -186,8 +189,6 @@ function appendApiEvents(url) {
         return url; // Return the original URL for invalid cases
     }
 }
-
-
 
 function prependProtocol(url) {
   try {

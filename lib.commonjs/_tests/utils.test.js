@@ -3997,6 +3997,45 @@ describe("add/get schema to/from event() function tests", () => {
         jest.restoreAllMocks();
     });
 });
+// flattenArrayOfStringsAndNumbersIntoString
+// joinStringOrNum
+// joinStringOrNumber
+// flattenArrayOfStringsAndNumbers
+// flattenMixedArray
+// flattenArray
+describe("flattenArrayOfStringsAndNumbersIntoString() function tests", () => {
+    test("flattenArrayOfStringsAndNumbersIntoString() should return true if true", () => {
+        expect((0, index_js_1.flattenArrayOfStringsAndNumbersIntoString)([1, 2, 3])).toStrictEqual("1,2,3");
+        expect((0, index_js_1.joinStringOrNum)(["one", 2, 3])).toStrictEqual("one,2,3");
+        expect((0, index_js_1.joinStringOrNumber)([1, 2, "three"])).toStrictEqual("1,2,three");
+        expect((0, index_js_1.flattenArrayOfStringsAndNumbers)(["  one  ", 2, 3])).toStrictEqual("  one  ,2,3");
+        expect((0, index_js_1.flattenMixedArray)([1, "", 2, 0])).toStrictEqual("1,2,0");
+        expect((0, index_js_1.flattenArray)([[1], 2, 3])).toStrictEqual("2,3");
+        expect((0, index_js_1.flattenArray)([{ one: 1 }, 2, 3])).toStrictEqual("2,3");
+        expect((0, index_js_1.flattenArray)(["0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b", "0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b"])).toStrictEqual("0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b,0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b");
+    });
+});
+// extractAllCategories()
+// extractCategories()
+// getAllCategories()
+// getCategories()
+// extractOneCategory()
+// extractCategory()
+// getOneCategory()
+// getCategory()
+describe("extractAllCategories() function tests", () => {
+    test("extractAllCategories() should return true if true", () => {
+        const input = (0, index_js_1.copyOf)(_events_data_js_1.validNostrSpasmEventV2SingleSignedOpenedConvertedToSpasmV2);
+        expect((0, index_js_1.extractAllCategories)(input, false)).toStrictEqual(["memes", "stonks"]);
+        expect((0, index_js_1.extractCategories)(input, false)).toStrictEqual(["memes", "stonks"]);
+        expect((0, index_js_1.getAllCategories)(input, true)).toStrictEqual(["memes", "memecoins", "wojak", "stonks"]);
+        expect((0, index_js_1.getCategories)(input)).toStrictEqual(["memes", "memecoins", "wojak", "stonks"]);
+        expect((0, index_js_1.extractOneCategory)(input)).toStrictEqual("memes");
+        expect((0, index_js_1.extractCategory)(input)).toStrictEqual("memes");
+        expect((0, index_js_1.getOneCategory)(input)).toStrictEqual("memes");
+        expect((0, index_js_1.getCategory)(input)).toStrictEqual("memes");
+    });
+});
 // template()
 describe("template() function tests", () => {
     test("template() should return true if true", () => {

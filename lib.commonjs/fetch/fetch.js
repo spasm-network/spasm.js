@@ -1,19 +1,93 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchEventsFromSource = exports.fetchEventsFromUrl = exports.fetchEvents = void 0;
+exports.fetchEventsFromSource = exports.fetchEventsFromUrl = exports.fetchEventsFromUrls = exports.fetchEvents = void 0;
 const convertRssFeedToSpasm_js_1 = require("./../convert/convertRssFeedToSpasm.js");
 const convertToSpasm_js_1 = require("../convert/convertToSpasm.js");
 const index_js_1 = require("../utils/index.js");
-const fetchEvents = async (config) => {
-    if (!config)
+const fetchEvents = async (fetchConfig) => {
+    if (!fetchConfig)
         return null;
+    if (!(0, index_js_1.isObjectWithValues)(fetchConfig))
+        return null;
+    if (!fetchConfig.url)
+        return null;
+    const arr = Array.isArray(fetchConfig.url)
+        ? fetchConfig.url : [fetchConfig.url];
+    const urls = arr
+        .filter(item => typeof item === 'string')
+        .filter(item => (0, index_js_1.isUrl)(item))
+        .map(item => item.toLowerCase());
+    // TODO convert fetchConfig into query
+    // Execute sequentially one by one
+    for (const url of urls) {
+        console.log("url:", url);
+        // const result = await fetchEventsFromSource(fetchConfig)
+        // TODO limit non-Spasm RSS feed response to "limit" val
+    }
     return null;
 };
 exports.fetchEvents = fetchEvents;
-const fetchEventsFromUrl = async (url, customConfig) => {
-    return await (0, exports.fetchEventsFromSource)({ apiUrl: url }, customConfig);
+// Good for full Spasm and RSS URLs
+const fetchEventsFromUrls = async (url, customConfig) => {
+    if (!url)
+        return "ERROR: no URL provided";
+    try {
+        const arr = Array.isArray(url) ? url : [url];
+        const urls = arr
+            .filter(item => typeof item === 'string')
+            .filter(item => (0, index_js_1.isUrl)(item))
+            .map(item => item.toLowerCase());
+        const spasmEvents = [];
+        const stringResponses = [];
+        const finalResponse = [];
+        for (const url of urls) {
+            const urlObj = new URL(url);
+            const source = {};
+            let hostname = "";
+            if (urlObj.hostname && typeof (urlObj.hostname) === "string") {
+                hostname = urlObj.hostname;
+            }
+            else if (urlObj.host && typeof (urlObj.host) === "string") {
+                hostname = urlObj.host;
+            }
+            if (hostname && typeof (hostname) === "string") {
+                if (hostname.startsWith("www.")) {
+                    hostname = hostname.slice(4);
+                }
+                source.name = hostname;
+            }
+            if (urlObj.origin && urlObj.pathname &&
+                typeof (urlObj.origin) === "string" &&
+                typeof (urlObj.pathname) === "string") {
+                source.apiUrl = urlObj.origin + urlObj.pathname;
+            }
+            if (urlObj.search && typeof (urlObj.search) === "string") {
+                source.query = urlObj.search;
+            }
+            const response = await (0, exports.fetchEventsFromSource)(source, customConfig);
+            if (response && Array.isArray(response)) {
+                response.forEach(event => {
+                    (0, index_js_1.pushToArrayIfEventIsUnique)(spasmEvents, event);
+                });
+            }
+            else if (typeof (response) === "string") {
+                stringResponses.push(`"${url}" response: ${response}`);
+            }
+            else if (!response) {
+                stringResponses.push(`"${url}" didn't respond.`);
+            }
+        }
+        finalResponse.push(...stringResponses);
+        finalResponse.push(...spasmEvents);
+        return finalResponse;
+    }
+    catch (err) {
+        console.error(err);
+        return "ERROR: something went wrong in fetchEventsFromUrls";
+    }
 };
-exports.fetchEventsFromUrl = fetchEventsFromUrl;
+exports.fetchEventsFromUrls = fetchEventsFromUrls;
+exports.fetchEventsFromUrl = exports.fetchEventsFromUrls;
 const fetchEventsFromSource = async (source, customConfig) => {
     if (!source)
         return "ERROR: no source provided";

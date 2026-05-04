@@ -11,25 +11,105 @@ import {
 import {convertManyToSpasm} from "../convert/convertToSpasm.js";
 import {
   isArrayWithValues,
-  isObjectWithValues
+  isObjectWithValues,
+  isUrl,
+  pushToArrayIfEventIsUnique
 } from "../utils/index.js";
 
 export const fetchEvents = async (
-  config: FetchEventsConfig
+  fetchConfig: FetchEventsConfig
 ): Promise<string[] | null> => {
-  if (!config) return null
+  if (!fetchConfig) return null
+  if (!isObjectWithValues(fetchConfig)) return null
+  if (!fetchConfig.url) return null
+  const arr = Array.isArray(fetchConfig.url)
+    ? fetchConfig.url : [fetchConfig.url]
+  const urls = arr
+    .filter(item => typeof item === 'string')
+    .filter(item => isUrl(item))
+    .map(item => item.toLowerCase())
+
+  // TODO convert fetchConfig into query
+  // Execute sequentially one by one
+  for (const url of urls) {
+    console.log("url:", url)
+    // const result = await fetchEventsFromSource(fetchConfig)
+    // TODO limit non-Spasm RSS feed response to "limit" val
+  }
+  
   return null
 }
 
-export const fetchEventsFromUrl = async (
-  url?: string,
+// Good for full Spasm and RSS URLs
+export const fetchEventsFromUrls = async (
+  url?: string | string[],
   customConfig?: CustomConvertToSpasmConfig
-): Promise<SpasmEventV2[] | string | null> => {
-  return await fetchEventsFromSource(
-    { apiUrl: url },
-    customConfig
-  )
+): Promise<(SpasmEventV2 | string)[] | string> => {
+  if (!url) return "ERROR: no URL provided"
+  try {
+    const arr = Array.isArray(url) ? url : [url]
+    const urls = arr
+      .filter(item => typeof item === 'string')
+      .filter(item => isUrl(item))
+      .map(item => item.toLowerCase())
+
+    const spasmEvents: SpasmEventV2[] = []
+
+    const stringResponses: string[] = []
+
+    const finalResponse: (SpasmEventV2 | string)[] = []
+
+    for (const url of urls) {
+      const urlObj = new URL(url)
+      const source: SpasmEventSource = {}
+      let hostname = ""
+      if (
+        urlObj.hostname && typeof(urlObj.hostname) === "string"
+      ) {
+        hostname = urlObj.hostname
+      } else if (
+        urlObj.host && typeof(urlObj.host) === "string"
+      ) {
+        hostname = urlObj.host
+      }
+      if (hostname && typeof(hostname) === "string") {
+        if (hostname.startsWith("www.")) {
+          hostname = hostname.slice(4)
+        }
+        source.name = hostname
+      }
+      if (
+        urlObj.origin && urlObj.pathname &&
+        typeof(urlObj.origin) === "string" &&
+        typeof(urlObj.pathname) === "string"
+      ) { source.apiUrl = urlObj.origin + urlObj.pathname }
+      if (urlObj.search && typeof(urlObj.search) === "string") {
+        source.query = urlObj.search
+      }
+      const response = await fetchEventsFromSource(
+        source,
+        customConfig
+      )
+      if (response && Array.isArray(response)) {
+        response.forEach(event => {
+          pushToArrayIfEventIsUnique(spasmEvents, event)
+        })
+      } else if (typeof(response) === "string") {
+        stringResponses.push(`"${url}" response: ${response}`)
+      } else if (!response) {
+        stringResponses.push(`"${url}" didn't respond.`)
+      }
+    }
+    finalResponse.push(...stringResponses)
+    finalResponse.push(...spasmEvents)
+    return finalResponse
+  } catch (err) {
+    console.error(err)
+    return "ERROR: something went wrong in fetchEventsFromUrls"
+  }
 }
+
+export const fetchEventsFromUrl = fetchEventsFromUrls
 
 export const fetchEventsFromSource = async (
   source: SpasmEventSource,
@@ -64,9 +144,9 @@ export const fetchEventsFromSource = async (
 async function makeRequest (
   url: string,
   options: {
-    method?: 'GET' | 'POST';
-    body?: Record<string, unknown>;
-    timeout?: number;
+    method?: 'GET' | 'POST'
+    body?: Record<string, unknown>
+    timeout?: number
   } = {},
   source: SpasmEventSource,
   customConfig?: CustomConvertToSpasmConfig

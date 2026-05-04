@@ -133,7 +133,21 @@ import {
   addSchemaToSpasmEventBody,
   getSchemaFromSpasmEvent,
   addSchema,
-  getSchema
+  getSchema,
+  flattenArrayOfStringsAndNumbersIntoString,
+  joinStringOrNum,
+  joinStringOrNumber,
+  flattenArrayOfStringsAndNumbers,
+  flattenMixedArray,
+  flattenArray,
+  extractAllCategories,
+  extractCategories,
+  getAllCategories,
+  getCategories,
+  extractCategory,
+  extractOneCategory,
+  getOneCategory,
+  getCategory
 } from './../utils/index.js';
 import {
   validDmpEvent, validDmpEventSignedClosed,
@@ -5435,6 +5449,55 @@ describe("add/get schema to/from event() function tests", () => {
   });
 });
 
+// flattenArrayOfStringsAndNumbersIntoString
+// joinStringOrNum
+// joinStringOrNumber
+// flattenArrayOfStringsAndNumbers
+// flattenMixedArray
+// flattenArray
+describe("flattenArrayOfStringsAndNumbersIntoString() function tests", () => {
+  test("flattenArrayOfStringsAndNumbersIntoString() should return true if true", () => {
+    expect(flattenArrayOfStringsAndNumbersIntoString([1,2,3])
+    ).toStrictEqual("1,2,3");
+    expect(joinStringOrNum(["one",2,3])
+    ).toStrictEqual("one,2,3");
+    expect(joinStringOrNumber([1,2,"three"])
+    ).toStrictEqual("1,2,three");
+    expect(flattenArrayOfStringsAndNumbers(["  one  ",2,3])
+    ).toStrictEqual("  one  ,2,3");
+    expect(flattenMixedArray([1,"",2,0])
+    ).toStrictEqual("1,2,0");
+    expect(flattenArray([[1],2,3])
+    ).toStrictEqual("2,3");
+    expect(flattenArray([{one: 1},2,3])
+    ).toStrictEqual("2,3");
+    expect(flattenArray(["0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b", "0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b"])
+    ).toStrictEqual("0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b,0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b");
+  });
+});
+
+
+// extractAllCategories()
+// extractCategories()
+// getAllCategories()
+// getCategories()
+// extractOneCategory()
+// extractCategory()
+// getOneCategory()
+// getCategory()
+describe("extractAllCategories() function tests", () => {
+  test("extractAllCategories() should return true if true", () => {
+    const input = copyOf(validNostrSpasmEventV2SingleSignedOpenedConvertedToSpasmV2)
+    expect(extractAllCategories(input, false)).toStrictEqual(["memes", "stonks"]);
+    expect(extractCategories(input, false)).toStrictEqual(["memes", "stonks"]);
+    expect(getAllCategories(input, true)).toStrictEqual(["memes", "memecoins", "wojak", "stonks"]);
+    expect(getCategories(input)).toStrictEqual(["memes", "memecoins", "wojak", "stonks"]);
+    expect(extractOneCategory(input)).toStrictEqual("memes");
+    expect(extractCategory(input)).toStrictEqual("memes");
+    expect(getOneCategory(input)).toStrictEqual("memes");
+    expect(getCategory(input)).toStrictEqual("memes");
+  });
+});
 
 // template()
 describe("template() function tests", () => {

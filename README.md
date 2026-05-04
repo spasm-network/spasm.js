@@ -438,7 +438,7 @@ const spasmEvent = spasm.convertToSpasm(event)
 // Convert one event to Spasm Envelope
 const spasmEnvelope = spasm.convertToSpasmEventEnvelope(event)
 // Convert many events to Spasm Envelopes
-const spasmEnvelopes = spasm.convertManyToSpasmEventEnvelope(event)
+const spasmEnvelopes = spasm.convertManyToSpasmEventEnvelope(events)
 ```
 
 ```js

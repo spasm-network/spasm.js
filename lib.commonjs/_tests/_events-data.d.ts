@@ -1,4 +1,4 @@
-import { NostrEvent, NostrEventSignedOpened, NostrSpasmEvent, NostrSpasmEventSignedOpened, DmpEvent, Post, DmpEventSignedClosed, DmpEventSignedOpened, SpasmEventV2, SpasmEventV0, EventForSpasmid01, SpasmEventEnvelopeV2, SpasmEventEnvelopeWithTreeV2, SpasmEventBodyV2, SpasmEventBodySignedClosedV2, RssEvent } from "./../types/interfaces.js";
+import { NostrEvent, NostrEventSignedOpened, NostrSpasmEvent, NostrSpasmEventSignedOpened, DmpEvent, Post, DmpEventSignedClosed, DmpEventSignedOpened, SpasmEventV2, SpasmEventV0, EventForSpasmid01, SpasmEventEnvelopeV2, SpasmEventEnvelopeWithTreeV2, SpasmEventBodyV2, SpasmEventBodySignedClosedV2, RssEvent, SpasmSimpleV2 } from "./../types/interfaces.js";
 export declare const validEthereumAddress1 = "0xf8553015220a857eda377a1e903c9e5afb3ac2fa";
 export declare const invalidEthereumAddress1 = "0xf8553015220a857eda377a1e903c9e5afb3ac2f";
 export declare const validEthereumSignature1 = "0xbd934a01dc3bd9bb183bda807d35e61accf7396c527b8a3d029c20c00b294cf029997be953772da32483b077eea856e6bafcae7a2aff95ae572af25dd3e204a71b";
@@ -2355,4 +2355,6 @@ export declare const validRssFeedChannelEmptyWithEthereumSigner: string;
 export declare const validRssFeedChannelEmptyWithNostrSigner: string;
 export declare const validSpasmEventBodyV2WithManyDuplicateValues: SpasmEventBodyV2;
 export declare const validEventWithUpperCasePubkey: SpasmEventEnvelopeV2;
+export declare const validDmpEventConvertedToSimpleV2: SpasmSimpleV2;
+export declare const validNostrEventSignedOpenedConvertedToSpasmV2ConvertedToSimpleV2: SpasmSimpleV2;
 //# sourceMappingURL=_events-data.d.ts.map

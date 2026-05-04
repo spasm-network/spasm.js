@@ -45,7 +45,9 @@ import {
   PostSignature,
   CustomFunctionType,
   SpasmEventBodyV2,
-  CustomSchema
+  CustomSchema,
+  ConvertToSpasmSimpleConfig,
+  CustomConvertToSpasmSimpleConfig
 } from "./../types/interfaces.js"
 
 import { convertToSpasm } from "./../convert/convertToSpasm.js"
@@ -1654,6 +1656,17 @@ export const mergeGenerateRssFeedConfigs = (
     mergeObjects(defaultConfig, customConfig, handleArrays)
   return newConfig as GenerateRssFeedConfig
 }
+
+export const mergeConvertToSpasmSimpleConfigs = (
+  defaultConfig: ConvertToSpasmSimpleConfig,
+  customConfig: CustomConvertToSpasmSimpleConfig,
+  handleArrays: MergeObjectsHandleArrays = "overwriteArrays"
+): ConvertToSpasmSimpleConfig => {
+  const newConfig =
+    mergeObjects(defaultConfig, customConfig, handleArrays)
+  return newConfig as ConvertToSpasmSimpleConfig
+}
+
 
 export const hasSignatureOfFormat = (
   spasmEvent: SpasmEventV2,
@@ -5547,6 +5560,74 @@ export const extractTagByName = getSpasmTagByName
 export const extractSpasmTagByName = getSpasmTagByName
 export const extractOneSpasmTagByName = getSpasmTagByName
 
+export const extractAllCategories = (
+  originalEvent: SpasmEventV2,
+  ifIncludeSubCategory: boolean = true
+): (string | number)[] => {
+  try {
+    const spasmEventV2: SpasmEventV2 | null =
+      toBeSpasmEventV2(originalEvent)
+    if (
+      !spasmEventV2 ||
+      !spasmEventV2?.categories ||
+      !Array.isArray(spasmEventV2.categories)
+    ) { return [] }
+
+    const cats: (string | number)[] = []
+    spasmEventV2.categories.forEach(cat => {
+      if (isObjectWithValues(cat)) {
+        if (cat.name && isStringOrNumber(cat.name)) {
+          cats.push(cat.name)
+        }
+        if (
+          ifIncludeSubCategory &&
+          cat.sub && isObjectWithValues(cat.sub) &&
+          isStringOrNumber(cat.sub.name)
+        ) {
+          cats.push(cat.sub.name)
+          if (
+            cat.sub.sub && isObjectWithValues(cat.sub.sub) &&
+            isStringOrNumber(cat.sub.sub.name)
+          ) {
+            cats.push(cat.sub.sub.name)
+            if (
+              cat.sub.sub.sub &&
+              isObjectWithValues(cat.sub.sub.sub) &&
+              isStringOrNumber(cat.sub.sub.sub.name)
+            ) {
+              cats.push(cat.sub.sub.sub.name)
+            }
+          }
+        }
+      }
+    })
+    if (isArrayWithValues(cats)) return cats
+  } catch (err) {
+    console.error(err);
+    return []
+  }
+  return []
+}
+
+export const extractCategories = extractAllCategories
+export const getAllCategories = extractCategories
+export const getCategories = extractCategories
+
+export const extractOneCategory = (
+  originalEvent: SpasmEventV2
+): string | number | null => {
+  const cat = extractAllCategories(originalEvent)
+  if (
+    cat && Array.isArray(cat) &&
+    cat[0] && isStringOrNumber(cat[0])
+  ) { return cat[0] }
+  return null
+}
+
+export const extractCategory = extractOneCategory
+export const getOneCategory = extractCategory
+export const getCategory = extractCategory
+
 export const addSchemaToSpasmEventBody = (
   spasmEventBodyV2: SpasmEventBodyV2,
   schema: CustomSchema
@@ -5791,3 +5872,27 @@ export const extractSchemaFromTag = extractSchemaFromSpasmTag
 export const extractConfigFromTag = extractSchemaFromSpasmTag
 export const getSchemaFromTag = extractSchemaFromSpasmTag
 export const getConfigFromTag = extractSchemaFromSpasmTag
+
+export const flattenArrayOfStringsAndNumbersIntoString = (
+  arr: unknown[], 
+  separator = ","
+): string => {
+  return (
+    arr
+      // .filter(Boolean) // keep 0
+      .filter(isStringOrNumber)
+      .map(String)
+      .join(separator)
+  )
+}
+
+export const joinStringOrNum =
+  flattenArrayOfStringsAndNumbersIntoString
+export const joinStringOrNumber =
+  flattenArrayOfStringsAndNumbersIntoString
+export const flattenArrayOfStringsAndNumbers =
+  flattenArrayOfStringsAndNumbersIntoString
+export const flattenMixedArray =
+  flattenArrayOfStringsAndNumbersIntoString
+export const flattenArray =
+  flattenArrayOfStringsAndNumbersIntoString

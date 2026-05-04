@@ -1,4 +1,4 @@
-import { UnknownPostOrEvent, UnknownEvent, NostrSpasmEvent, NostrSpasmEventSignedOpened, NostrSpasmVersion, LinkObject, SpasmEventIdFormatV2, SpasmEventAddressFormatV2, SpasmEventSignatureFormatV2, SpasmEventV2, SpasmEventAuthorV2, SpasmEventBodyHostV2, SpasmEventMediaV2, SpasmEventIdV2, SpasmEventBodyReferenceV2, SpasmEventBodyParentV2, ConvertToSpasmConfig, CustomConvertToSpasmConfig, CustomSanitizationConfig, SanitizationConfig, UnknownEventV2, SpasmEventStatV2, SpasmEventChildV2, SpasmEventAddressFormatNameV2, NostrEventSignedOpened, NostrEvent, SpasmEventIdFormatNameV2, ConvertToRssConfig, CustomConvertToRssConfig, CustomGenerateRssFeedConfig, GenerateRssFeedConfig, PostSignature, CustomFunctionType, SpasmEventBodyV2, CustomSchema } from "./../types/interfaces.js";
+import { UnknownPostOrEvent, UnknownEvent, NostrSpasmEvent, NostrSpasmEventSignedOpened, NostrSpasmVersion, LinkObject, SpasmEventIdFormatV2, SpasmEventAddressFormatV2, SpasmEventSignatureFormatV2, SpasmEventV2, SpasmEventAuthorV2, SpasmEventBodyHostV2, SpasmEventMediaV2, SpasmEventIdV2, SpasmEventBodyReferenceV2, SpasmEventBodyParentV2, ConvertToSpasmConfig, CustomConvertToSpasmConfig, CustomSanitizationConfig, SanitizationConfig, UnknownEventV2, SpasmEventStatV2, SpasmEventChildV2, SpasmEventAddressFormatNameV2, NostrEventSignedOpened, NostrEvent, SpasmEventIdFormatNameV2, ConvertToRssConfig, CustomConvertToRssConfig, CustomGenerateRssFeedConfig, GenerateRssFeedConfig, PostSignature, CustomFunctionType, SpasmEventBodyV2, CustomSchema, ConvertToSpasmSimpleConfig, CustomConvertToSpasmSimpleConfig } from "./../types/interfaces.js";
 export declare const hasValue: (el?: any) => boolean;
 export declare const isStringOrNumber: (val: any) => boolean;
 export declare const isNumberOrString: (val: any) => boolean;
@@ -80,6 +80,7 @@ export declare const mergeConfigs: (defaultConfig: ConvertToSpasmConfig, customC
 export declare const mergeSanitizationConfigs: (defaultConfig: SanitizationConfig, customConfig: CustomSanitizationConfig, handleArrays?: MergeObjectsHandleArrays) => SanitizationConfig;
 export declare const mergeConvertToRssConfigs: (defaultConfig: ConvertToRssConfig, customConfig: CustomConvertToRssConfig, handleArrays?: MergeObjectsHandleArrays) => ConvertToRssConfig;
 export declare const mergeGenerateRssFeedConfigs: (defaultConfig: GenerateRssFeedConfig, customConfig: CustomGenerateRssFeedConfig, handleArrays?: MergeObjectsHandleArrays) => GenerateRssFeedConfig;
+export declare const mergeConvertToSpasmSimpleConfigs: (defaultConfig: ConvertToSpasmSimpleConfig, customConfig: CustomConvertToSpasmSimpleConfig, handleArrays?: MergeObjectsHandleArrays) => ConvertToSpasmSimpleConfig;
 export declare const hasSignatureOfFormat: (spasmEvent: SpasmEventV2, signatureFormat: "ethereum" | "nostr") => boolean;
 export declare const hasSignatureEthereum: (spasmEvent: SpasmEventV2) => boolean;
 export declare const hasSignatureNostr: (spasmEvent: SpasmEventV2) => boolean;
@@ -251,6 +252,14 @@ export declare const getOneSpasmTagByName: (originalEvent: SpasmEventV2, tagName
 export declare const extractTagByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[] | null;
 export declare const extractSpasmTagByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[] | null;
 export declare const extractOneSpasmTagByName: (originalEvent: SpasmEventV2, tagName: string | number) => any[] | null;
+export declare const extractAllCategories: (originalEvent: SpasmEventV2, ifIncludeSubCategory?: boolean) => (string | number)[];
+export declare const extractCategories: (originalEvent: SpasmEventV2, ifIncludeSubCategory?: boolean) => (string | number)[];
+export declare const getAllCategories: (originalEvent: SpasmEventV2, ifIncludeSubCategory?: boolean) => (string | number)[];
+export declare const getCategories: (originalEvent: SpasmEventV2, ifIncludeSubCategory?: boolean) => (string | number)[];
+export declare const extractOneCategory: (originalEvent: SpasmEventV2) => string | number | null;
+export declare const extractCategory: (originalEvent: SpasmEventV2) => string | number | null;
+export declare const getOneCategory: (originalEvent: SpasmEventV2) => string | number | null;
+export declare const getCategory: (originalEvent: SpasmEventV2) => string | number | null;
 export declare const addSchemaToSpasmEventBody: (spasmEventBodyV2: SpasmEventBodyV2, schema: CustomSchema) => void;
 export declare const addSchema: (spasmEventBodyV2: SpasmEventBodyV2, schema: CustomSchema) => void;
 export declare const addCustomSchemaToSpasmEventBody: (spasmEventBodyV2: SpasmEventBodyV2, schema: CustomSchema) => void;
@@ -295,5 +304,11 @@ export declare const extractSchemaFromTag: (tag: string[]) => CustomSchema | nul
 export declare const extractConfigFromTag: (tag: string[]) => CustomSchema | null;
 export declare const getSchemaFromTag: (tag: string[]) => CustomSchema | null;
 export declare const getConfigFromTag: (tag: string[]) => CustomSchema | null;
+export declare const flattenArrayOfStringsAndNumbersIntoString: (arr: unknown[], separator?: string) => string;
+export declare const joinStringOrNum: (arr: unknown[], separator?: string) => string;
+export declare const joinStringOrNumber: (arr: unknown[], separator?: string) => string;
+export declare const flattenArrayOfStringsAndNumbers: (arr: unknown[], separator?: string) => string;
+export declare const flattenMixedArray: (arr: unknown[], separator?: string) => string;
+export declare const flattenArray: (arr: unknown[], separator?: string) => string;
 export {};
 //# sourceMappingURL=utils.d.ts.map

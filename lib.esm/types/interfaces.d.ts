@@ -836,5 +836,40 @@ export interface FetchEventsConfig extends FeedFiltersV2 {
     timeout?: string | number | null;
     short?: boolean | null;
 }
+/**
+ * SpasmSimpleV2 is only used to display events in a short form
+ * after all signatures were verified by convertToSpasm() func.
+ * SpasmSimpleV2 cannot be converted back to SpasmEventAnyV2
+ * since it lacks siblings and signatures.
+ * Simple version consumes less tokens when analyzed by LLMs.
+ */
+export interface SpasmSimpleV2 {
+    type: "SpasmSimpleV2";
+    title?: string;
+    content?: string;
+    timestamp?: number;
+    authors?: string;
+    action?: string;
+    parentId?: string;
+    categories?: string;
+    source?: string;
+    ids?: string;
+}
+export declare class ConvertToSpasmSimpleConfig {
+    version: string;
+    limit: {
+        title: number;
+        content: number;
+        timestamp: number;
+        author: number;
+        action: number;
+        parentId: number;
+        categories: number;
+        source: number;
+        ids: number;
+    };
+    constructor();
+}
+export type CustomConvertToSpasmSimpleConfig = MakeOptional<ConvertToSpasmSimpleConfig>;
 export {};
 //# sourceMappingURL=interfaces.d.ts.map

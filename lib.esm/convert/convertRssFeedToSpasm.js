@@ -99,6 +99,12 @@ export const convertRssItemsToSpasm = (items, source, customConfig) => {
                 if (item.pubDate && typeof (item.pubDate) === "string") {
                     post.pubdate = turndownService.turndown(item.pubDate);
                 }
+                else if (item.published && typeof (item.published) === "string") {
+                    post.pubdate = turndownService.turndown(item.published);
+                }
+                else if (item.updated && typeof (item.updated) === "string") {
+                    post.pubdate = turndownService.turndown(item.updated);
+                }
                 post.description = '';
                 // description
                 if (item.description &&
