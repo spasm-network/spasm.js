@@ -5,6 +5,11 @@ Signer and Protocol Agnostic Social Media (Spasm)
 
 Mirrors: [Forgejo](https://git.spasm.network/spasm-network/spasm.js) [Codeberg](https://codeberg.org/spasm-network/spasm.js) [Github](https://github.com/spasm-network/spasm.js)
 
+## Deploy official Spasm forum
+
+- Launch Spasm under three minutes with [docker/podman](https://github.com/spasm-network/spasm-docker).
+- Or set up a new server from scratch with [one script](https://github.com/spasm-network/spasm-ansible) ([video](https://media.spasm.network/spasmvi01e2729a96813336a92a2f511c4770c7935c95ab44e8cbb94b1d38912c0f1db14f.mp4)).
+
 ## Overview
 
 The future of social media is agnostic to signing keys, messaging formats, transport protocols and storage infrastructure. However, such design places significant burden on developers, who must maintain a myriad of protocols, formats, and architectures.
