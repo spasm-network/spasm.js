@@ -4402,9 +4402,10 @@ const addSchemaToSpasmEventBody = (spasmEventBodyV2, schema) => {
     try {
         if (!schema || typeof (schema) !== "object")
             return;
-        if (!spasmEventBodyV2)
+        if (Array.isArray(schema))
             return;
-        if (spasmEventBodyV2.type !== "SpasmEventBodyV2") {
+        if (!spasmEventBodyV2 ||
+            spasmEventBodyV2.type !== "SpasmEventBodyV2") {
             console.error("Custom schema can only be added to SpasmEventBodyV2");
             return;
         }
@@ -4430,6 +4431,7 @@ exports.addCustomConfigToSpasmEventBody = exports.addSchemaToSpasmEventBody;
 exports.addExtraConfigToSpasmEventBody = exports.addSchemaToSpasmEventBody;
 const createSpasmTagFromSchema = (schema) => {
     if (!schema || typeof (schema) !== "object" ||
+        Array.isArray(schema) ||
         !schema.name || !String(schema.name))
         return null;
     const tag = [
