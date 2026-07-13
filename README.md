@@ -799,6 +799,25 @@ const urls = parseStringForUrls(event)
 ```
 
 ```js
+// Check if an event contains patterns (e.g., banned phrases)
+const ifMatch = checkIfEventHasTheseWords(event, ["hello"])
+
+// aliases
+eventContainsWords()
+eventContainsBannedWords()
+eventContainsKeywords()
+eventContainsBannedKeywords()
+eventContainsPatterns()
+eventContainsBannedPatterns()
+eventHasWords()
+eventHasBannedWords()
+eventHasKeywords()
+eventHasBannedKeywords()
+eventHasPatterns()
+eventHasBannedPatterns()
+```
+
+```js
 // Generate RSS feed
 const rssFeed = generateRssFeed(events, config)
 

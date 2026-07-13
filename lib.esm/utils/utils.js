@@ -4454,4 +4454,186 @@ export const joinStringOrNumber = flattenArrayOfStringsAndNumbersIntoString;
 export const flattenArrayOfStringsAndNumbers = flattenArrayOfStringsAndNumbersIntoString;
 export const flattenMixedArray = flattenArrayOfStringsAndNumbersIntoString;
 export const flattenArray = flattenArrayOfStringsAndNumbersIntoString;
+export const toBeArray = (val) => {
+    if (Array.isArray(val))
+        return val;
+    if (val === undefined)
+        return [];
+    return [val];
+};
+export const toBeArrayOfString = (val) => {
+    const arr = toBeArray(val);
+    return arr
+        .map((v) => {
+        if (typeof (v) === "string")
+            return v;
+        if (typeof (v) === "number")
+            return String(v);
+        return null;
+    })
+        .filter((v) => v !== null);
+};
+export const matchesAnyPattern = (val, patterns) => {
+    try {
+        if (!val || !isStringOrNumber(val))
+            return false;
+        const text = toBeString(val).toLowerCase();
+        if (!text || typeof (val) !== "string")
+            return false;
+        if (!isArrayOfStrings(patterns))
+            return false;
+        if (patterns.length === 0)
+            return false;
+        return patterns.some((pattern) => {
+            if (!pattern)
+                return false;
+            const lowerPattern = pattern.toLowerCase();
+            return text.includes(lowerPattern);
+        });
+    }
+    catch (err) {
+        // console.error(err);
+        return false;
+    }
+};
+export const matchesExactWord = (val, patterns) => {
+    try {
+        // 1. Validate Input
+        if (!val || !isStringOrNumber(val))
+            return false;
+        let text = toBeString(val).toLowerCase().trim();
+        if (!text)
+            return false;
+        // List of characters to remove/replace
+        const charsToRemoveOrReplace = [
+            '\u200C', // ZWNJ
+            '\u200D', // ZWJ
+            '\u200B', // ZWSP
+            '\uFEFF', // BOM
+            '\u00AD' // Soft Hyphen
+        ];
+        // Strategy: Replace with SPACE to prevent bypass (as discussed)
+        let normalizedText = '';
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            if (charsToRemoveOrReplace.includes(char)) {
+                normalizedText += ' '; // Replace invisible chars with space
+            }
+            else {
+                normalizedText += char;
+            }
+        }
+        text = normalizedText;
+        if (!text)
+            return false;
+        if (!isArrayOfStrings(patterns) || patterns.length === 0)
+            return false;
+        // 2. Normalize Patterns
+        // Convert to lowercase, trim, remove empty strings, and deduplicate for O(1) lookup
+        const patternSet = new Set(patterns
+            .map((p) => (p ?? "").toLowerCase().trim())
+            .filter(Boolean));
+        if (patternSet.size === 0)
+            return false;
+        let tokens = [];
+        // 3. Tokenization Strategy
+        // Use Intl.Segmenter if available (best for Unicode/Emojis/Complex scripts)
+        // Fallback to safe regex split for older environments
+        // @ts-ignore - Intl.Segmenter is available in modern environments (Node 16+, modern browsers)
+        if (typeof globalThis.Intl?.Segmenter === "function") {
+            // @ts-ignore
+            const seg = new globalThis.Intl.Segmenter(undefined, { granularity: "word" });
+            for (const { segment, isWordLike } of seg.segment(text)) {
+                if (isWordLike && segment) {
+                    tokens.push(segment.toLowerCase());
+                }
+            }
+        }
+        else {
+            // SAFE FALLBACK:
+            // Split on any non-word character (\W).
+            // \W matches anything that is NOT [a-zA-Z0-9_].
+            // This safely handles spaces, tabs, newlines, and ALL punctuation (.,!?;: etc.)
+            // This regex is O(N) and mathematically safe from ReDoS attacks.
+            tokens = text.split(/\W+/).map(s => s.toLowerCase()).filter(Boolean);
+        }
+        if (tokens.length === 0)
+            return false;
+        // 4. Check for Exact Match
+        for (const token of tokens) {
+            if (patternSet.has(token))
+                return true;
+        }
+        return false;
+    }
+    catch {
+        return false;
+    }
+};
+export const matchesExactKeyword = matchesExactWord;
+export const toBeArrayOfStrings = toBeArrayOfString;
+export const checkIfEventHasThesePatterns = (event, words, keys = ["title", "content"]) => {
+    try {
+        if (!isStringOrNumber(words) &&
+            !isArrayOfStringsOrNumbers(words)) {
+            return false;
+        }
+        const spasmEventV2 = toBeSpasmEventV2(event);
+        if (!spasmEventV2 || !isObjectWithValues(spasmEventV2)) {
+            return false;
+        }
+        const arrayOfStrings = toBeArrayOfStrings(words);
+        if (!isArrayOfStrings(arrayOfStrings))
+            return false;
+        for (const key of keys) {
+            if (matchesAnyPattern(spasmEventV2[key], arrayOfStrings)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    catch (err) {
+        console.error(err);
+        return false;
+    }
+};
+export const eventContainsPatterns = checkIfEventHasThesePatterns;
+export const eventContainsBannedPatterns = checkIfEventHasThesePatterns;
+export const eventHasPatterns = checkIfEventHasThesePatterns;
+export const eventHasBannedPatterns = checkIfEventHasThesePatterns;
+export const eventHasPhrases = checkIfEventHasThesePatterns;
+export const eventHasBannedPhrases = checkIfEventHasThesePatterns;
+export const checkIfEventHasTheseWords = (event, words, keys = ["title", "content"]) => {
+    try {
+        if (!isStringOrNumber(words) &&
+            !isArrayOfStringsOrNumbers(words)) {
+            return false;
+        }
+        const spasmEventV2 = toBeSpasmEventV2(event);
+        if (!spasmEventV2 || !isObjectWithValues(spasmEventV2)) {
+            return false;
+        }
+        const arrayOfStrings = toBeArrayOfStrings(words);
+        if (!isArrayOfStrings(arrayOfStrings))
+            return false;
+        for (const key of keys) {
+            if (matchesExactWord(spasmEventV2[key], arrayOfStrings)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    catch (err) {
+        console.error(err);
+        return false;
+    }
+};
+export const eventContainsWords = checkIfEventHasTheseWords;
+export const eventContainsBannedWords = checkIfEventHasTheseWords;
+export const eventContainsKeywords = checkIfEventHasTheseWords;
+export const eventContainsBannedKeywords = checkIfEventHasTheseWords;
+export const eventHasWords = checkIfEventHasTheseWords;
+export const eventHasBannedWords = checkIfEventHasTheseWords;
+export const eventHasKeywords = checkIfEventHasTheseWords;
+export const eventHasBannedKeywords = checkIfEventHasTheseWords;
 //# sourceMappingURL=utils.js.map

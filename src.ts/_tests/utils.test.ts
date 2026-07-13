@@ -3,7 +3,9 @@ import {convertToNostr} from '../convert/convertToNostr.js';
 import {
   ConvertToSpasmConfig,
   CustomConvertToSpasmConfig,
+  ExtraSchema,
   SpasmEventBodyParentV2,
+  SpasmEventBodyV2,
   SpasmEventEnvelopeV2,
   SpasmEventIdV2,
   SpasmEventStatV2,
@@ -131,8 +133,10 @@ import {
   getSpasmTagByName,
   getOneTagByName,
   addSchemaToSpasmEventBody,
+  addCustomSchemaToSpasmEventBody,
   getSchemaFromSpasmEvent,
   addSchema,
+  addConfig,
   getSchema,
   flattenArrayOfStringsAndNumbersIntoString,
   joinStringOrNum,
@@ -147,7 +151,21 @@ import {
   extractCategory,
   extractOneCategory,
   getOneCategory,
-  getCategory
+  getCategory,
+  addExtraSchemaToSpasmEventBody,
+  addConfigToSpasmEventBody,
+  checkIfEventHasTheseWords,
+  checkIfEventHasThesePatterns,
+  matchesExactWord,
+  eventContainsWords,
+  eventContainsBannedWords,
+  eventContainsKeywords,
+  eventContainsBannedKeywords,
+  eventHasWords,
+  eventHasBannedWords,
+  eventHasKeywords,
+  eventHasBannedKeywords,
+  matchesExactKeyword
 } from './../utils/index.js';
 import {
   validDmpEvent, validDmpEventSignedClosed,
@@ -5446,6 +5464,154 @@ describe("add/get schema to/from event() function tests", () => {
     expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
     // Restore console errors
     jest.restoreAllMocks();
+
+    // Hide console errors for passing invalid event types
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addSchemaToSpasmEventBody(fakeAsObject('') as SpasmEventBodyV2, schema)
+    addSchemaToSpasmEventBody(fakeAsObject('0') as SpasmEventBodyV2, schema)
+    addSchemaToSpasmEventBody(fakeAsObject(0) as SpasmEventBodyV2, schema)
+    addSchemaToSpasmEventBody(fakeAsObject(123) as SpasmEventBodyV2, schema)
+    addSchemaToSpasmEventBody(fakeAsObject('0123') as SpasmEventBodyV2, schema)
+    addSchemaToSpasmEventBody(fakeAsObject(null) as SpasmEventBodyV2, schema)
+    addSchemaToSpasmEventBody(fakeAsObject([null]) as SpasmEventBodyV2, schema)
+    addSchemaToSpasmEventBody(fakeAsObject({a:1}) as SpasmEventBodyV2, schema)
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+    // Restore console errors
+    jest.restoreAllMocks();
+
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addSchemaToSpasmEventBody(spasmEventBody, fakeAsObject('') as ExtraSchema)
+    addSchemaToSpasmEventBody(spasmEventBody, fakeAsObject('0') as ExtraSchema)
+    addSchemaToSpasmEventBody(spasmEventBody, fakeAsObject(0) as ExtraSchema)
+    addSchemaToSpasmEventBody(spasmEventBody, fakeAsObject(123) as ExtraSchema)
+    addSchemaToSpasmEventBody(spasmEventBody, fakeAsObject('0123') as ExtraSchema)
+    addSchemaToSpasmEventBody(spasmEventBody, fakeAsObject(null) as ExtraSchema)
+    addSchemaToSpasmEventBody(spasmEventBody, fakeAsObject([null]) as ExtraSchema)
+    addSchemaToSpasmEventBody(spasmEventBody, fakeAsObject({a:1}) as ExtraSchema)
+    jest.restoreAllMocks();
+
+    // Aliases
+    // Hide console errors for passing invalid event types
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addCustomSchemaToSpasmEventBody(fakeAsObject('') as SpasmEventBodyV2, schema)
+    addCustomSchemaToSpasmEventBody(fakeAsObject('0') as SpasmEventBodyV2, schema)
+    addCustomSchemaToSpasmEventBody(fakeAsObject(0) as SpasmEventBodyV2, schema)
+    addCustomSchemaToSpasmEventBody(fakeAsObject(123) as SpasmEventBodyV2, schema)
+    addCustomSchemaToSpasmEventBody(fakeAsObject('0123') as SpasmEventBodyV2, schema)
+    addCustomSchemaToSpasmEventBody(fakeAsObject(null) as SpasmEventBodyV2, schema)
+    addCustomSchemaToSpasmEventBody(fakeAsObject([null]) as SpasmEventBodyV2, schema)
+    addCustomSchemaToSpasmEventBody(fakeAsObject({a:1}) as SpasmEventBodyV2, schema)
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+    // Restore console errors
+    jest.restoreAllMocks();
+
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addCustomSchemaToSpasmEventBody(spasmEventBody, fakeAsObject('') as ExtraSchema)
+    addCustomSchemaToSpasmEventBody(spasmEventBody, fakeAsObject('0') as ExtraSchema)
+    addCustomSchemaToSpasmEventBody(spasmEventBody, fakeAsObject(0) as ExtraSchema)
+    addCustomSchemaToSpasmEventBody(spasmEventBody, fakeAsObject(123) as ExtraSchema)
+    addCustomSchemaToSpasmEventBody(spasmEventBody, fakeAsObject('0123') as ExtraSchema)
+    addCustomSchemaToSpasmEventBody(spasmEventBody, fakeAsObject(null) as ExtraSchema)
+    addCustomSchemaToSpasmEventBody(spasmEventBody, fakeAsObject([null]) as ExtraSchema)
+    addCustomSchemaToSpasmEventBody(spasmEventBody, fakeAsObject({a:1}) as ExtraSchema)
+    jest.restoreAllMocks();
+
+    // Hide console errors for passing invalid event types
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addExtraSchemaToSpasmEventBody(fakeAsObject('') as SpasmEventBodyV2, schema)
+    addExtraSchemaToSpasmEventBody(fakeAsObject('0') as SpasmEventBodyV2, schema)
+    addExtraSchemaToSpasmEventBody(fakeAsObject(0) as SpasmEventBodyV2, schema)
+    addExtraSchemaToSpasmEventBody(fakeAsObject(123) as SpasmEventBodyV2, schema)
+    addExtraSchemaToSpasmEventBody(fakeAsObject('0123') as SpasmEventBodyV2, schema)
+    addExtraSchemaToSpasmEventBody(fakeAsObject(null) as SpasmEventBodyV2, schema)
+    addExtraSchemaToSpasmEventBody(fakeAsObject([null]) as SpasmEventBodyV2, schema)
+    addExtraSchemaToSpasmEventBody(fakeAsObject({a:1}) as SpasmEventBodyV2, schema)
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+    // Restore console errors
+    jest.restoreAllMocks();
+
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addExtraSchemaToSpasmEventBody(spasmEventBody, fakeAsObject('') as ExtraSchema)
+    addExtraSchemaToSpasmEventBody(spasmEventBody, fakeAsObject('0') as ExtraSchema)
+    addExtraSchemaToSpasmEventBody(spasmEventBody, fakeAsObject(0) as ExtraSchema)
+    addExtraSchemaToSpasmEventBody(spasmEventBody, fakeAsObject(123) as ExtraSchema)
+    addExtraSchemaToSpasmEventBody(spasmEventBody, fakeAsObject('0123') as ExtraSchema)
+    addExtraSchemaToSpasmEventBody(spasmEventBody, fakeAsObject(null) as ExtraSchema)
+    addExtraSchemaToSpasmEventBody(spasmEventBody, fakeAsObject([null]) as ExtraSchema)
+    addExtraSchemaToSpasmEventBody(spasmEventBody, fakeAsObject({a:1}) as ExtraSchema)
+    jest.restoreAllMocks();
+
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addSchema(fakeAsObject('') as SpasmEventBodyV2, schema)
+    addSchema(fakeAsObject('0') as SpasmEventBodyV2, schema)
+    addSchema(fakeAsObject(0) as SpasmEventBodyV2, schema)
+    addSchema(fakeAsObject(123) as SpasmEventBodyV2, schema)
+    addSchema(fakeAsObject('0123') as SpasmEventBodyV2, schema)
+    addSchema(fakeAsObject(null) as SpasmEventBodyV2, schema)
+    addSchema(fakeAsObject([null]) as SpasmEventBodyV2, schema)
+    addSchema(fakeAsObject({a:1}) as SpasmEventBodyV2, schema)
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+    // Restore console errors
+    jest.restoreAllMocks();
+
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addSchema(spasmEventBody, fakeAsObject('') as ExtraSchema)
+    addSchema(spasmEventBody, fakeAsObject('0') as ExtraSchema)
+    addSchema(spasmEventBody, fakeAsObject(0) as ExtraSchema)
+    addSchema(spasmEventBody, fakeAsObject(123) as ExtraSchema)
+    addSchema(spasmEventBody, fakeAsObject('0123') as ExtraSchema)
+    addSchema(spasmEventBody, fakeAsObject(null) as ExtraSchema)
+    addSchema(spasmEventBody, fakeAsObject([null]) as ExtraSchema)
+    addSchema(spasmEventBody, fakeAsObject({a:1}) as ExtraSchema)
+    jest.restoreAllMocks();
+
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addConfig(fakeAsObject('') as SpasmEventBodyV2, schema)
+    addConfig(fakeAsObject('0') as SpasmEventBodyV2, schema)
+    addConfig(fakeAsObject(0) as SpasmEventBodyV2, schema)
+    addConfig(fakeAsObject(123) as SpasmEventBodyV2, schema)
+    addConfig(fakeAsObject('0123') as SpasmEventBodyV2, schema)
+    addConfig(fakeAsObject(null) as SpasmEventBodyV2, schema)
+    addConfig(fakeAsObject([null]) as SpasmEventBodyV2, schema)
+    addConfig(fakeAsObject({a:1}) as SpasmEventBodyV2, schema)
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+    // Restore console errors
+    jest.restoreAllMocks();
+
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addConfig(spasmEventBody, fakeAsObject('') as ExtraSchema)
+    addConfig(spasmEventBody, fakeAsObject('0') as ExtraSchema)
+    addConfig(spasmEventBody, fakeAsObject(0) as ExtraSchema)
+    addConfig(spasmEventBody, fakeAsObject(123) as ExtraSchema)
+    addConfig(spasmEventBody, fakeAsObject('0123') as ExtraSchema)
+    addConfig(spasmEventBody, fakeAsObject(null) as ExtraSchema)
+    addConfig(spasmEventBody, fakeAsObject([null]) as ExtraSchema)
+    addConfig(spasmEventBody, fakeAsObject({a:1}) as ExtraSchema)
+    jest.restoreAllMocks();
+
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addConfigToSpasmEventBody(fakeAsObject('') as SpasmEventBodyV2, schema)
+    addConfigToSpasmEventBody(fakeAsObject('0') as SpasmEventBodyV2, schema)
+    addConfigToSpasmEventBody(fakeAsObject(0) as SpasmEventBodyV2, schema)
+    addConfigToSpasmEventBody(fakeAsObject(123) as SpasmEventBodyV2, schema)
+    addConfigToSpasmEventBody(fakeAsObject('0123') as SpasmEventBodyV2, schema)
+    addConfigToSpasmEventBody(fakeAsObject(null) as SpasmEventBodyV2, schema)
+    addConfigToSpasmEventBody(fakeAsObject([null]) as SpasmEventBodyV2, schema)
+    addConfigToSpasmEventBody(fakeAsObject({a:1}) as SpasmEventBodyV2, schema)
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+    // Restore console errors
+    jest.restoreAllMocks();
+
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    addConfigToSpasmEventBody(spasmEventBody, fakeAsObject('') as ExtraSchema)
+    addConfigToSpasmEventBody(spasmEventBody, fakeAsObject('0') as ExtraSchema)
+    addConfigToSpasmEventBody(spasmEventBody, fakeAsObject(0) as ExtraSchema)
+    addConfigToSpasmEventBody(spasmEventBody, fakeAsObject(123) as ExtraSchema)
+    addConfigToSpasmEventBody(spasmEventBody, fakeAsObject('0123') as ExtraSchema)
+    addConfigToSpasmEventBody(spasmEventBody, fakeAsObject(null) as ExtraSchema)
+    addConfigToSpasmEventBody(spasmEventBody, fakeAsObject([null]) as ExtraSchema)
+    addConfigToSpasmEventBody(spasmEventBody, fakeAsObject({a:1}) as ExtraSchema)
+    jest.restoreAllMocks();
   });
 });
 
@@ -5496,6 +5662,807 @@ describe("extractAllCategories() function tests", () => {
     expect(extractCategory(input)).toStrictEqual("memes");
     expect(getOneCategory(input)).toStrictEqual("memes");
     expect(getCategory(input)).toStrictEqual("memes");
+  });
+});
+
+// checkIfEventHasThesePatterns()
+describe("checkIfEventHasThesePatterns() function tests", () => {
+  test("checkIfEventHasThesePatterns() should return true if RSS event contains words", () => {
+    const input = copyOf(validPostWithRssItem)
+    expect(checkIfEventHasThesePatterns(input, ["moon"])
+    ).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(input, ["moo"])
+    ).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(input, ["star"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(input, ["tornado "])
+    ).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(input, ["ToRnAdO "])
+    ).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(input, ["Tornado is coming back!"])
+    ).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(input, ["Tornado is coming back?"])
+    ).toStrictEqual(false);
+    expect(checkIfEventHasThesePatterns(
+      input, [" started"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasThesePatterns(
+      input, [" tornado"]
+    )).toStrictEqual(false);
+  });
+
+  test("checkIfEventHasThesePatterns() should return true if DMP SpasmEventV2 contains words", () => {
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["genesis"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["keys"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["genesis"],
+      ["title"]
+    )).toStrictEqual(true);
+
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["tornado"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["keys"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["keys"],
+      ["id"]
+    )).toStrictEqual(false);
+  });
+
+  test("checkIfEventHasThesePatterns() should return true if SpasmEventV2 contains words", () => {
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2),
+      ["genesis"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2),
+      ["genesis"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2),
+      ["genesis"],
+      ["title"]
+    )).toStrictEqual(false);
+  });
+
+  test("checkIfEventHasThesePatterns() should return true if Nostr event contains words", () => {
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasThesePatterns(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+  });
+});
+
+// checkIfEventHasTheseWords()
+describe("checkIfEventHasTheseWords() function tests", () => {
+  test("checkIfEventHasTheseWords() should return true if RSS event contains words", () => {
+    const input = copyOf(validPostWithRssItem)
+    expect(checkIfEventHasTheseWords(input, ["moon"])
+    ).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(input, ["moo"])
+    ).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(input, ["star"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(input, ["tornado "])
+    ).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(input, ["ToRnAdO "])
+    ).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(input, ["Tornado is coming back!"])
+    ).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(input, ["Tornado is coming back?"])
+    ).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(
+      input, [" started"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(
+      input, [" tornado"]
+    )).toStrictEqual(true);
+  });
+
+  test("checkIfEventHasTheseWords() should return true if DMP SpasmEventV2 contains words", () => {
+    expect(checkIfEventHasTheseWords(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["genesis"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["keys"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["genesis"],
+      ["title"]
+    )).toStrictEqual(true);
+
+    expect(checkIfEventHasTheseWords(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["tornado"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["keys"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validDmpEventSignedClosedConvertedToSpasmV2),
+      ["keys"],
+      ["id"]
+    )).toStrictEqual(false);
+  });
+
+  test("checkIfEventHasTheseWords() should return true if SpasmEventV2 contains words", () => {
+    expect(checkIfEventHasTheseWords(
+      copyOf(validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2),
+      ["genesis"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2),
+      ["genesis"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2),
+      ["genesis"],
+      ["title"]
+    )).toStrictEqual(false);
+  });
+
+  test("checkIfEventHasTheseWords() should return true if Nostr event contains words", () => {
+    expect(checkIfEventHasTheseWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(checkIfEventHasTheseWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+  });
+
+  // aliases
+  test("checkIfEventHasTheseWords() aliases should return true if event contains words", () => {
+    expect(eventContainsWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventContainsWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventContainsWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventContainsWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventContainsWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+
+    expect(eventContainsBannedWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventContainsBannedWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventContainsBannedWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventContainsBannedWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventContainsBannedWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+
+    expect(eventContainsKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventContainsKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventContainsKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventContainsKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventContainsKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+
+    expect(eventContainsBannedKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventContainsBannedKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventContainsBannedKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventContainsBannedKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventContainsBannedKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+
+    expect(eventHasWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventHasWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventHasWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventHasWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventHasWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+
+    expect(eventHasBannedWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventHasBannedWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventHasBannedWords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventHasBannedWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventHasBannedWords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+
+    expect(eventHasKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventHasKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventHasKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventHasKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventHasKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+
+    expect(eventHasBannedKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventHasBannedKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventHasBannedKeywords(
+      copyOf(validNostrEventSignedOpened),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"]
+    )).toStrictEqual(true);
+    expect(eventHasBannedKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["content"]
+    )).toStrictEqual(true);
+    expect(eventHasBannedKeywords(
+      copyOf(validNostrEventSignedOpenedConvertedToSpasmV2),
+      ["gardens"],
+      ["title"]
+    )).toStrictEqual(false);
+  });
+
+  test("checkIfEventHasTheseWords() should return false when passed invalid values", () => {
+    expect(checkIfEventHasTheseWords(fakeAsObject(null) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject(undefined) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject("") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject("gardens") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject(0) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject(123) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject("123") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject(true) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject(false) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject(["gardens"]) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(checkIfEventHasTheseWords(fakeAsObject({a:"gardens"}) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+  });
+
+  // aliases
+  test("checkIfEventHasTheseWords() aliases should return false when passed invalid values", () => {
+    expect(eventContainsWords(fakeAsObject(null) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject(undefined) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject("") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject("gardens") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject(0) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject(123) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject("123") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject(true) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject(false) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject(["gardens"]) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsWords(fakeAsObject({a:"gardens"}) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+
+    expect(eventContainsBannedWords(fakeAsObject(null) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject(undefined) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject("") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject("gardens") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject(0) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject(123) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject("123") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject(true) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject(false) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject(["gardens"]) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedWords(fakeAsObject({a:"gardens"}) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+
+    expect(eventContainsKeywords(fakeAsObject(null) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject(undefined) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject("") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject("gardens") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject(0) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject(123) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject("123") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject(true) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject(false) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject(["gardens"]) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsKeywords(fakeAsObject({a:"gardens"}) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+
+    expect(eventContainsBannedKeywords(fakeAsObject(null) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject(undefined) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject("") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject("gardens") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject(0) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject(123) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject("123") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject(true) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject(false) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject(["gardens"]) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventContainsBannedKeywords(fakeAsObject({a:"gardens"}) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+
+    expect(eventHasWords(fakeAsObject(null) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject(undefined) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject("") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject("gardens") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject(0) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject(123) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject("123") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject(true) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject(false) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject(["gardens"]) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasWords(fakeAsObject({a:"gardens"}) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+
+    expect(eventHasBannedWords(fakeAsObject(null) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject(undefined) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject("") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject("gardens") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject(0) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject(123) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject("123") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject(true) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject(false) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject(["gardens"]) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedWords(fakeAsObject({a:"gardens"}) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+
+    expect(eventHasKeywords(fakeAsObject(null) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject(undefined) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject("") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject("gardens") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject(0) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject(123) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject("123") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject(true) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject(false) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject(["gardens"]) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasKeywords(fakeAsObject({a:"gardens"}) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+
+    expect(eventHasBannedKeywords(fakeAsObject(null) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject(undefined) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject("") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject("gardens") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject(0) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject(123) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject("123") as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject(true) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject(false) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject(["gardens"]) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+    expect(eventHasBannedKeywords(fakeAsObject({a:"gardens"}) as SpasmEventV2, ["gardens"]
+    )).toStrictEqual(false);
+  });
+});
+
+// matchesExactWord
+describe("matchesExactWord() function tests", () => {
+  // --- Basic Exact Matches ---
+  test("should return true if matches an exact word", () => {
+    expect(matchesExactWord("hello world", ["hello"])).toStrictEqual(true);
+    expect(matchesExactWord("hello world", ["world"])).toStrictEqual(true);
+    expect(matchesExactWord("hello world", ["hell"])).toStrictEqual(false); // Substring
+    expect(matchesExactWord("hello world", ["lo"])).toStrictEqual(false);   // Substring
+  });
+
+  // --- Case Insensitivity ---
+  test("should be case insensitive", () => {
+    expect(matchesExactWord("HELLO world", ["hello"])).toStrictEqual(true);
+    expect(matchesExactWord("hello WORLD", ["WORLD"])).toStrictEqual(true);
+    expect(matchesExactWord("HeLLo", ["hello"])).toStrictEqual(true);
+    expect(matchesExactWord("hello", ["HELLO"])).toStrictEqual(true);
+  });
+
+  // --- Punctuation Handling ---
+  test("should handle punctuation as word boundaries", () => {
+    expect(matchesExactWord("Hello, world!", ["hello"])).toStrictEqual(true);
+    expect(matchesExactWord("Hello, world!", ["world"])).toStrictEqual(true);
+    expect(matchesExactWord("It's a test.", ["it", "a", "test"])).toStrictEqual(true);
+    expect(matchesExactWord("User: admin; pass: 123", ["admin", "123"])).toStrictEqual(true);
+    expect(matchesExactWord("Question? Yes!", ["yes"])).toStrictEqual(true);
+    expect(matchesExactWord("Email: test@example.com", ["test", "example", "com"])).toStrictEqual(true);
+  });
+
+  // --- Negative Cases: Substrings in Compound Words ---
+  test("should NOT match substrings inside compound words", () => {
+    expect(matchesExactWord("hotdog is tasty", ["dog"])).toStrictEqual(false);
+    expect(matchesExactWord("understand", ["stand"])).toStrictEqual(false);
+    expect(matchesExactWord("keyboard", ["board"])).toStrictEqual(false);
+    expect(matchesExactWord("replay", ["play"])).toStrictEqual(false);
+    expect(matchesExactWord("unhappy", ["happy"])).toStrictEqual(false);
+  });
+
+  // --- Unicode Whitespace: NBSP (Non-Breaking Space) ---
+  test("should handle Non-Breaking Space (NBSP \\u00A0)", () => {
+    const nbsp = "\u00A0";
+    expect(matchesExactWord(`hello${nbsp}world`, ["hello"])).toStrictEqual(true);
+    expect(matchesExactWord(`hello${nbsp}world`, ["world"])).toStrictEqual(true);
+    expect(matchesExactWord(`hello${nbsp}world`, ["helloworld"])).toStrictEqual(false);
+  });
+
+  // --- Unicode Whitespace: ZWSP (Zero Width Space) ---
+  test("should handle Zero Width Space (ZWSP \\u200B)", () => {
+    const zwsp = "\u200B";
+    // ZWSP usually splits words in segmenters,
+    // but in a split fallback it might act as a separator
+    // or part of the word depending on implementation.
+    // With /\W+/, ZWSP is a non-word char, so it splits.
+    expect(matchesExactWord(`hello${zwsp}world`, ["hello"])).toStrictEqual(true);
+    expect(matchesExactWord(`hello${zwsp}world`, ["world"])).toStrictEqual(true);
+    // If the text is "hel\u200Blo", it splits into "hel" and "lo".
+    expect(matchesExactWord(`hel${zwsp}lo`, ["hel"])).toStrictEqual(true);
+    expect(matchesExactWord(`hel${zwsp}lo`, ["lo"])).toStrictEqual(true);
+    expect(matchesExactWord(`hel${zwsp}lo`, ["hello"])).toStrictEqual(false);
+  });
+
+  // --- Unicode Whitespace: ZWNJ (Zero Width Non-Joiner) & ZWJ ---
+  test("should handle Zero Width Non-Joiner (ZWNJ) and Joiner (ZWJ)", () => {
+    const zwnj = "\u200C";
+    const zwj = "\u200D";
+    
+    expect(matchesExactWord(`word${zwnj}break`, ["word"])).toStrictEqual(true);
+    expect(matchesExactWord(`word${zwnj}break`, ["break"])).toStrictEqual(true);
+    expect(matchesExactWord(`word${zwj}join`, ["word"])).toStrictEqual(true);
+  });
+
+  // --- Other Unicode Spaces ---
+  test("should handle other Unicode whitespace characters", () => {
+    // En Space
+    expect(matchesExactWord("hello\u2002world", ["hello"])).toStrictEqual(true);
+    // Em Space
+    expect(matchesExactWord("hello\u2003world", ["world"])).toStrictEqual(true);
+    // Ideographic Space
+    expect(matchesExactWord("hello\u3000world", ["hello"])).toStrictEqual(true);
+    // Line Separator
+    expect(matchesExactWord("hello\u2028world", ["world"])).toStrictEqual(true);
+  });
+
+  // --- Edge Cases: Empty and Invalid Inputs ---
+  test("should handle empty or invalid inputs gracefully", () => {
+    expect(matchesExactWord("", ["hello"])).toStrictEqual(false);
+    expect(matchesExactWord("   ", ["hello"])).toStrictEqual(false);
+    expect(matchesExactWord(null as any, ["hello"])).toStrictEqual(false);
+    expect(matchesExactWord(undefined as any, ["hello"])).toStrictEqual(false);
+    expect(matchesExactWord(123, ["123"])).toStrictEqual(true);
+    expect(matchesExactWord(123, ["12"])).toStrictEqual(false);
+    expect(matchesExactWord("hello", [])).toStrictEqual(false);
+    expect(matchesExactWord("hello", [""])).toStrictEqual(false);
+    expect(matchesExactWord("hello", [null as any])).toStrictEqual(false);
+  });
+
+  // --- Multiple Patterns ---
+  test("should return true if ANY pattern matches", () => {
+    expect(matchesExactWord("cat dog bird", ["cat", "fish"])).toStrictEqual(true);
+    expect(matchesExactWord("cat dog bird", ["fish", "bird"])).toStrictEqual(true);
+    expect(matchesExactWord("cat dog bird", ["fish", "mouse"])).toStrictEqual(false);
+  });
+
+  // --- Hyphenated Words ---
+  test("should split on hyphens (treat as separate words)", () => {
+    expect(matchesExactWord("user-name", ["user"])).toStrictEqual(true);
+    expect(matchesExactWord("user-name", ["name"])).toStrictEqual(true);
+    expect(matchesExactWord("user-name", ["user-name"])).toStrictEqual(false);
+  });
+
+  // --- Numbers ---
+  test("should handle numbers correctly", () => {
+    expect(matchesExactWord("I have 2 apples", ["2"])).toStrictEqual(true);
+    expect(matchesExactWord("Item #123", ["123"])).toStrictEqual(true);
+    expect(matchesExactWord("2024-01-01", ["2024"])).toStrictEqual(true);
+    expect(matchesExactWord("2024-01-01", ["01"])).toStrictEqual(true);
+    expect(matchesExactWord("2024-01-01", ["2024-01"])).toStrictEqual(false);
+  });
+
+  // --- Special Characters as Separators ---
+  test("should handle various special characters as delimiters", () => {
+    expect(matchesExactWord("foo@bar.com", ["foo", "bar", "com"])).toStrictEqual(true);
+    expect(matchesExactWord("price: $100", ["100"])).toStrictEqual(true);
+    expect(matchesExactWord("a/b/c", ["a", "b", "c"])).toStrictEqual(true);
+    expect(matchesExactWord("test!@#data", ["test", "data"])).toStrictEqual(true);
+  });
+
+  // --- aliases
+  test("should return true if matches an exact word", () => {
+    expect(matchesExactKeyword("hello world", ["hello"])).toStrictEqual(true);
+    expect(matchesExactKeyword("hello world", ["world"])).toStrictEqual(true);
+    expect(matchesExactKeyword("hello world", ["hell"])).toStrictEqual(false);
+    expect(matchesExactKeyword("hello world", ["lo"])).toStrictEqual(false);
+  });
+
+  test("should be case insensitive", () => {
+    expect(matchesExactKeyword("HELLO world", ["hello"])).toStrictEqual(true);
+    expect(matchesExactKeyword("hello WORLD", ["WORLD"])).toStrictEqual(true);
+    expect(matchesExactKeyword("HeLLo", ["hello"])).toStrictEqual(true);
+    expect(matchesExactKeyword("hello", ["HELLO"])).toStrictEqual(true);
   });
 });
 

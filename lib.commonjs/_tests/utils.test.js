@@ -3995,6 +3995,142 @@ describe("add/get schema to/from event() function tests", () => {
         expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
         // Restore console errors
         jest.restoreAllMocks();
+        // Hide console errors for passing invalid event types
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(''), schema);
+        (0, index_js_1.addSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)('0'), schema);
+        (0, index_js_1.addSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(0), schema);
+        (0, index_js_1.addSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(123), schema);
+        (0, index_js_1.addSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)('0123'), schema);
+        (0, index_js_1.addSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(null), schema);
+        (0, index_js_1.addSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)([null]), schema);
+        (0, index_js_1.addSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)({ a: 1 }), schema);
+        expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+        // Restore console errors
+        jest.restoreAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(''));
+        (0, index_js_1.addSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)('0'));
+        (0, index_js_1.addSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(0));
+        (0, index_js_1.addSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(123));
+        (0, index_js_1.addSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)('0123'));
+        (0, index_js_1.addSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(null));
+        (0, index_js_1.addSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)([null]));
+        (0, index_js_1.addSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)({ a: 1 }));
+        jest.restoreAllMocks();
+        // Aliases
+        // Hide console errors for passing invalid event types
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(''), schema);
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)('0'), schema);
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(0), schema);
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(123), schema);
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)('0123'), schema);
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(null), schema);
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)([null]), schema);
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)({ a: 1 }), schema);
+        expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+        // Restore console errors
+        jest.restoreAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(''));
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)('0'));
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(0));
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(123));
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)('0123'));
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(null));
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)([null]));
+        (0, index_js_1.addCustomSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)({ a: 1 }));
+        jest.restoreAllMocks();
+        // Hide console errors for passing invalid event types
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(''), schema);
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)('0'), schema);
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(0), schema);
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(123), schema);
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)('0123'), schema);
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)(null), schema);
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)([null]), schema);
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)((0, index_js_1.fakeAsObject)({ a: 1 }), schema);
+        expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+        // Restore console errors
+        jest.restoreAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(''));
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)('0'));
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(0));
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(123));
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)('0123'));
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(null));
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)([null]));
+        (0, index_js_1.addExtraSchemaToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)({ a: 1 }));
+        jest.restoreAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addSchema)((0, index_js_1.fakeAsObject)(''), schema);
+        (0, index_js_1.addSchema)((0, index_js_1.fakeAsObject)('0'), schema);
+        (0, index_js_1.addSchema)((0, index_js_1.fakeAsObject)(0), schema);
+        (0, index_js_1.addSchema)((0, index_js_1.fakeAsObject)(123), schema);
+        (0, index_js_1.addSchema)((0, index_js_1.fakeAsObject)('0123'), schema);
+        (0, index_js_1.addSchema)((0, index_js_1.fakeAsObject)(null), schema);
+        (0, index_js_1.addSchema)((0, index_js_1.fakeAsObject)([null]), schema);
+        (0, index_js_1.addSchema)((0, index_js_1.fakeAsObject)({ a: 1 }), schema);
+        expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+        // Restore console errors
+        jest.restoreAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addSchema)(spasmEventBody, (0, index_js_1.fakeAsObject)(''));
+        (0, index_js_1.addSchema)(spasmEventBody, (0, index_js_1.fakeAsObject)('0'));
+        (0, index_js_1.addSchema)(spasmEventBody, (0, index_js_1.fakeAsObject)(0));
+        (0, index_js_1.addSchema)(spasmEventBody, (0, index_js_1.fakeAsObject)(123));
+        (0, index_js_1.addSchema)(spasmEventBody, (0, index_js_1.fakeAsObject)('0123'));
+        (0, index_js_1.addSchema)(spasmEventBody, (0, index_js_1.fakeAsObject)(null));
+        (0, index_js_1.addSchema)(spasmEventBody, (0, index_js_1.fakeAsObject)([null]));
+        (0, index_js_1.addSchema)(spasmEventBody, (0, index_js_1.fakeAsObject)({ a: 1 }));
+        jest.restoreAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addConfig)((0, index_js_1.fakeAsObject)(''), schema);
+        (0, index_js_1.addConfig)((0, index_js_1.fakeAsObject)('0'), schema);
+        (0, index_js_1.addConfig)((0, index_js_1.fakeAsObject)(0), schema);
+        (0, index_js_1.addConfig)((0, index_js_1.fakeAsObject)(123), schema);
+        (0, index_js_1.addConfig)((0, index_js_1.fakeAsObject)('0123'), schema);
+        (0, index_js_1.addConfig)((0, index_js_1.fakeAsObject)(null), schema);
+        (0, index_js_1.addConfig)((0, index_js_1.fakeAsObject)([null]), schema);
+        (0, index_js_1.addConfig)((0, index_js_1.fakeAsObject)({ a: 1 }), schema);
+        expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+        // Restore console errors
+        jest.restoreAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addConfig)(spasmEventBody, (0, index_js_1.fakeAsObject)(''));
+        (0, index_js_1.addConfig)(spasmEventBody, (0, index_js_1.fakeAsObject)('0'));
+        (0, index_js_1.addConfig)(spasmEventBody, (0, index_js_1.fakeAsObject)(0));
+        (0, index_js_1.addConfig)(spasmEventBody, (0, index_js_1.fakeAsObject)(123));
+        (0, index_js_1.addConfig)(spasmEventBody, (0, index_js_1.fakeAsObject)('0123'));
+        (0, index_js_1.addConfig)(spasmEventBody, (0, index_js_1.fakeAsObject)(null));
+        (0, index_js_1.addConfig)(spasmEventBody, (0, index_js_1.fakeAsObject)([null]));
+        (0, index_js_1.addConfig)(spasmEventBody, (0, index_js_1.fakeAsObject)({ a: 1 }));
+        jest.restoreAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addConfigToSpasmEventBody)((0, index_js_1.fakeAsObject)(''), schema);
+        (0, index_js_1.addConfigToSpasmEventBody)((0, index_js_1.fakeAsObject)('0'), schema);
+        (0, index_js_1.addConfigToSpasmEventBody)((0, index_js_1.fakeAsObject)(0), schema);
+        (0, index_js_1.addConfigToSpasmEventBody)((0, index_js_1.fakeAsObject)(123), schema);
+        (0, index_js_1.addConfigToSpasmEventBody)((0, index_js_1.fakeAsObject)('0123'), schema);
+        (0, index_js_1.addConfigToSpasmEventBody)((0, index_js_1.fakeAsObject)(null), schema);
+        (0, index_js_1.addConfigToSpasmEventBody)((0, index_js_1.fakeAsObject)([null]), schema);
+        (0, index_js_1.addConfigToSpasmEventBody)((0, index_js_1.fakeAsObject)({ a: 1 }), schema);
+        expect(consoleErrorSpy).toHaveBeenCalledWith("Custom schema can only be added to SpasmEventBodyV2");
+        // Restore console errors
+        jest.restoreAllMocks();
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+        (0, index_js_1.addConfigToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(''));
+        (0, index_js_1.addConfigToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)('0'));
+        (0, index_js_1.addConfigToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(0));
+        (0, index_js_1.addConfigToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(123));
+        (0, index_js_1.addConfigToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)('0123'));
+        (0, index_js_1.addConfigToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)(null));
+        (0, index_js_1.addConfigToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)([null]));
+        (0, index_js_1.addConfigToSpasmEventBody)(spasmEventBody, (0, index_js_1.fakeAsObject)({ a: 1 }));
+        jest.restoreAllMocks();
     });
 });
 // flattenArrayOfStringsAndNumbersIntoString
@@ -4034,6 +4170,359 @@ describe("extractAllCategories() function tests", () => {
         expect((0, index_js_1.extractCategory)(input)).toStrictEqual("memes");
         expect((0, index_js_1.getOneCategory)(input)).toStrictEqual("memes");
         expect((0, index_js_1.getCategory)(input)).toStrictEqual("memes");
+    });
+});
+// checkIfEventHasThesePatterns()
+describe("checkIfEventHasThesePatterns() function tests", () => {
+    test("checkIfEventHasThesePatterns() should return true if RSS event contains words", () => {
+        const input = (0, index_js_1.copyOf)(_events_data_js_1.validPostWithRssItem);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)(input, ["moon"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)(input, ["moo"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)(input, ["star"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)(input, ["tornado "])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)(input, ["ToRnAdO "])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)(input, ["Tornado is coming back!"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)(input, ["Tornado is coming back?"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)(input, [" started"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)(input, [" tornado"])).toStrictEqual(false);
+    });
+    test("checkIfEventHasThesePatterns() should return true if DMP SpasmEventV2 contains words", () => {
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["genesis"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["keys"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["genesis"], ["title"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["tornado"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["keys"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["keys"], ["id"])).toStrictEqual(false);
+    });
+    test("checkIfEventHasThesePatterns() should return true if SpasmEventV2 contains words", () => {
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2), ["genesis"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2), ["genesis"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2), ["genesis"], ["title"])).toStrictEqual(false);
+    });
+    test("checkIfEventHasThesePatterns() should return true if Nostr event contains words", () => {
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasThesePatterns)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+    });
+});
+// checkIfEventHasTheseWords()
+describe("checkIfEventHasTheseWords() function tests", () => {
+    test("checkIfEventHasTheseWords() should return true if RSS event contains words", () => {
+        const input = (0, index_js_1.copyOf)(_events_data_js_1.validPostWithRssItem);
+        expect((0, index_js_1.checkIfEventHasTheseWords)(input, ["moon"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)(input, ["moo"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)(input, ["star"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)(input, ["tornado "])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)(input, ["ToRnAdO "])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)(input, ["Tornado is coming back!"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)(input, ["Tornado is coming back?"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)(input, [" started"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)(input, [" tornado"])).toStrictEqual(true);
+    });
+    test("checkIfEventHasTheseWords() should return true if DMP SpasmEventV2 contains words", () => {
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["genesis"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["keys"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["genesis"], ["title"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["tornado"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["keys"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validDmpEventSignedClosedConvertedToSpasmV2), ["keys"], ["id"])).toStrictEqual(false);
+    });
+    test("checkIfEventHasTheseWords() should return true if SpasmEventV2 contains words", () => {
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2), ["genesis"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2), ["genesis"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validSpasmEventBodyV2ReplyToGenesisSignedClosedConvertToSpasmV2), ["genesis"], ["title"])).toStrictEqual(false);
+    });
+    test("checkIfEventHasTheseWords() should return true if Nostr event contains words", () => {
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+    });
+    // aliases
+    test("checkIfEventHasTheseWords() aliases should return true if event contains words", () => {
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpened), ["gardens"], ["title"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["content"])).toStrictEqual(true);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.copyOf)(_events_data_js_1.validNostrEventSignedOpenedConvertedToSpasmV2), ["gardens"], ["title"])).toStrictEqual(false);
+    });
+    test("checkIfEventHasTheseWords() should return false when passed invalid values", () => {
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)(null), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)(undefined), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)(""), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)("gardens"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)(0), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)(123), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)("123"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)(true), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)(false), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)(["gardens"]), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.checkIfEventHasTheseWords)((0, index_js_1.fakeAsObject)({ a: "gardens" }), ["gardens"])).toStrictEqual(false);
+    });
+    // aliases
+    test("checkIfEventHasTheseWords() aliases should return false when passed invalid values", () => {
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)(null), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)(undefined), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)(""), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)("gardens"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)(0), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)(123), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)("123"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)(true), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)(false), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)(["gardens"]), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsWords)((0, index_js_1.fakeAsObject)({ a: "gardens" }), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)(null), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)(undefined), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)(""), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)("gardens"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)(0), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)(123), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)("123"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)(true), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)(false), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)(["gardens"]), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedWords)((0, index_js_1.fakeAsObject)({ a: "gardens" }), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)(null), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)(undefined), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)(""), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)("gardens"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)(0), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)(123), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)("123"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)(true), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)(false), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)(["gardens"]), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsKeywords)((0, index_js_1.fakeAsObject)({ a: "gardens" }), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)(null), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)(undefined), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)(""), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)("gardens"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)(0), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)(123), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)("123"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)(true), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)(false), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)(["gardens"]), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventContainsBannedKeywords)((0, index_js_1.fakeAsObject)({ a: "gardens" }), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)(null), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)(undefined), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)(""), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)("gardens"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)(0), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)(123), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)("123"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)(true), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)(false), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)(["gardens"]), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasWords)((0, index_js_1.fakeAsObject)({ a: "gardens" }), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)(null), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)(undefined), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)(""), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)("gardens"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)(0), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)(123), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)("123"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)(true), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)(false), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)(["gardens"]), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedWords)((0, index_js_1.fakeAsObject)({ a: "gardens" }), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)(null), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)(undefined), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)(""), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)("gardens"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)(0), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)(123), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)("123"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)(true), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)(false), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)(["gardens"]), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasKeywords)((0, index_js_1.fakeAsObject)({ a: "gardens" }), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)(null), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)(undefined), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)(""), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)("gardens"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)(0), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)(123), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)("123"), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)(true), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)(false), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)(["gardens"]), ["gardens"])).toStrictEqual(false);
+        expect((0, index_js_1.eventHasBannedKeywords)((0, index_js_1.fakeAsObject)({ a: "gardens" }), ["gardens"])).toStrictEqual(false);
+    });
+});
+// matchesExactWord
+describe("matchesExactWord() function tests", () => {
+    // --- Basic Exact Matches ---
+    test("should return true if matches an exact word", () => {
+        expect((0, index_js_1.matchesExactWord)("hello world", ["hello"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("hello world", ["world"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("hello world", ["hell"])).toStrictEqual(false); // Substring
+        expect((0, index_js_1.matchesExactWord)("hello world", ["lo"])).toStrictEqual(false); // Substring
+    });
+    // --- Case Insensitivity ---
+    test("should be case insensitive", () => {
+        expect((0, index_js_1.matchesExactWord)("HELLO world", ["hello"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("hello WORLD", ["WORLD"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("HeLLo", ["hello"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("hello", ["HELLO"])).toStrictEqual(true);
+    });
+    // --- Punctuation Handling ---
+    test("should handle punctuation as word boundaries", () => {
+        expect((0, index_js_1.matchesExactWord)("Hello, world!", ["hello"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("Hello, world!", ["world"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("It's a test.", ["it", "a", "test"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("User: admin; pass: 123", ["admin", "123"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("Question? Yes!", ["yes"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("Email: test@example.com", ["test", "example", "com"])).toStrictEqual(true);
+    });
+    // --- Negative Cases: Substrings in Compound Words ---
+    test("should NOT match substrings inside compound words", () => {
+        expect((0, index_js_1.matchesExactWord)("hotdog is tasty", ["dog"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)("understand", ["stand"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)("keyboard", ["board"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)("replay", ["play"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)("unhappy", ["happy"])).toStrictEqual(false);
+    });
+    // --- Unicode Whitespace: NBSP (Non-Breaking Space) ---
+    test("should handle Non-Breaking Space (NBSP \\u00A0)", () => {
+        const nbsp = "\u00A0";
+        expect((0, index_js_1.matchesExactWord)(`hello${nbsp}world`, ["hello"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)(`hello${nbsp}world`, ["world"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)(`hello${nbsp}world`, ["helloworld"])).toStrictEqual(false);
+    });
+    // --- Unicode Whitespace: ZWSP (Zero Width Space) ---
+    test("should handle Zero Width Space (ZWSP \\u200B)", () => {
+        const zwsp = "\u200B";
+        // ZWSP usually splits words in segmenters,
+        // but in a split fallback it might act as a separator
+        // or part of the word depending on implementation.
+        // With /\W+/, ZWSP is a non-word char, so it splits.
+        expect((0, index_js_1.matchesExactWord)(`hello${zwsp}world`, ["hello"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)(`hello${zwsp}world`, ["world"])).toStrictEqual(true);
+        // If the text is "hel\u200Blo", it splits into "hel" and "lo".
+        expect((0, index_js_1.matchesExactWord)(`hel${zwsp}lo`, ["hel"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)(`hel${zwsp}lo`, ["lo"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)(`hel${zwsp}lo`, ["hello"])).toStrictEqual(false);
+    });
+    // --- Unicode Whitespace: ZWNJ (Zero Width Non-Joiner) & ZWJ ---
+    test("should handle Zero Width Non-Joiner (ZWNJ) and Joiner (ZWJ)", () => {
+        const zwnj = "\u200C";
+        const zwj = "\u200D";
+        expect((0, index_js_1.matchesExactWord)(`word${zwnj}break`, ["word"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)(`word${zwnj}break`, ["break"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)(`word${zwj}join`, ["word"])).toStrictEqual(true);
+    });
+    // --- Other Unicode Spaces ---
+    test("should handle other Unicode whitespace characters", () => {
+        // En Space
+        expect((0, index_js_1.matchesExactWord)("hello\u2002world", ["hello"])).toStrictEqual(true);
+        // Em Space
+        expect((0, index_js_1.matchesExactWord)("hello\u2003world", ["world"])).toStrictEqual(true);
+        // Ideographic Space
+        expect((0, index_js_1.matchesExactWord)("hello\u3000world", ["hello"])).toStrictEqual(true);
+        // Line Separator
+        expect((0, index_js_1.matchesExactWord)("hello\u2028world", ["world"])).toStrictEqual(true);
+    });
+    // --- Edge Cases: Empty and Invalid Inputs ---
+    test("should handle empty or invalid inputs gracefully", () => {
+        expect((0, index_js_1.matchesExactWord)("", ["hello"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)("   ", ["hello"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)(null, ["hello"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)(undefined, ["hello"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)(123, ["123"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)(123, ["12"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)("hello", [])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)("hello", [""])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactWord)("hello", [null])).toStrictEqual(false);
+    });
+    // --- Multiple Patterns ---
+    test("should return true if ANY pattern matches", () => {
+        expect((0, index_js_1.matchesExactWord)("cat dog bird", ["cat", "fish"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("cat dog bird", ["fish", "bird"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("cat dog bird", ["fish", "mouse"])).toStrictEqual(false);
+    });
+    // --- Hyphenated Words ---
+    test("should split on hyphens (treat as separate words)", () => {
+        expect((0, index_js_1.matchesExactWord)("user-name", ["user"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("user-name", ["name"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("user-name", ["user-name"])).toStrictEqual(false);
+    });
+    // --- Numbers ---
+    test("should handle numbers correctly", () => {
+        expect((0, index_js_1.matchesExactWord)("I have 2 apples", ["2"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("Item #123", ["123"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("2024-01-01", ["2024"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("2024-01-01", ["01"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("2024-01-01", ["2024-01"])).toStrictEqual(false);
+    });
+    // --- Special Characters as Separators ---
+    test("should handle various special characters as delimiters", () => {
+        expect((0, index_js_1.matchesExactWord)("foo@bar.com", ["foo", "bar", "com"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("price: $100", ["100"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("a/b/c", ["a", "b", "c"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactWord)("test!@#data", ["test", "data"])).toStrictEqual(true);
+    });
+    // --- aliases
+    test("should return true if matches an exact word", () => {
+        expect((0, index_js_1.matchesExactKeyword)("hello world", ["hello"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactKeyword)("hello world", ["world"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactKeyword)("hello world", ["hell"])).toStrictEqual(false);
+        expect((0, index_js_1.matchesExactKeyword)("hello world", ["lo"])).toStrictEqual(false);
+    });
+    test("should be case insensitive", () => {
+        expect((0, index_js_1.matchesExactKeyword)("HELLO world", ["hello"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactKeyword)("hello WORLD", ["WORLD"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactKeyword)("HeLLo", ["hello"])).toStrictEqual(true);
+        expect((0, index_js_1.matchesExactKeyword)("hello", ["HELLO"])).toStrictEqual(true);
     });
 });
 // template()
