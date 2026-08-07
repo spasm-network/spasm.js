@@ -4571,6 +4571,8 @@ export const matchesExactWord = (val, patterns) => {
     }
 };
 export const matchesExactKeyword = matchesExactWord;
+export const matchesWord = matchesExactWord;
+export const matchesKeyword = matchesExactWord;
 export const toBeArrayOfStrings = toBeArrayOfString;
 export const checkIfEventHasThesePatterns = (event, words, keys = ["title", "content"]) => {
     try {

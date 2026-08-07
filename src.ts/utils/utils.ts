@@ -6024,6 +6024,8 @@ export const matchesExactWord = (
 }
 
 export const matchesExactKeyword = matchesExactWord
+export const matchesWord = matchesExactWord
+export const matchesKeyword = matchesExactWord
 
 export const toBeArrayOfStrings = toBeArrayOfString
 

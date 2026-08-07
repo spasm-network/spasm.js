@@ -165,7 +165,9 @@ import {
   eventHasBannedWords,
   eventHasKeywords,
   eventHasBannedKeywords,
-  matchesExactKeyword
+  matchesExactKeyword,
+  matchesWord,
+  matchesKeyword
 } from './../utils/index.js';
 import {
   validDmpEvent, validDmpEventSignedClosed,
@@ -6451,18 +6453,188 @@ describe("matchesExactWord() function tests", () => {
   });
 
   // --- aliases
-  test("should return true if matches an exact word", () => {
+  test("matchesExactKeyword alias", () => {
+    const zwsp = "\u200B";
+    const nbsp = "\u00A0";
+    const zwnj = "\u200C";
+    const zwj = "\u200D";
+    expect(matchesExactKeyword(`hello${nbsp}world`, ["hello"])).toStrictEqual(true);
+    expect(matchesExactKeyword(`hello${nbsp}world`, ["world"])).toStrictEqual(true);
+    expect(matchesExactKeyword(`hello${nbsp}world`, ["helloworld"])).toStrictEqual(false);
+    expect(matchesExactKeyword(`hello${zwsp}world`, ["hello"])).toStrictEqual(true);
+    expect(matchesExactKeyword(`hello${zwsp}world`, ["world"])).toStrictEqual(true);
+    expect(matchesExactKeyword(`hel${zwsp}lo`, ["hel"])).toStrictEqual(true);
+    expect(matchesExactKeyword(`hel${zwsp}lo`, ["lo"])).toStrictEqual(true);
+    expect(matchesExactKeyword(`hel${zwsp}lo`, ["hello"])).toStrictEqual(false);
+    expect(matchesExactKeyword(`word${zwnj}break`, ["word"])).toStrictEqual(true);
+    expect(matchesExactKeyword(`word${zwnj}break`, ["break"])).toStrictEqual(true);
+    expect(matchesExactKeyword(`word${zwj}join`, ["word"])).toStrictEqual(true);
+
     expect(matchesExactKeyword("hello world", ["hello"])).toStrictEqual(true);
     expect(matchesExactKeyword("hello world", ["world"])).toStrictEqual(true);
     expect(matchesExactKeyword("hello world", ["hell"])).toStrictEqual(false);
     expect(matchesExactKeyword("hello world", ["lo"])).toStrictEqual(false);
-  });
 
-  test("should be case insensitive", () => {
     expect(matchesExactKeyword("HELLO world", ["hello"])).toStrictEqual(true);
     expect(matchesExactKeyword("hello WORLD", ["WORLD"])).toStrictEqual(true);
     expect(matchesExactKeyword("HeLLo", ["hello"])).toStrictEqual(true);
     expect(matchesExactKeyword("hello", ["HELLO"])).toStrictEqual(true);
+
+    expect(matchesExactKeyword("Hello, world!", ["hello"])).toStrictEqual(true);
+    expect(matchesExactKeyword("Hello, world!", ["world"])).toStrictEqual(true);
+    expect(matchesExactKeyword("It's a test.", ["it", "a", "test"])).toStrictEqual(true);
+    expect(matchesExactKeyword("User: admin; pass: 123", ["admin", "123"])).toStrictEqual(true);
+    expect(matchesExactKeyword("Question? Yes!", ["yes"])).toStrictEqual(true);
+    expect(matchesExactKeyword("Email: test@example.com", ["test", "example", "com"])).toStrictEqual(true);
+
+    expect(matchesExactKeyword("hotdog is tasty", ["dog"])).toStrictEqual(false);
+    expect(matchesExactKeyword("understand", ["stand"])).toStrictEqual(false);
+    expect(matchesExactKeyword("keyboard", ["board"])).toStrictEqual(false);
+    expect(matchesExactKeyword("replay", ["play"])).toStrictEqual(false);
+    expect(matchesExactKeyword("unhappy", ["happy"])).toStrictEqual(false);
+
+    expect(matchesExactKeyword("hello\u2002world", ["hello"])).toStrictEqual(true);
+    expect(matchesExactKeyword("hello\u2003world", ["world"])).toStrictEqual(true);
+    expect(matchesExactKeyword("hello\u3000world", ["hello"])).toStrictEqual(true);
+    expect(matchesExactKeyword("hello\u2028world", ["world"])).toStrictEqual(true);
+
+    expect(matchesExactKeyword("", ["hello"])).toStrictEqual(false);
+    expect(matchesExactKeyword("   ", ["hello"])).toStrictEqual(false);
+    expect(matchesExactKeyword(null as any, ["hello"])).toStrictEqual(false);
+    expect(matchesExactKeyword(undefined as any, ["hello"])).toStrictEqual(false);
+    expect(matchesExactKeyword(123, ["123"])).toStrictEqual(true);
+    expect(matchesExactKeyword(123, ["12"])).toStrictEqual(false);
+    expect(matchesExactKeyword("hello", [])).toStrictEqual(false);
+    expect(matchesExactKeyword("hello", [""])).toStrictEqual(false);
+    expect(matchesExactKeyword("hello", [null as any])).toStrictEqual(false);
+
+    expect(matchesExactKeyword("cat dog bird", ["cat", "fish"])).toStrictEqual(true);
+    expect(matchesExactKeyword("cat dog bird", ["fish", "bird"])).toStrictEqual(true);
+    expect(matchesExactKeyword("cat dog bird", ["fish", "mouse"])).toStrictEqual(false);
+    expect(matchesExactKeyword("user-name", ["user"])).toStrictEqual(true);
+    expect(matchesExactKeyword("user-name", ["name"])).toStrictEqual(true);
+    expect(matchesExactKeyword("user-name", ["user-name"])).toStrictEqual(false);
+    expect(matchesExactKeyword("I have 2 apples", ["2"])).toStrictEqual(true);
+    expect(matchesExactKeyword("Item #123", ["123"])).toStrictEqual(true);
+    expect(matchesExactKeyword("2024-01-01", ["2024"])).toStrictEqual(true);
+    expect(matchesExactKeyword("2024-01-01", ["01"])).toStrictEqual(true);
+    expect(matchesExactKeyword("2024-01-01", ["2024-01"])).toStrictEqual(false);
+    expect(matchesExactKeyword("foo@bar.com", ["foo", "bar", "com"])).toStrictEqual(true);
+    expect(matchesExactKeyword("price: $100", ["100"])).toStrictEqual(true);
+    expect(matchesExactKeyword("a/b/c", ["a", "b", "c"])).toStrictEqual(true);
+    expect(matchesExactKeyword("test!@#data", ["test", "data"])).toStrictEqual(true);
+  });
+
+  test("matchesWord alias", () => {
+    const zwsp = "\u200B";
+    const nbsp = "\u00A0";
+    const zwnj = "\u200C";
+    const zwj = "\u200D";
+    expect(matchesWord(`hello${nbsp}world`, ["hello"])).toStrictEqual(true);
+    expect(matchesWord(`hello${nbsp}world`, ["world"])).toStrictEqual(true);
+    expect(matchesWord(`hello${nbsp}world`, ["helloworld"])).toStrictEqual(false);
+    expect(matchesWord(`hello${zwsp}world`, ["hello"])).toStrictEqual(true);
+    expect(matchesWord(`hello${zwsp}world`, ["world"])).toStrictEqual(true);
+    expect(matchesWord(`hel${zwsp}lo`, ["hel"])).toStrictEqual(true);
+    expect(matchesWord(`hel${zwsp}lo`, ["lo"])).toStrictEqual(true);
+    expect(matchesWord(`hel${zwsp}lo`, ["hello"])).toStrictEqual(false);
+    expect(matchesWord(`word${zwnj}break`, ["word"])).toStrictEqual(true);
+    expect(matchesWord(`word${zwnj}break`, ["break"])).toStrictEqual(true);
+    expect(matchesWord(`word${zwj}join`, ["word"])).toStrictEqual(true);
+
+    expect(matchesWord("hello world", ["hello"])).toStrictEqual(true);
+    expect(matchesWord("hello world", ["world"])).toStrictEqual(true);
+    expect(matchesWord("hello world", ["hell"])).toStrictEqual(false);
+    expect(matchesWord("hello world", ["lo"])).toStrictEqual(false);
+    expect(matchesWord("HELLO world", ["hello"])).toStrictEqual(true);
+    expect(matchesWord("hello WORLD", ["WORLD"])).toStrictEqual(true);
+    expect(matchesWord("HeLLo", ["hello"])).toStrictEqual(true);
+    expect(matchesWord("hello", ["HELLO"])).toStrictEqual(true);
+    expect(matchesWord("Hello, world!", ["hello"])).toStrictEqual(true);
+    expect(matchesWord("Hello, world!", ["world"])).toStrictEqual(true);
+    expect(matchesWord("It's a test.", ["it", "a", "test"])).toStrictEqual(true);
+    expect(matchesWord("User: admin; pass: 123", ["admin", "123"])).toStrictEqual(true);
+    expect(matchesWord("Question? Yes!", ["yes"])).toStrictEqual(true);
+    expect(matchesWord("Email: test@example.com", ["test", "example", "com"])).toStrictEqual(true);
+
+    expect(matchesWord("hotdog is tasty", ["dog"])).toStrictEqual(false);
+    expect(matchesWord("understand", ["stand"])).toStrictEqual(false);
+    expect(matchesWord("keyboard", ["board"])).toStrictEqual(false);
+    expect(matchesWord("replay", ["play"])).toStrictEqual(false);
+    expect(matchesWord("unhappy", ["happy"])).toStrictEqual(false);
+    expect(matchesWord("hello\u2002world", ["hello"])).toStrictEqual(true);
+    expect(matchesWord("hello\u2003world", ["world"])).toStrictEqual(true);
+    expect(matchesWord("hello\u3000world", ["hello"])).toStrictEqual(true);
+    expect(matchesWord("hello\u2028world", ["world"])).toStrictEqual(true);
+
+    expect(matchesWord("", ["hello"])).toStrictEqual(false);
+    expect(matchesWord("   ", ["hello"])).toStrictEqual(false);
+    expect(matchesWord(null as any, ["hello"])).toStrictEqual(false);
+    expect(matchesWord(undefined as any, ["hello"])).toStrictEqual(false);
+    expect(matchesWord(123, ["123"])).toStrictEqual(true);
+    expect(matchesWord(123, ["12"])).toStrictEqual(false);
+    expect(matchesWord("hello", [])).toStrictEqual(false);
+    expect(matchesWord("hello", [""])).toStrictEqual(false);
+    expect(matchesWord("hello", [null as any])).toStrictEqual(false);
+
+    expect(matchesWord("cat dog bird", ["cat", "fish"])).toStrictEqual(true);
+    expect(matchesWord("cat dog bird", ["fish", "bird"])).toStrictEqual(true);
+    expect(matchesWord("cat dog bird", ["fish", "mouse"])).toStrictEqual(false);
+    expect(matchesWord("user-name", ["user"])).toStrictEqual(true);
+    expect(matchesWord("user-name", ["name"])).toStrictEqual(true);
+    expect(matchesWord("user-name", ["user-name"])).toStrictEqual(false);
+    expect(matchesWord("I have 2 apples", ["2"])).toStrictEqual(true);
+    expect(matchesWord("Item #123", ["123"])).toStrictEqual(true);
+    expect(matchesWord("2024-01-01", ["2024"])).toStrictEqual(true);
+    expect(matchesWord("2024-01-01", ["01"])).toStrictEqual(true);
+    expect(matchesWord("2024-01-01", ["2024-01"])).toStrictEqual(false);
+    expect(matchesWord("foo@bar.com", ["foo", "bar", "com"])).toStrictEqual(true);
+    expect(matchesWord("price: $100", ["100"])).toStrictEqual(true);
+    expect(matchesWord("a/b/c", ["a", "b", "c"])).toStrictEqual(true);
+    expect(matchesWord("test!@#data", ["test", "data"])).toStrictEqual(true);
+  });
+
+  test("matchesKeyword alias", () => {
+    const zwsp = "\u200B";
+    const nbsp = "\u00A0";
+    const zwnj = "\u200C";
+    const zwj = "\u200D";
+    expect(matchesKeyword(`hello${nbsp}world`, ["hello"])).toStrictEqual(true);
+    expect(matchesKeyword(`hello${nbsp}world`, ["world"])).toStrictEqual(true);
+    expect(matchesKeyword(`hello${nbsp}world`, ["helloworld"])).toStrictEqual(false);
+    expect(matchesKeyword(`hello${zwsp}world`, ["hello"])).toStrictEqual(true);
+    expect(matchesKeyword(`hello${zwsp}world`, ["world"])).toStrictEqual(true);
+    expect(matchesKeyword(`hel${zwsp}lo`, ["hel"])).toStrictEqual(true);
+    expect(matchesKeyword(`hel${zwsp}lo`, ["lo"])).toStrictEqual(true);
+    expect(matchesKeyword(`hel${zwsp}lo`, ["hello"])).toStrictEqual(false);
+    expect(matchesKeyword(`word${zwnj}break`, ["word"])).toStrictEqual(true);
+    expect(matchesKeyword(`word${zwnj}break`, ["break"])).toStrictEqual(true);
+    expect(matchesKeyword(`word${zwj}join`, ["word"])).toStrictEqual(true);
+
+    expect(matchesKeyword("hello world", ["hello"])).toStrictEqual(true);
+    expect(matchesKeyword("hello world", ["world"])).toStrictEqual(true);
+    expect(matchesKeyword("hello world", ["hell"])).toStrictEqual(false);
+    expect(matchesKeyword("hello world", ["lo"])).toStrictEqual(false);
+    expect(matchesKeyword("HELLO world", ["hello"])).toStrictEqual(true);
+    expect(matchesKeyword("hello WORLD", ["WORLD"])).toStrictEqual(true);
+    expect(matchesKeyword("HeLLo", ["hello"])).toStrictEqual(true);
+    expect(matchesKeyword("hello", ["HELLO"])).toStrictEqual(true);
+    expect(matchesKeyword("Hello, world!", ["hello"])).toStrictEqual(true);
+    expect(matchesKeyword("Hello, world!", ["world"])).toStrictEqual(true);
+    expect(matchesKeyword("It's a test.", ["it", "a", "test"])).toStrictEqual(true);
+    expect(matchesKeyword("User: admin; pass: 123", ["admin", "123"])).toStrictEqual(true);
+    expect(matchesKeyword("Question? Yes!", ["yes"])).toStrictEqual(true);
+    expect(matchesKeyword("Email: test@example.com", ["test", "example", "com"])).toStrictEqual(true);
+
+    expect(matchesKeyword("hotdog is tasty", ["dog"])).toStrictEqual(false);
+    expect(matchesKeyword("understand", ["stand"])).toStrictEqual(false);
+    expect(matchesKeyword("keyboard", ["board"])).toStrictEqual(false);
+    expect(matchesKeyword("replay", ["play"])).toStrictEqual(false);
+    expect(matchesKeyword("unhappy", ["happy"])).toStrictEqual(false);
+    expect(matchesKeyword("hello\u2002world", ["hello"])).toStrictEqual(true);
+    expect(matchesKeyword("hello\u2003world", ["world"])).toStrictEqual(true);
+    expect(matchesKeyword("hello\u3000world", ["hello"])).toStrictEqual(true);
+    expect(matchesKeyword("hello\u2028world", ["world"])).toStrictEqual(true);
   });
 });
 
